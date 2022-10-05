@@ -1,5 +1,4 @@
 import 'package:bmi_calculator/Screens/home_screen.dart';
-import 'package:bmi_calculator/utils/dimentions.dart';
 import 'package:bmi_calculator/utils/utils.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
 

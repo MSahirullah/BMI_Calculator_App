@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton(
-      {super.key, required this.onPressed, required this.btnText});
+      {super.key, required this.onPressed, required this.btnText, this.width = 200.0});
 
   final VoidCallback onPressed;
   final String btnText;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,13 @@ class CustomTextButton extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         elevation: 2.0,
-        padding: EdgeInsets.all(0.0),
+        padding: const EdgeInsets.all(0.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
       ),
       child: Ink(
-        width: 200.0,
+        width: width,
         decoration: BoxDecoration(
           gradient: AppColors.linearGradient,
           borderRadius: BorderRadius.circular(50.0),
@@ -31,7 +32,7 @@ class CustomTextButton extends StatelessWidget {
           ),
           alignment: Alignment.center,
           child: Text(
-            "btnText",
+            btnText,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 15.0,
