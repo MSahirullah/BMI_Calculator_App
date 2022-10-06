@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     Map<int, Color> color = {
       50: AppColors.mainColor.withOpacity(.1),
       100: AppColors.mainColor.withOpacity(.2),
-      200: AppColors.mainColor.withOpacity(.3),
+      200: AppColors.mainColor.withOpacity(.3), 
       300: AppColors.mainColor.withOpacity(.4),
       400: AppColors.mainColor.withOpacity(.5),
       500: AppColors.mainColor.withOpacity(.6),

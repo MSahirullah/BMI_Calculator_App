@@ -287,16 +287,31 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   void readData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      nameController.text =
-          StoreServices(sharedPreferences: prefs).retriveData('str', 'name');
-      genderController.text =
-          StoreServices(sharedPreferences: prefs).retriveData('str', 'gender');
-      bdateController.text =
-          StoreServices(sharedPreferences: prefs).retriveData('str', 'dob');
-      weightController.text =
-          StoreServices(sharedPreferences: prefs).retriveData('str', 'weight');
-      heightController.text =
-          StoreServices(sharedPreferences: prefs).retriveData('str', 'height');
+      nameController.text = StoreServices(sharedPreferences: prefs)
+                  .retriveData('str', 'name') !=
+              ''
+          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'name')
+          : '';
+      genderController.text = StoreServices(sharedPreferences: prefs)
+                  .retriveData('str', 'gender') !=
+              ''
+          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'gender')
+          : '';
+      bdateController.text = StoreServices(sharedPreferences: prefs)
+                  .retriveData('str', 'dob') !=
+              ''
+          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'dob')
+          : '';
+      weightController.text = StoreServices(sharedPreferences: prefs)
+                  .retriveData('str', 'weight') !=
+              ''
+          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'weight')
+          : '';
+      heightController.text = StoreServices(sharedPreferences: prefs)
+                  .retriveData('str', 'height') !=
+              ''
+          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'height')
+          : '';
     });
   }
 }

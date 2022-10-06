@@ -154,7 +154,11 @@ class _SideBarState extends State<SideBar> {
   void readName() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      name = StoreServices(sharedPreferences: prefs).retriveData('str', 'name');
+      name = StoreServices(sharedPreferences: prefs)
+                  .retriveData('str', 'name') ==
+              ''
+          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'name')
+          : 'Mohamed Sahirullah';
     });
   }
 }

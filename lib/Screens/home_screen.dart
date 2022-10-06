@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: const SideBar(),
+      drawer: const SideBar(),
       appBar: AppBar(
         elevation: 2.0,
         backgroundColor: AppColors.mainColor,
@@ -365,8 +365,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           initialPositionX: 0.0,
                           minValue: 50,
                           initialPosition: InitialPosition.center,
-                          maxValue: 200,
-                          divisions: 150,
+                          maxValue: 220,
+                          divisions: 170,
                           suffix: " cm",
                           cursorColor: AppColors.mainColor,
                           showCursor: true,
