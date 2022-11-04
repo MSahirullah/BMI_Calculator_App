@@ -18,6 +18,7 @@ class HorizontalPicker extends StatefulWidget {
   final Color passiveItemsTextColor;
   final String suffix;
   final double initialPositionX;
+   FixedExtentScrollController scrollController;
 
   HorizontalPicker({
     super.key,
@@ -34,6 +35,7 @@ class HorizontalPicker extends StatefulWidget {
     this.passiveItemsTextColor = Colors.grey,
     this.suffix = "",
     required this.initialPositionX,
+    required this.scrollController,
   }) : assert(minValue < maxValue);
 
   @override
@@ -41,7 +43,6 @@ class HorizontalPicker extends StatefulWidget {
 }
 
 class _HorizontalPickerState extends State<HorizontalPicker> {
-  late FixedExtentScrollController _scrollController;
   late int curItem;
   List<Map> valueMap = [];
 
@@ -62,22 +63,19 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
 
   void setScrollController() {
     int initialItem;
-    if (widget.initialPositionX != 0.0) {
-      initialItem = widget.initialPositionX.toInt() * 9;
-    } else {
-      switch (widget.initialPosition) {
-        case InitialPosition.start:
-          initialItem = 0;
-          break;
-        case InitialPosition.center:
-          initialItem = (valueMap.length ~/ 2);
-          break;
-        case InitialPosition.end:
-          initialItem = valueMap.length - 1;
-          break;
-      }
+    switch (widget.initialPosition) {
+      case InitialPosition.start:
+        initialItem = 0;
+        break;
+      case InitialPosition.center:
+        initialItem = (valueMap.length ~/ 2);
+        break;
+      case InitialPosition.end:
+        initialItem = valueMap.length - 1;
+        break;
     }
-    _scrollController = FixedExtentScrollController(initialItem: initialItem);
+    widget.scrollController =
+        FixedExtentScrollController(initialItem: initialItem);
   }
 
   @override
@@ -92,7 +90,7 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
           RotatedBox(
             quarterTurns: 3,
             child: ListWheelScrollView(
-                controller: _scrollController,
+                controller: widget.scrollController,
                 itemExtent: 60,
                 onSelectedItemChanged: (item) {
                   curItem = item;
@@ -112,7 +110,9 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
                       valueMap[i]["hasBorders"] = false;
                     }
                   }
-                  setState(() {});
+                  setState(() {
+                    
+                  });
                 },
                 children: valueMap.map((Map curValue) {
                   return ItemWidget(

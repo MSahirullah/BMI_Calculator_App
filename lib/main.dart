@@ -1,6 +1,8 @@
 import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/utils/colors.dart';
+import 'package:bmi_calculator/widgets/scrollwidget.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
     Map<int, Color> color = {
       50: AppColors.mainColor.withOpacity(.1),
       100: AppColors.mainColor.withOpacity(.2),
-      200: AppColors.mainColor.withOpacity(.3), 
+      200: AppColors.mainColor.withOpacity(.3),
       300: AppColors.mainColor.withOpacity(.4),
       400: AppColors.mainColor.withOpacity(.5),
       500: AppColors.mainColor.withOpacity(.6),
@@ -37,3 +39,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+//tell user to how much weight that he/she needs to reduce
+//

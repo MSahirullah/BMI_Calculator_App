@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bmi_calculator/services/store_service.dart';
 import 'package:bmi_calculator/utils/dimentions.dart';
 import 'package:bmi_calculator/utils/utils.dart';
+import 'package:bmi_calculator/widgets/result_widget.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -18,13 +19,30 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String _genderSelected = 'null';
   double _age = 20;
-  double _weight = 70;
+  double _weight = 220;
   double _height = 150;
   bool _saveAsProfileData = true;
   double bmiResult = 0.0;
   String _textResult = "";
   String _textInfo = "";
   int _result = 0;
+
+  FixedExtentScrollController weightScrollController =
+      FixedExtentScrollController();
+  FixedExtentScrollController heightScrollController =
+      FixedExtentScrollController();
+
+  TextEditingController weightController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    weightController.text = "0.0";
+    heightController.text = "0.0";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -251,6 +269,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onChanged: (double value) {
                                         setState(() {
                                           _age = value;
+                                          // weightScrollController.animateToItem(
+                                          //     _weight.toInt()*2,
+                                          //     duration: Duration(seconds: 1),
+                                          //     curve: Curves.linear);
                                         });
                                       },
                                     ),
@@ -291,12 +313,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      Text(
-                        "WEIGHT (kg)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
-                          color: AppColors.secondaryColor,
+                      SizedBox(
+                        width: double.infinity,
+                        child: Stack(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "WEIGHT (kg)",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.0,
+                                    color: AppColors.secondaryColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Positioned(
+                              right: 0,
+                              child: Icon(
+                                Icons.edit,
+                                size: 22.0,
+                                color: AppColors.secondaryColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(
@@ -307,11 +349,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           horizontal: 8.0,
                         ),
                         child: HorizontalPicker(
+                          scrollController: weightScrollController,
                           initialPositionX: 0.0,
                           minValue: 1,
                           initialPosition: InitialPosition.center,
-                          maxValue: 151,
-                          divisions: 300,
+                          maxValue: _weight,
+                          divisions: 440,
                           suffix: " kg",
                           cursorColor: AppColors.mainColor,
                           showCursor: true,
@@ -346,12 +389,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      Text(
-                        "HEIGHT (cm)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
-                          color: AppColors.secondaryColor,
+                      SizedBox(
+                        width: double.infinity,
+                        child: Stack(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "HEIGHT (cm)",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.0,
+                                    color: AppColors.secondaryColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Positioned(
+                              right: 0,
+                              child: Icon(
+                                Icons.edit,
+                                size: 22.0,
+                                color: AppColors.secondaryColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(
@@ -362,6 +425,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           horizontal: 8.0,
                         ),
                         child: HorizontalPicker(
+                          scrollController: heightScrollController,
                           initialPositionX: 0.0,
                           minValue: 50,
                           initialPosition: InitialPosition.center,
@@ -376,7 +440,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           onChanged: (value) {
                             setState(() {
                               _height = value;
-                              // print(_weight);
                             });
                           },
                           height: 75.0,
@@ -415,6 +478,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       h = h / 100;
                       bmiResult = w / (h * h);
+
                       if ((h <= 0) || (w <= 0)) {
                         bmiResult = 0.0;
                         _textResult = " ";
@@ -443,102 +507,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          content: SizedBox(
-                            height: 275,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "YOUR BMI IS",
-                                        style: TextStyle(
-                                          color: AppColors.secondaryColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16.0,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Text(
-                                        bmiResult.toStringAsFixed(2),
-                                        style: TextStyle(
-                                          color: AppColors.mainColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 35.0,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 15.0,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                    left: _result == 0
-                                        ? 0
-                                        : _result == 1
-                                            ? 220
-                                            : _result == 2
-                                                ? 110
-                                                : 0,
-                                  ),
-                                  child: Image.asset(
-                                    "assets/images/pin.png",
-                                    height: 25.0,
-                                  ),
-                                ),
-                                Container(
-                                  height: 8.0,
-                                  width: double.infinity,
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(10.0),
-                                    ),
-                                    image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: AssetImage(
-                                        "assets/images/gradient.png",
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 30.0,
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    _textResult,
-                                    style: TextStyle(
-                                      color: AppColors.mainColor,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 20.0,
-                                ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    _textInfo,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: AppColors.secondaryColor,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          content: ResultWidget(
+                              bmiResult: bmiResult,
+                              textResult: _textResult,
+                              textInfo: _textInfo),
                           actionsPadding: const EdgeInsets.only(bottom: 20.0),
                           actionsAlignment: MainAxisAlignment.spaceAround,
                           actions: <Widget>[

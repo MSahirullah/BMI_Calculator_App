@@ -63,11 +63,10 @@ class _ItemWidgetState extends State<ItemWidget> {
                     TextSpan(
                       text: leftText,
                       style: TextStyle(
-                          fontSize: widget.curItem["fontSize"],
-                          color: widget.curItem["color"],
-                          fontWeight: rightText == "0"
-                              ? FontWeight.w800
-                              : FontWeight.w400),
+                        fontSize: widget.curItem["fontSize"],
+                        color: widget.curItem["color"],
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                     TextSpan(
                       text: rightText == "0" ? "" : ".",
@@ -81,6 +80,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                       style: TextStyle(
                         fontSize: widget.curItem["fontSize"] - 3,
                         color: widget.curItem["color"],
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                     TextSpan(
