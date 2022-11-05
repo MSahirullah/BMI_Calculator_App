@@ -1,12 +1,18 @@
 import 'package:bmi_calculator/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton(
-      {super.key, required this.onPressed, required this.btnText, this.width = 200.0});
+      {super.key,
+      required this.onPressed,
+      required this.btnText,
+      this.width = 200.0,
+      required this.type});
 
   final VoidCallback onPressed;
   final String btnText;
+  final String type;
   final double width;
 
   @override
@@ -31,13 +37,23 @@ class CustomTextButton extends StatelessWidget {
             vertical: 13.0,
           ),
           alignment: Alignment.center,
-          child: Text(
-            btnText,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 15.0,
-            ),
-            textAlign: TextAlign.center,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              type == "sign in" ?  const FaIcon(
+                FontAwesomeIcons.google,
+                color: Colors.white,
+              ): Container(),
+              const SizedBox(width: 15.0),
+              Text(
+                btnText,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ),

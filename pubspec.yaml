@@ -37,10 +37,15 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_launcher_icons: ^0.10.0
   horizontal_picker: ^1.2.0
-  share_plus: ^4.4.0
+  share_plus: ^6.2.0
   shared_preferences: ^2.0.15
   intl: ^0.17.0
   syncfusion_flutter_gauges: ^20.3.48
+  firebase_auth: ^4.1.1
+  google_sign_in: ^5.4.2
+  provider: ^6.0.4
+  firebase_core: ^2.1.1
+  font_awesome_flutter: ^10.2.1
 
 dev_dependencies:
   flutter_test:

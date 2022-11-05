@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bmi_calculator/provider/google_sign_in.dart';
 import 'package:bmi_calculator/services/store_service.dart';
 import 'package:bmi_calculator/utils/dimentions.dart';
 import 'package:bmi_calculator/utils/utils.dart';
@@ -7,6 +8,8 @@ import 'package:bmi_calculator/widgets/result_widget.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -89,8 +92,27 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 10.0),
+            child: GestureDetector(
+              onTap: () {
+                final provider =
+                    Provider.of<GoogleSignInProvider>(context, listen: false);
+                provider.logout();
+              },
+              child: const Center(
+                child: FaIcon(
+                  FontAwesomeIcons.rightFromBracket,
+                  color: Colors.white,
+                  size: 20.0,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-      backgroundColor: const Color.fromARGB(244, 255, 255, 255),
+      backgroundColor: AppColors.mainColor.withOpacity(0.1),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(
@@ -682,6 +704,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment.center,
                 child: CustomTextButton(
+                  type: "",
                   onPressed: () {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     if (_genderSelected == 'null') {

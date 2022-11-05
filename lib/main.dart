@@ -1,8 +1,13 @@
-import 'package:bmi_calculator/Screens/screens.dart';
+import 'package:bmi_calculator/Screens/loading_screen.dart';
+import 'package:bmi_calculator/provider/google_sign_in.dart';
 import 'package:bmi_calculator/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -26,15 +31,17 @@ class MyApp extends StatelessWidget {
 
     MaterialColor colorCustom = MaterialColor(0xFF606BA1, color);
 
-    return MaterialApp(
-      title: 'BMI Calculator',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: colorCustom,
-        fontFamily: 'OpenSans',
-      ),
-      home: const SplashScreen(),
-    );
+    return ChangeNotifierProvider(
+        create: (context) => GoogleSignInProvider(),
+        child: MaterialApp(
+          title: 'BMI Calculator',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: colorCustom,
+            fontFamily: 'OpenSans',
+          ),
+          home: const LoadingScreen(),
+        ));
   }
 }
 

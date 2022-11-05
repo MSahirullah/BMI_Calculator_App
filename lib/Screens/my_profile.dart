@@ -233,6 +233,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               ),
             ),
             CustomTextButton(
+              type: "",
                 onPressed: () {
                   FocusManager.instance.primaryFocus?.unfocus();
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();

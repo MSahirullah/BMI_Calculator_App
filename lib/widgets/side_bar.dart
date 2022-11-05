@@ -1,8 +1,7 @@
 import 'package:bmi_calculator/Screens/screens.dart';
-import 'package:bmi_calculator/services/store_service.dart';
 import 'package:bmi_calculator/utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key});
@@ -12,16 +11,14 @@ class SideBar extends StatefulWidget {
 }
 
 class _SideBarState extends State<SideBar> {
-  String name = '';
   @override
   void initState() {
     super.initState();
-
-    readName();
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
     return Drawer(
       backgroundColor: AppColors.mainColor,
       width: 275.0,
@@ -59,8 +56,8 @@ class _SideBarState extends State<SideBar> {
                           backgroundColor: AppColors.mainColor,
                           maxRadius: 45.0,
                           child: ClipOval(
-                            child: Image.asset(
-                              'assets/images/profile.jpg',
+                            child: Image.network(
+                              user.photoURL!,
                               fit: BoxFit.cover,
                               width: 200,
                               height: 200,
@@ -69,7 +66,7 @@ class _SideBarState extends State<SideBar> {
                         ),
                       ),
                       Text(
-                        name,
+                        user.displayName!,
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -148,16 +145,5 @@ class _SideBarState extends State<SideBar> {
         ],
       ),
     );
-  }
-
-  void readName() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      name = StoreServices(sharedPreferences: prefs)
-                  .retriveData('str', 'name') ==
-              ''
-          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'name')
-          : 'Mohamed Sahirullah';
-    });
   }
 }
