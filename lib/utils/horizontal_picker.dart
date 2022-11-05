@@ -17,8 +17,8 @@ class HorizontalPicker extends StatefulWidget {
   final Color activeItemTextColor;
   final Color passiveItemsTextColor;
   final String suffix;
-  final double initialPositionX;
-   FixedExtentScrollController scrollController;
+  final int initialPositionX;
+  FixedExtentScrollController scrollController;
 
   HorizontalPicker({
     super.key,
@@ -36,7 +36,7 @@ class HorizontalPicker extends StatefulWidget {
     this.suffix = "",
     required this.initialPositionX,
     required this.scrollController,
-  }) : assert(minValue < maxValue);
+  }) : assert(minValue <= maxValue);
 
   @override
   _HorizontalPickerState createState() => _HorizontalPickerState();
@@ -62,20 +62,15 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
   }
 
   void setScrollController() {
+    //print('running');
+
     int initialItem;
-    switch (widget.initialPosition) {
-      case InitialPosition.start:
-        initialItem = 0;
-        break;
-      case InitialPosition.center:
-        initialItem = (valueMap.length ~/ 2);
-        break;
-      case InitialPosition.end:
-        initialItem = valueMap.length - 1;
-        break;
-    }
-    widget.scrollController =
-        FixedExtentScrollController(initialItem: initialItem);
+
+    initialItem = widget.initialPositionX;
+
+    widget.scrollController = FixedExtentScrollController(
+      initialItem: initialItem,
+    );
   }
 
   @override
@@ -93,26 +88,8 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
                 controller: widget.scrollController,
                 itemExtent: 60,
                 onSelectedItemChanged: (item) {
-                  curItem = item;
-                  int decimalCount = 1;
-                  num fac = pow(10, decimalCount);
-                  valueMap[item]["value"] =
-                      (valueMap[item]["value"] * fac).round() / fac;
-                  widget.onChanged(valueMap[item]["value"]);
-                  for (var i = 0; i < valueMap.length; i++) {
-                    if (i == item) {
-                      valueMap[item]["color"] = widget.activeItemTextColor;
-                      valueMap[item]["fontSize"] = 15.0;
-                      valueMap[item]["hasBorders"] = true;
-                    } else {
-                      valueMap[i]["color"] = widget.passiveItemsTextColor;
-                      valueMap[i]["fontSize"] = 14.0;
-                      valueMap[i]["hasBorders"] = false;
-                    }
-                  }
-                  setState(() {
-                    
-                  });
+                  createMap(item);
+                  setState(() {});
                 },
                 children: valueMap.map((Map curValue) {
                   return ItemWidget(
@@ -141,5 +118,24 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
         ],
       ),
     );
+  }
+
+  void createMap(int item) {
+    curItem = item;
+    int decimalCount = 1;
+    num fac = pow(10, decimalCount);
+    valueMap[item]["value"] = (valueMap[item]["value"] * fac).round() / fac;
+    widget.onChanged(valueMap[item]["value"]);
+    for (var i = 0; i < valueMap.length; i++) {
+      if (i == item) {
+        valueMap[item]["color"] = widget.activeItemTextColor;
+        valueMap[item]["fontSize"] = 18.0;
+        valueMap[item]["hasBorders"] = true;
+      } else {
+        valueMap[i]["color"] = widget.passiveItemsTextColor;
+        valueMap[i]["fontSize"] = 16.0;
+        valueMap[i]["hasBorders"] = false;
+      }
+    }
   }
 }

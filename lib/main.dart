@@ -35,10 +35,21 @@ class MyApp extends StatelessWidget {
         primarySwatch: colorCustom,
         fontFamily: 'OpenSans',
       ),
-      home: const SplashScreen(),
+      home: const HomeScreen(),
     );
   }
 }
 
-//tell user to how much weight that he/she needs to reduce
-//
+// tell user to how much weight that he/she needs to reduce
+// when user input value the meter value should be bold
+
+
+
+// print(_weight);
+
+// setState(() {
+//   weightScrollController.animateToItem(
+//       ((_weight - 1) * 2).toInt(),
+//       duration: const Duration(seconds: 1),
+//       curve: Curves.linear);
+// });

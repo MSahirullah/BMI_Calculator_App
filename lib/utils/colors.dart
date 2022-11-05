@@ -4,6 +4,7 @@ class AppColors {
   static Color mainColor = const Color(0xFF606BA1);
   static Color secondaryColor = const Color(0xFF515151);
   static Color greyColor = const Color(0xFF9F9F9F);
+  static Color inputFieldBorder = const Color.fromARGB(255, 194, 193, 193);
 
   static LinearGradient linearGradient = const LinearGradient(
     begin: Alignment.topCenter,

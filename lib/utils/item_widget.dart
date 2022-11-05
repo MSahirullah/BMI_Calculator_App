@@ -65,7 +65,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                       style: TextStyle(
                         fontSize: widget.curItem["fontSize"],
                         color: widget.curItem["color"],
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     TextSpan(
@@ -80,7 +80,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                       style: TextStyle(
                         fontSize: widget.curItem["fontSize"] - 3,
                         color: widget.curItem["color"],
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     TextSpan(

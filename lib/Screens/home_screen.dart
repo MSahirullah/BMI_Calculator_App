@@ -6,6 +6,7 @@ import 'package:bmi_calculator/utils/utils.dart';
 import 'package:bmi_calculator/widgets/result_widget.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,13 +20,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String _genderSelected = 'null';
   double _age = 20;
-  double _weight = 220;
+  final double _maxWeight = 220;
+  late double _weight;
   double _height = 150;
   bool _saveAsProfileData = true;
   double bmiResult = 0.0;
   String _textResult = "";
   String _textInfo = "";
   int _result = 0;
+
+  late IconData weighIcon;
+  late IconData heightIcon;
+
+  late bool weightInputChanger;
+  late bool heightInputChanger;
+
+  late int weightPosition;
 
   FixedExtentScrollController weightScrollController =
       FixedExtentScrollController();
@@ -40,8 +50,18 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     super.initState();
 
-    weightController.text = "0.0";
-    heightController.text = "0.0";
+    weightController.text = (_maxWeight / 2).toString();
+    heightController.text = _height.toString();
+
+    _weight = (_maxWeight + 1) / 2;
+
+    weighIcon = Icons.edit;
+    heightIcon = Icons.edit;
+
+    weightInputChanger = true;
+    heightInputChanger = true;
+
+    weightPosition = ((_weight - 1) * 2).toInt();
   }
 
   @override
@@ -269,10 +289,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onChanged: (double value) {
                                         setState(() {
                                           _age = value;
-                                          // weightScrollController.animateToItem(
-                                          //     _weight.toInt()*2,
-                                          //     duration: Duration(seconds: 1),
-                                          //     curve: Curves.linear);
                                         });
                                       },
                                     ),
@@ -332,10 +348,45 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Positioned(
                               right: 0,
-                              child: Icon(
-                                Icons.edit,
-                                size: 22.0,
-                                color: AppColors.secondaryColor,
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (weightInputChanger) {
+                                    setState(() {
+                                      weightController.text =
+                                          _weight.toString();
+                                      weighIcon = Icons.monitor_weight_outlined;
+                                      weightInputChanger = !weightInputChanger;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _weight =
+                                          double.parse(weightController.text);
+                                      if (_weight > 0 &&
+                                          _weight <= _maxWeight) {
+                                        weighIcon = Icons.edit;
+                                        weightInputChanger =
+                                            !weightInputChanger;
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentSnackBar();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                "Please input valid weight."),
+                                          ),
+                                        );
+                                        return;
+                                      }
+                                    });
+                                  }
+                                  weightPosition = ((_weight - 1) * 2).toInt();
+                                },
+                                child: Icon(
+                                  weighIcon,
+                                  size: 22.0,
+                                  color: AppColors.secondaryColor,
+                                ),
                               ),
                             ),
                           ],
@@ -348,26 +399,70 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                         ),
-                        child: HorizontalPicker(
-                          scrollController: weightScrollController,
-                          initialPositionX: 0.0,
-                          minValue: 1,
-                          initialPosition: InitialPosition.center,
-                          maxValue: _weight,
-                          divisions: 440,
-                          suffix: " kg",
-                          cursorColor: AppColors.mainColor,
-                          showCursor: true,
-                          backgroundColor: Colors.transparent,
-                          activeItemTextColor: AppColors.mainColor,
-                          passiveItemsTextColor: AppColors.greyColor,
-                          onChanged: (value) {
-                            setState(() {
-                              _weight = value;
-                            });
-                          },
-                          height: 75.0,
-                        ),
+                        child: weightInputChanger
+                            ? HorizontalPicker(
+                                scrollController: weightScrollController,
+                                initialPositionX: weightPosition,
+                                minValue: 1,
+                                initialPosition: InitialPosition.center,
+                                maxValue: _maxWeight,
+                                divisions: 438,
+                                suffix: " kg",
+                                cursorColor: AppColors.mainColor,
+                                showCursor: true,
+                                backgroundColor: Colors.transparent,
+                                activeItemTextColor: AppColors.mainColor,
+                                passiveItemsTextColor: AppColors.greyColor,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _weight = value;
+                                  });
+                                },
+                                height: 75.0,
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 13.0, bottom: 10.0),
+                                child: TextFormField(
+                                  controller: weightController,
+                                  key: const ValueKey('Weight'),
+                                  style: const TextStyle(
+                                    fontSize: 15.0,
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9.]')),
+                                    LengthLimitingTextInputFormatter(6),
+                                  ],
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  decoration: InputDecoration(
+                                    suffixText: "kg",
+                                    contentPadding: const EdgeInsets.all(16.0),
+                                    labelText: "",
+                                    labelStyle: TextStyle(
+                                      color: AppColors.secondaryColor,
+                                      fontSize: 15.0,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AppColors.inputFieldBorder),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide(
+                                          color: AppColors.inputFieldBorder),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide(
+                                          color: AppColors.inputFieldBorder),
+                                    ),
+                                  ),
+                                ),
+                              ),
                       ),
                       const SizedBox(
                         height: 8.0,
@@ -408,10 +503,25 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Positioned(
                               right: 0,
-                              child: Icon(
-                                Icons.edit,
-                                size: 22.0,
-                                color: AppColors.secondaryColor,
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (heightIcon ==
+                                      Icons.accessibility_new_rounded) {
+                                    setState(() {
+                                      heightIcon = Icons.edit;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      heightIcon =
+                                          Icons.accessibility_new_rounded;
+                                    });
+                                  }
+                                },
+                                child: Icon(
+                                  heightIcon,
+                                  size: 22.0,
+                                  color: AppColors.secondaryColor,
+                                ),
                               ),
                             ),
                           ],
@@ -424,26 +534,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                         ),
-                        child: HorizontalPicker(
-                          scrollController: heightScrollController,
-                          initialPositionX: 0.0,
-                          minValue: 50,
-                          initialPosition: InitialPosition.center,
-                          maxValue: 220,
-                          divisions: 170,
-                          suffix: " cm",
-                          cursorColor: AppColors.mainColor,
-                          showCursor: true,
-                          backgroundColor: Colors.transparent,
-                          activeItemTextColor: AppColors.mainColor,
-                          passiveItemsTextColor: AppColors.greyColor,
-                          onChanged: (value) {
-                            setState(() {
-                              _height = value;
-                            });
-                          },
-                          height: 75.0,
-                        ),
+                        // child: HorizontalPicker(
+                        //   scrollController: heightScrollController,
+                        //   initialPositionX: 0.0,
+                        //   minValue: 50,
+                        //   initialPosition: InitialPosition.center,
+                        //   maxValue: 220,
+                        //   divisions: 170,
+                        //   suffix: " cm",
+                        //   cursorColor: AppColors.mainColor,
+                        //   showCursor: true,
+                        //   backgroundColor: Colors.transparent,
+                        //   activeItemTextColor: AppColors.mainColor,
+                        //   passiveItemsTextColor: AppColors.greyColor,
+                        //   onChanged: (value) {
+                        //     setState(() {
+                        //       _height = value;
+                        //     });
+                        //   },
+                        //   height: 75.0,
+                        // ),
                       ),
                       const SizedBox(
                         height: 8.0,
