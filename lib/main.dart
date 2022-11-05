@@ -1,8 +1,6 @@
 import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/utils/colors.dart';
-import 'package:bmi_calculator/widgets/scrollwidget.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,21 +33,20 @@ class MyApp extends StatelessWidget {
         primarySwatch: colorCustom,
         fontFamily: 'OpenSans',
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
 
-// tell user to how much weight that he/she needs to reduce
 // when user input value the meter value should be bold
 
 
 
-// print(_weight);
+  // print(_weight);
 
-// setState(() {
-//   weightScrollController.animateToItem(
-//       ((_weight - 1) * 2).toInt(),
-//       duration: const Duration(seconds: 1),
-//       curve: Curves.linear);
-// });
+  // setState(() {
+  //   weightScrollController.animateToItem(
+  //       ((_weight - 1) * 2).toInt(),
+  //       duration: const Duration(seconds: 1),
+  //       curve: Curves.linear);
+  // });

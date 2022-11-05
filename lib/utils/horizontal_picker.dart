@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 enum InitialPosition { start, center, end }
 
+// ignore: must_be_immutable
 class HorizontalPicker extends StatefulWidget {
   final double minValue, maxValue;
   final int divisions;
@@ -39,6 +40,7 @@ class HorizontalPicker extends StatefulWidget {
   }) : assert(minValue <= maxValue);
 
   @override
+  // ignore: library_private_types_in_public_api
   _HorizontalPickerState createState() => _HorizontalPickerState();
 }
 

@@ -58,7 +58,7 @@ class SplashScreen extends StatelessWidget {
                 ),
               );
             },
-            btnText: "Get Started",
+            btnText: "Sign in with Google",
           ),
         ],
       ),

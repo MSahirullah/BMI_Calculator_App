@@ -15,7 +15,6 @@ class _SideBarState extends State<SideBar> {
   String name = '';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     readName();
@@ -71,7 +70,7 @@ class _SideBarState extends State<SideBar> {
                       ),
                       Text(
                         name,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: 15.0,

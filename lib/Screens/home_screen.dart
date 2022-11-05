@@ -19,15 +19,22 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _genderSelected = 'null';
-  double _age = 20;
+  int _age = 20;
+
+  final double _minWeight = 1;
   final double _maxWeight = 220;
   late double _weight;
-  double _height = 150;
-  bool _saveAsProfileData = true;
+
+  final double _minHeight = 30;
+  final double _maxHeight = 220;
+  late double _height;
+
   double bmiResult = 0.0;
   String _textResult = "";
   String _textInfo = "";
-  int _result = 0;
+  Color _textResultColor = AppColors.mainColor;
+  double _reduceMinWeight = 0.0;
+  double _reduceMaxWeight = 0.0;
 
   late IconData weighIcon;
   late IconData heightIcon;
@@ -36,6 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
   late bool heightInputChanger;
 
   late int weightPosition;
+  late int heightPosition;
+
+  bool _saveMyData = true;
 
   FixedExtentScrollController weightScrollController =
       FixedExtentScrollController();
@@ -47,13 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    weightController.text = (_maxWeight / 2).toString();
-    heightController.text = _height.toString();
+    _weight = 65;
+    _height = 170;
 
-    _weight = (_maxWeight + 1) / 2;
+    weightController.text = _weight.toString();
+    heightController.text = _height.toString();
 
     weighIcon = Icons.edit;
     heightIcon = Icons.edit;
@@ -61,7 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
     weightInputChanger = true;
     heightInputChanger = true;
 
-    weightPosition = ((_weight - 1) * 2).toInt();
+    weightPosition = 128;
+    heightPosition = 140;
   }
 
   @override
@@ -91,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  //Gender Card
                   Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -234,6 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                  //Age Card
                   Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -282,13 +295,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                             (Dimentions.width10 * 10)) /
                                         2,
                                     child: Slider(
-                                      value: _age,
+                                      value: _age.toDouble(),
                                       max: 100,
                                       min: 1,
                                       label: _age.round().toString(),
                                       onChanged: (double value) {
                                         setState(() {
-                                          _age = value;
+                                          _age = value.toInt();
                                         });
                                       },
                                     ),
@@ -316,9 +329,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              const SizedBox(height: 20.0),
+              //Weight Card
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -359,9 +371,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     });
                                   } else {
                                     setState(() {
-                                      _weight =
-                                          double.parse(weightController.text);
-                                      if (_weight > 0 &&
+                                      _weight = weightController.text.isEmpty
+                                          ? -1
+                                          : double.parse(weightController.text);
+
+                                      if (_weight >= _minWeight &&
                                           _weight <= _maxWeight) {
                                         weighIcon = Icons.edit;
                                         weightInputChanger =
@@ -403,7 +417,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? HorizontalPicker(
                                 scrollController: weightScrollController,
                                 initialPositionX: weightPosition,
-                                minValue: 1,
+                                minValue: _minWeight,
                                 initialPosition: InitialPosition.center,
                                 maxValue: _maxWeight,
                                 divisions: 438,
@@ -424,6 +438,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: const EdgeInsets.only(
                                     top: 13.0, bottom: 10.0),
                                 child: TextFormField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _weight = weightController.text.isEmpty
+                                          ? -1
+                                          : double.parse(weightController.text);
+                                    });
+                                  },
                                   controller: weightController,
                                   key: const ValueKey('Weight'),
                                   style: const TextStyle(
@@ -471,9 +492,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20.0,
-              ),
+              const SizedBox(height: 20.0),
+              //Height Card
               Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -492,7 +512,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "HEIGHT (cm)",
+                                  "Height (cm)",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16.0,
@@ -505,17 +525,41 @@ class _HomeScreenState extends State<HomeScreen> {
                               right: 0,
                               child: GestureDetector(
                                 onTap: () {
-                                  if (heightIcon ==
-                                      Icons.accessibility_new_rounded) {
+                                  if (heightInputChanger) {
                                     setState(() {
-                                      heightIcon = Icons.edit;
+                                      heightController.text =
+                                          _height.toString();
+                                      heightIcon =
+                                          Icons.accessibility_new_rounded;
+                                      heightInputChanger = !heightInputChanger;
                                     });
                                   } else {
                                     setState(() {
-                                      heightIcon =
-                                          Icons.accessibility_new_rounded;
+                                      _height = heightController.text.isEmpty
+                                          ? -1
+                                          : double.parse(heightController.text);
+
+                                      if (_height >= _minHeight &&
+                                          _height <= _maxHeight) {
+                                        heightIcon = Icons.edit;
+                                        heightInputChanger =
+                                            !heightInputChanger;
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentSnackBar();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                "Please input valid height."),
+                                          ),
+                                        );
+                                        return;
+                                      }
                                     });
                                   }
+                                  heightPosition =
+                                      (_height - _minHeight).toInt();
                                 },
                                 child: Icon(
                                   heightIcon,
@@ -534,26 +578,77 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(
                           horizontal: 8.0,
                         ),
-                        // child: HorizontalPicker(
-                        //   scrollController: heightScrollController,
-                        //   initialPositionX: 0.0,
-                        //   minValue: 50,
-                        //   initialPosition: InitialPosition.center,
-                        //   maxValue: 220,
-                        //   divisions: 170,
-                        //   suffix: " cm",
-                        //   cursorColor: AppColors.mainColor,
-                        //   showCursor: true,
-                        //   backgroundColor: Colors.transparent,
-                        //   activeItemTextColor: AppColors.mainColor,
-                        //   passiveItemsTextColor: AppColors.greyColor,
-                        //   onChanged: (value) {
-                        //     setState(() {
-                        //       _height = value;
-                        //     });
-                        //   },
-                        //   height: 75.0,
-                        // ),
+                        child: heightInputChanger
+                            ? HorizontalPicker(
+                                scrollController: heightScrollController,
+                                initialPositionX: heightPosition,
+                                minValue: _minHeight,
+                                initialPosition: InitialPosition.center,
+                                maxValue: _maxHeight,
+                                divisions: (_maxHeight - _minHeight).toInt(),
+                                suffix: " cm",
+                                cursorColor: AppColors.mainColor,
+                                showCursor: true,
+                                backgroundColor: Colors.transparent,
+                                activeItemTextColor: AppColors.mainColor,
+                                passiveItemsTextColor: AppColors.greyColor,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _height = value;
+                                  });
+                                },
+                                height: 75.0,
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 13.0, bottom: 10.0),
+                                child: TextFormField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _height = heightController.text.isEmpty
+                                          ? -1
+                                          : double.parse(heightController.text);
+                                    });
+                                  },
+                                  controller: heightController,
+                                  key: const ValueKey('Height'),
+                                  style: const TextStyle(
+                                    fontSize: 15.0,
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'[0-9.]')),
+                                    LengthLimitingTextInputFormatter(6),
+                                  ],
+                                  textCapitalization:
+                                      TextCapitalization.sentences,
+                                  decoration: InputDecoration(
+                                    suffixText: "cm",
+                                    contentPadding: const EdgeInsets.all(16.0),
+                                    labelText: "",
+                                    labelStyle: TextStyle(
+                                      color: AppColors.secondaryColor,
+                                      fontSize: 15.0,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AppColors.inputFieldBorder),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide(
+                                          color: AppColors.inputFieldBorder),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderSide: BorderSide(
+                                          color: AppColors.inputFieldBorder),
+                                    ),
+                                  ),
+                                ),
+                              ),
                       ),
                       const SizedBox(
                         height: 8.0,
@@ -562,12 +657,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 80.0,
+              const SizedBox(height: 15.0),
+              Row(
+                children: [
+                  Checkbox(
+                    value: _saveMyData,
+                    onChanged: (value) {
+                      setState(() {
+                        _saveMyData = value!;
+                      });
+                    },
+                  ),
+                  const SizedBox(width: 2.0),
+                  Text(
+                    'Save my data',
+                    style: TextStyle(
+                      color: AppColors.secondaryColor,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 10.0,
-              ),
+              const SizedBox(height: 25.0),
               Align(
                 alignment: Alignment.center,
                 child: CustomTextButton(
@@ -582,101 +693,149 @@ class _HomeScreenState extends State<HomeScreen> {
                       return;
                     }
 
+                    String errorText = "";
+                    if (heightController.text.isEmpty &&
+                        weightController.text.isEmpty) {
+                      errorText = "Please input valid weight & height.";
+                    } else if (heightController.text.isEmpty) {
+                      errorText = "Please input valid height.";
+                    } else if (weightController.text.isEmpty) {
+                      errorText = "Please input valid weight.";
+                    } else {
+                      double tempHeight = double.parse(heightController.text);
+                      double tempWeight = double.parse(weightController.text);
+
+                      if ((tempHeight < _minHeight ||
+                              tempHeight > _maxHeight) &&
+                          (tempWeight < _minWeight ||
+                              tempWeight > _maxWeight)) {
+                        errorText = "Please input valid weight & height.";
+                      } else if (tempHeight < _minHeight ||
+                          tempHeight > _maxHeight) {
+                        errorText = "Please input valid height.";
+                      } else if (tempWeight < _minWeight ||
+                          tempWeight > _maxWeight) {
+                        errorText = "Please input valid weight.";
+                      }
+                    }
+
+                    if (errorText.isNotEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(errorText),
+                        ),
+                      );
+                      return;
+                    }
+
                     double w = _weight != 0.0 ? _weight : 0.00;
                     double h = _height != 0 ? _height : 0.00;
 
                     setState(() {
-                      h = h / 100;
-                      bmiResult = w / (h * h);
-
                       if ((h <= 0) || (w <= 0)) {
                         bmiResult = 0.0;
                         _textResult = " ";
                         _textInfo = " ";
-                        _result = 0;
-                      } else if (bmiResult > 25) {
-                        _textResult = "You're OVER WEIGHT!";
-                        _textInfo = "Over weight BMI ranges \nabove 25";
-
-                        _result = 1;
-                      } else if (bmiResult >= 18.5 && bmiResult <= 25) {
-                        _textResult = "You're NORMAL WEIGHT!";
-                        _textInfo =
-                            "Normal weight BMI ranges \nbetween 18.5 - 24.9";
-
-                        _result = 2;
+                        //
                       } else {
-                        _textResult = "You're UNDER WEIGHT!";
-                        _textInfo = "Under weight BMI ranges \nbelow 18.5";
-                        _result = 3;
+                        h = h / 100;
+                        bmiResult = w / (h * h);
+
+                        _reduceMinWeight =
+                            double.parse((18.5 * h * h).toStringAsFixed(1));
+                        _reduceMaxWeight =
+                            double.parse((24.9 * h * h).toStringAsFixed(1));
+
+                        if (bmiResult > 30) {
+                          _textResult = "OBESITY!";
+                          _textInfo = "Obesity BMI ranges \nabove 30";
+                          _textResultColor = const Color(0xffF45656);
+                          //
+                        } else if (bmiResult > 25) {
+                          _textResult = "OVER WEIGHT!";
+                          _textInfo =
+                              "Over weight BMI ranges \nbetween 25 - 29.9";
+                          _textResultColor = const Color(0xffF45656);
+                          //
+                        } else if (bmiResult >= 18.5 && bmiResult <= 25) {
+                          _textResult = "NORMAL WEIGHT!";
+                          _textInfo =
+                              "Normal weight BMI ranges \nbetween 18.5 - 24.9";
+                          _textResultColor = const Color(0xff0DC9AB);
+                          //
+                        } else {
+                          _textResult = "UNDER WEIGHT!";
+                          _textInfo = "Under weight BMI ranges \nbelow 18.5";
+                          _textResultColor = const Color(0xffffae00);
+                          //
+                        }
                       }
                     });
-                    if (_result != 0) {
-                      if (_saveAsProfileData) {}
 
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          content: ResultWidget(
-                              bmiResult: bmiResult,
-                              textResult: _textResult,
-                              textInfo: _textInfo),
-                          actionsPadding: const EdgeInsets.only(bottom: 20.0),
-                          actionsAlignment: MainAxisAlignment.spaceAround,
-                          actions: <Widget>[
-                            IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              icon: Icon(
-                                Icons.refresh,
-                                color: AppColors.secondaryColor,
-                                size: 26.0,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  _genderSelected = 'null';
-                                  _age = 20;
-                                  _weight = 70;
-                                  _height = 150;
-                                  _saveAsProfileData = false;
-                                  bmiResult = 0.0;
-                                  _textResult = "";
-                                  _textInfo = "";
-                                  _result = 0;
-                                });
-                                Navigator.of(context).pop();
-                              },
-                              icon: Container(
-                                height: 50.0,
-                                width: 50.0,
-                                decoration: BoxDecoration(
-                                    color: AppColors.mainColor,
-                                    borderRadius: BorderRadius.circular(30.0)),
-                                child: const Icon(
-                                  Icons.home,
-                                  color: Colors.white,
-                                  size: 26.0,
-                                ),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () async {
-                                await Share.share(
-                                    'My BMI is ${bmiResult.toStringAsFixed(2)}.');
-                              },
-                              icon: Icon(
-                                Icons.share,
-                                color: AppColors.secondaryColor,
-                                size: 26.0,
-                              ),
-                            ),
-                          ],
+                    //saveData
+                    if (_saveMyData) {}
+
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        content: ResultWidget(
+                          reduceMaxWeight: _reduceMaxWeight,
+                          reduceMinWeight: _reduceMinWeight,
+                          bmiResult: bmiResult,
+                          textResult: _textResult,
+                          textInfo: _textInfo,
+                          textResultColor: _textResultColor,
                         ),
-                      );
-                    }
+                        actionsPadding: const EdgeInsets.only(bottom: 20.0),
+                        actionsAlignment: MainAxisAlignment.spaceAround,
+                        actions: <Widget>[
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            icon: Icon(
+                              Icons.history,
+                              color: AppColors.secondaryColor,
+                              size: 26.0,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _saveMyData = true;
+                                bmiResult = 0.0;
+                                _textResult = "";
+                                _textInfo = "";
+                              });
+                              Navigator.of(context).pop();
+                            },
+                            icon: Container(
+                              height: 50.0,
+                              width: 50.0,
+                              decoration: BoxDecoration(
+                                  color: AppColors.mainColor,
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: const Icon(
+                                Icons.refresh,
+                                color: Colors.white,
+                                size: 26.0,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              await Share.share(
+                                  'My BMI is ${bmiResult.toStringAsFixed(2)}.');
+                            },
+                            icon: Icon(
+                              Icons.share,
+                              color: AppColors.secondaryColor,
+                              size: 26.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   btnText: "Calculate",
                   width: Dimentions.screenWidth * 0.75,

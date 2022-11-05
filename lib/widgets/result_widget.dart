@@ -1,30 +1,33 @@
-import 'dart:ffi';
-
 import 'package:bmi_calculator/utils/dimentions.dart';
 import 'package:bmi_calculator/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ResultWidget extends StatelessWidget {
   final double bmiResult;
   final String textResult;
   final String textInfo;
+  final double reduceMinWeight;
+  final double reduceMaxWeight;
+  final Color textResultColor;
 
   const ResultWidget(
       {super.key,
       required this.bmiResult,
       required this.textResult,
-      required this.textInfo});
+      required this.textInfo,
+      required this.textResultColor,
+      required this.reduceMinWeight,
+      required this.reduceMaxWeight});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 275,
       width: (Dimentions.screenWidth - Dimentions.width10 * 2),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Align(
             alignment: Alignment.center,
@@ -103,12 +106,20 @@ class ResultWidget extends StatelessWidget {
           ),
           Align(
             alignment: Alignment.center,
-            child: Text(
-              textResult,
-              style: TextStyle(
-                color: AppColors.mainColor,
-                fontWeight: FontWeight.w600,
-                fontSize: 18.0,
+            child: RichText(
+              text: TextSpan(
+                text: "You're ",
+                style: DefaultTextStyle.of(context).style,
+                children: <TextSpan>[
+                  TextSpan(
+                    text: textResult,
+                    style: TextStyle(
+                      color: textResultColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -127,6 +138,74 @@ class ResultWidget extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(
+            height: 20.0,
+          ),
+          textResult != "NORMAL WEIGHT!"
+              ? Container(
+                  padding: const EdgeInsets.all(10.0),
+                  width: Dimentions.screenWidth * 0.75,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Theme.of(context).primaryColor.withOpacity(0.7),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.info_outline_rounded,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(width: 10.0),
+                      Flexible(
+                        child: RichText(
+                          text: TextSpan(
+                            text:
+                                "A healthy weight range for your height is between ",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: "${reduceMinWeight}kg",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                              const TextSpan(
+                                text: " & ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "${reduceMaxWeight}kg",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                              const TextSpan(
+                                text: ".",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(),
         ],
       ),
     );
