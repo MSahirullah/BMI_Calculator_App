@@ -1,14 +1,16 @@
-import 'package:bmi_calculator/Screens/loading_screen.dart';
+import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/provider/google_sign_in.dart';
-import 'package:bmi_calculator/utils/colors.dart';
+import 'package:bmi_calculator/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
+  configLoading();
 }
 
 class MyApp extends StatelessWidget {
@@ -41,8 +43,28 @@ class MyApp extends StatelessWidget {
             fontFamily: 'OpenSans',
           ),
           home: const LoadingScreen(),
+          builder: EasyLoading.init(),
         ));
   }
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = AppColors.greyColor.withOpacity(0.5)
+    ..userInteractions = false
+    ..toastPosition = EasyLoadingToastPosition.bottom
+    ..contentPadding =
+        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0)
+    ..dismissOnTap = true;
 }
 
 // when user input value the meter value should be bold

@@ -1,5 +1,5 @@
 import 'package:bmi_calculator/Screens/screens.dart';
-import 'package:bmi_calculator/utils/colors.dart';
+import 'package:bmi_calculator/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

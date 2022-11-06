@@ -1,18 +1,12 @@
-import 'package:bmi_calculator/provider/google_sign_in.dart';
+import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/utils/utils.dart';
-import 'package:bmi_calculator/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+import 'package:bmi_calculator/widgets/widgets.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class ErrorScreen extends StatelessWidget {
+  const ErrorScreen({super.key});
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,29 +41,29 @@ class _SplashScreenState extends State<SplashScreen> {
           const SizedBox(
             height: 25.0,
           ),
-          const Image(
-            image: AssetImage(
-              "assets/images/splash-image.png",
+          Container(
+            margin: EdgeInsets.all(25.0),
+            child: const Image(
+              image: AssetImage(
+                "assets/images/error-image.png",
+              ),
             ),
           ),
           const SizedBox(
             height: 30.0,
           ),
           CustomTextButton(
+            icon: FontAwesomeIcons.arrowRotateLeft,
             isHaveIcon: true,
-            icon: FontAwesomeIcons.google,
             onPressed: () {
-              final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-              provider.googleLogin();
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute<void>(
-              //     builder: (BuildContext context) => const LoadingScreen(),
-              //   ),
-              // );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const LoadingScreen(),
+                ),
+              );
             },
-            btnText: "Sign in with Google",
+            btnText: "Try again",
             width: Dimentions.screenWidth * 0.65,
           ),
         ],

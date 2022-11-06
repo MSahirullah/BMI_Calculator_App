@@ -1,9 +1,7 @@
-import 'package:bmi_calculator/services/store_service.dart';
-import 'package:bmi_calculator/utils/colors.dart';
+import 'package:bmi_calculator/utils/utils.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({super.key});
@@ -28,7 +26,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   @override
   void initState() {
     super.initState();
-    readData();
     genderController.text = "Male";
   }
 
@@ -233,7 +230,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               ),
             ),
             CustomTextButton(
-              type: "",
+                isHaveIcon: false,
+                icon: null,
                 onPressed: () {
                   FocusManager.instance.primaryFocus?.unfocus();
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -258,11 +256,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     );
                     return;
                   }
-                  saveData('str', 'name', nameController.text);
-                  saveData('str', 'gender', genderController.text);
-                  saveData('str', 'dob', bdateController.text);
-                  saveData('str', 'weight', weightController.text);
-                  saveData('str', 'height', heightController.text);
+                  
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
@@ -278,41 +272,5 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         ),
       ),
     );
-  }
-
-  void saveData(type, key, value) async {
-    final prefs = await SharedPreferences.getInstance();
-    StoreServices(sharedPreferences: prefs).saveData(type, key, value);
-  }
-
-  void readData() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      nameController.text = StoreServices(sharedPreferences: prefs)
-                  .retriveData('str', 'name') !=
-              ''
-          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'name')
-          : '';
-      genderController.text = StoreServices(sharedPreferences: prefs)
-                  .retriveData('str', 'gender') !=
-              ''
-          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'gender')
-          : '';
-      bdateController.text = StoreServices(sharedPreferences: prefs)
-                  .retriveData('str', 'dob') !=
-              ''
-          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'dob')
-          : '';
-      weightController.text = StoreServices(sharedPreferences: prefs)
-                  .retriveData('str', 'weight') !=
-              ''
-          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'weight')
-          : '';
-      heightController.text = StoreServices(sharedPreferences: prefs)
-                  .retriveData('str', 'height') !=
-              ''
-          ? StoreServices(sharedPreferences: prefs).retriveData('str', 'height')
-          : '';
-    });
   }
 }

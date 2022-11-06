@@ -8,11 +8,13 @@ class CustomTextButton extends StatelessWidget {
       required this.onPressed,
       required this.btnText,
       this.width = 200.0,
-      required this.type});
+      this.icon,
+      required this.isHaveIcon});
 
   final VoidCallback onPressed;
   final String btnText;
-  final String type;
+  final IconData? icon;
+  final bool isHaveIcon;
   final double width;
 
   @override
@@ -40,11 +42,14 @@ class CustomTextButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              type == "sign in" ?  const FaIcon(
-                FontAwesomeIcons.google,
-                color: Colors.white,
-              ): Container(),
-              const SizedBox(width: 15.0),
+              isHaveIcon
+                  ? FaIcon(
+                      icon,
+                      color: Colors.white,
+                      size: 16.0,
+                    )
+                  : Container(),
+              isHaveIcon ? const SizedBox(width: 15.0) : Container(),
               Text(
                 btnText,
                 style: const TextStyle(

@@ -2,16 +2,13 @@ import 'dart:convert';
 
 import 'package:bmi_calculator/provider/google_sign_in.dart';
 import 'package:bmi_calculator/services/store_service.dart';
-import 'package:bmi_calculator/utils/dimentions.dart';
 import 'package:bmi_calculator/utils/utils.dart';
-import 'package:bmi_calculator/widgets/result_widget.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -704,7 +701,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Align(
                 alignment: Alignment.center,
                 child: CustomTextButton(
-                  type: "",
+                  isHaveIcon: false,
+                  icon: null,
                   onPressed: () {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     if (_genderSelected == 'null') {
@@ -869,15 +867,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  void saveBMIData() async {
-    final prefs = await SharedPreferences.getInstance();
-    StoreServices(sharedPreferences: prefs).saveData(
-        'list',
-        'bmi',
-        jsonEncode({
-          "name": "",
-        }));
   }
 }

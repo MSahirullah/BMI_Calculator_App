@@ -20,13 +20,11 @@ class LoadingScreen extends StatelessWidget {
             return const HomeScreen();
             //
           } else if (snapshot.hasError) {
-            return const Center(
-              child: Text("Something went worng!"),
-              //
-            );
+            return const ErrorScreen();
+            //
           } else {
             return const SplashScreen();
-            // 
+            //
           }
         },
       ),
