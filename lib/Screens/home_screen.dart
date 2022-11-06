@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bmi_calculator/provider/google_sign_in.dart';
-import 'package:bmi_calculator/services/store_service.dart';
+import 'package:bmi_calculator/services/database.dart';
 import 'package:bmi_calculator/utils/utils.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,13 +14,18 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.auth, required this.fireStore});
+
+  final FirebaseAuth auth;
+  final FirebaseFirestore fireStore;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final user = FirebaseAuth.instance.currentUser!;
+
   String _genderSelected = 'null';
   int _age = 20;
 
@@ -46,6 +54,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late int heightPosition;
 
   bool _saveMyData = true;
+
+  Timer? timer;
 
   FixedExtentScrollController weightScrollController =
       FixedExtentScrollController();
@@ -78,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const SideBar(),
+      drawer: SideBar(auth: widget.auth, fireStore: widget.fireStore),
       appBar: AppBar(
         elevation: 2.0,
         backgroundColor: AppColors.mainColor,
@@ -109,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      backgroundColor: AppColors.mainColor.withOpacity(0.1),
+      backgroundColor: AppColors.backgroundColor,
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(
@@ -689,7 +699,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(width: 2.0),
                   Text(
-                    'Save my data',
+                    'Save as my profile data',
                     style: TextStyle(
                       color: AppColors.secondaryColor,
                       fontWeight: FontWeight.w500,
@@ -757,6 +767,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bmiResult = 0.0;
                         _textResult = " ";
                         _textInfo = " ";
+                        return;
                         //
                       } else {
                         h = h / 100;
@@ -792,9 +803,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       }
                     });
-
-                    //saveData
-                    if (_saveMyData) {}
 
                     showDialog(
                       context: context,
@@ -857,6 +865,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     );
+
+                    Database(auth: widget.auth, fireStore: widget.fireStore)
+                        .addBMIData(
+                      uid: user.uid,
+                      weight: _weight.toString(),
+                      height: _height.toString(),
+                      bmi: bmiResult.toStringAsFixed(2),
+                    )
+                        .then((value) async {
+                      hideLoading(timer);
+                      print(value);
+
+                      if (value == "0") {
+                        showSnackBar(
+                            "Something went wrong. Please try again later.");
+                      }
+                    });
+
+                    //saveData
+                    if (_saveMyData) {}
                   },
                   btnText: "Calculate",
                   width: Dimentions.screenWidth * 0.75,

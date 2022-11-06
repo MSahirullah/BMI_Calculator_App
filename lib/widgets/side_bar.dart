@@ -1,10 +1,14 @@
 import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/utils/utils.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SideBar extends StatefulWidget {
-  const SideBar({super.key});
+  const SideBar({super.key, required this.auth, required this.fireStore});
+
+  final FirebaseAuth auth;
+  final FirebaseFirestore fireStore;
 
   @override
   State<SideBar> createState() => _SideBarState();
@@ -120,7 +124,11 @@ class _SideBarState extends State<SideBar> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const BMIHistoryScreen()),
+                            builder: (context) => BMIHistoryScreen(
+                              auth: widget.auth,
+                              fireStore: widget.fireStore,
+                            ),
+                          ),
                         );
                       },
                       child: const ListTile(

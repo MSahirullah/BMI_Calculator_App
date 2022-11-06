@@ -66,14 +66,14 @@ class ResultWidget extends StatelessWidget {
               ),
               useRangeColorForAxis: true,
               animateAxis: true,
-              ranges: const <LinearGaugeRange>[
+              ranges: <LinearGaugeRange>[
                 LinearGaugeRange(
                   startValue: 0,
                   startWidth: 8,
                   endWidth: 8,
                   endValue: 18.5,
                   position: LinearElementPosition.outside,
-                  color: Color(0xffFFC93E),
+                  color: AppColors.yellowColor,
                 ),
                 LinearGaugeRange(
                   startValue: 18.5,
@@ -81,7 +81,7 @@ class ResultWidget extends StatelessWidget {
                   startWidth: 8,
                   endWidth: 8,
                   position: LinearElementPosition.outside,
-                  color: Color(0xff0DC9AB),
+                  color: AppColors.greenColor,
                 ),
                 LinearGaugeRange(
                   startValue: 25,
@@ -89,7 +89,7 @@ class ResultWidget extends StatelessWidget {
                   startWidth: 8,
                   endWidth: 8,
                   position: LinearElementPosition.outside,
-                  color: Color(0xffF45656),
+                  color: AppColors.redColor,
                 ),
               ],
               markerPointers: [

@@ -47,6 +47,8 @@ dependencies:
   firebase_core: ^2.1.1
   font_awesome_flutter: ^10.2.1
   flutter_easyloading: ^3.0.5
+  internet_connection_checker: ^1.0.0+1
+  cloud_firestore: ^4.0.4
 
 dev_dependencies:
   flutter_test:

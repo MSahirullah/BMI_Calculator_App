@@ -1,5 +1,6 @@
 import 'package:bmi_calculator/utils/utils.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -31,6 +32,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!;
+
+    nameController.text = user.displayName!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainColor,
@@ -46,12 +51,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 15.0),
-                  height: 175.0,
-                  width: 175.0,
+                  height: 150.0,
+                  width: 150.0,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100.0),
-                    image: const DecorationImage(
-                      image: AssetImage("assets/images/profile.jpg"),
+                    image: DecorationImage(
+                      image: NetworkImage(user.photoURL!),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -256,7 +261,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     );
                     return;
                   }
-                  
 
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(

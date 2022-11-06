@@ -4,6 +4,7 @@ import 'package:bmi_calculator/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -33,24 +34,30 @@ class MyApp extends StatelessWidget {
 
     MaterialColor colorCustom = MaterialColor(0xFF606BA1, color);
 
-    return ChangeNotifierProvider(
-        create: (context) => GoogleSignInProvider(),
-        child: MaterialApp(
-          title: 'BMI Calculator',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: colorCustom,
-            fontFamily: 'OpenSans',
-          ),
-          home: const LoadingScreen(),
-          builder: EasyLoading.init(),
-        ));
+    return StreamProvider<InternetConnectionStatus>(
+      initialData: InternetConnectionStatus.connected,
+      create: (_) {
+        return InternetConnectionChecker().onStatusChange;
+      },
+      child: ChangeNotifierProvider(
+          create: (context) => GoogleSignInProvider(),
+          child: MaterialApp(
+            title: 'BMI Calculator',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: colorCustom,
+              fontFamily: 'OpenSans',
+            ),
+            home: const LoadingScreen(),
+            builder: EasyLoading.init(),
+          )),
+    );
   }
 }
 
 void configLoading() {
   EasyLoading.instance
-    ..displayDuration = const Duration(milliseconds: 2000)
+    ..displayDuration = const Duration(milliseconds: 1750)
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
     ..loadingStyle = EasyLoadingStyle.dark
     ..indicatorSize = 45.0

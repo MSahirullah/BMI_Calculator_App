@@ -9,18 +9,20 @@ class CustomTextButton extends StatelessWidget {
       required this.btnText,
       this.width = 200.0,
       this.icon,
-      required this.isHaveIcon});
+      required this.isHaveIcon,
+      this.disabled = false});
 
   final VoidCallback onPressed;
   final String btnText;
   final IconData? icon;
   final bool isHaveIcon;
   final double width;
+  final bool disabled;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed,
+      onPressed: disabled ? () {} : onPressed,
       style: TextButton.styleFrom(
         elevation: 2.0,
         padding: const EdgeInsets.all(0.0),
