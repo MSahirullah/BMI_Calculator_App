@@ -1,4 +1,3 @@
-import 'package:bmi_calculator/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class NoConnectionWidget extends StatelessWidget {

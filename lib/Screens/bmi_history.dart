@@ -1,4 +1,3 @@
-import 'package:bmi_calculator/Screens/home_screen.dart';
 import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/models/bmi_data.dart';
 import 'package:bmi_calculator/services/database.dart';
@@ -55,10 +54,10 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                         color: Colors.white,
                         size: 18.0,
                       )
-                    : Container(
+                    : const SizedBox(
                         height: 20.0,
                         width: 20.0,
-                        child: const CircularProgressIndicator(
+                        child: CircularProgressIndicator(
                           color: Colors.white,
                           strokeWidth: 2.0,
                         ),

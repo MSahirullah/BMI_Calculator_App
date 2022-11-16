@@ -11,9 +11,10 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await Preferences.init();
+
   runApp(const MyApp());
   configLoading();
-  await Preferences.init();
 }
 
 class MyApp extends StatelessWidget {
@@ -77,8 +78,7 @@ void configLoading() {
 }
 
 // when user input value the meter value should be bold
-
-
+// remove all snackbar
 
   // print(_weight);
 

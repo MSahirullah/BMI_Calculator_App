@@ -12,36 +12,31 @@ class Preferences {
     await _preferences.setString("profile", profile);
     await _preferences.setString("gender", gender);
     await _preferences.setString("dob", dob);
-
-    
   }
 
-  static String? getUsername() {
-    return _preferences.getString("name");
-  }
+  static String? getUsername() => _preferences.getString("name");
+  static String? getProfile() => _preferences.getString("profile");
+  static String? getGender() => _preferences.getString("gender");
+  static String? getDOB() => _preferences.getString("dob");
 
-  static String? getProfile() {
-    return _preferences.getString("profile");
-  }
-
-  static String? getGender() {
-    return _preferences.getString("gender");
-  }
-
-  static String? getDOB() {
-    return _preferences.getString("dob");
-  }
-
-  static Future setBMIData(String height, String weight)async {
+  static Future setBMIData(String height, String weight) async {
     await _preferences.setString("height", height);
     await _preferences.setString("weight", weight);
   }
 
-    static String? getHeight() {
-    return _preferences.getString("height");
+  static String? getHeight() => _preferences.getString("height");
+  static String? getWeight() => _preferences.getString("weight");
+
+  static Future setSettingsData(
+      String minHeight, String maxHeight,String  minWeight, String maxWeight) async {
+    await _preferences.setString("minHeight", minHeight);
+    await _preferences.setString("maxHeight", maxHeight);
+    await _preferences.setString("minWeight", minWeight);
+    await _preferences.setString("maxWeight", maxWeight);
   }
 
-    static String? getWeight() {
-    return _preferences.getString("weight");
-  }
+  static String? getMinHeight() => _preferences.getString("minHeight");
+  static String? getMaxHeight() => _preferences.getString("maxHeight");
+  static String? getMinWeight() => _preferences.getString("minWeight");
+  static String? getMaxWeight() => _preferences.getString("maxWeight");
 }

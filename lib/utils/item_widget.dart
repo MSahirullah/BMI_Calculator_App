@@ -72,14 +72,14 @@ class _ItemWidgetState extends State<ItemWidget> {
                     TextSpan(
                       text: rightText == "0" ? "" : ".",
                       style: TextStyle(
-                        fontSize: widget.curItem["fontSize"] - 3,
+                        fontSize: widget.curItem["fontSize"] - 2,
                         color: widget.curItem["color"],
                       ),
                     ),
                     TextSpan(
                       text: rightText == "0" ? "" : rightText,
                       style: TextStyle(
-                        fontSize: widget.curItem["fontSize"] - 3,
+                        fontSize: widget.curItem["fontSize"] - 2,
                         color: widget.curItem["color"],
                         fontWeight: FontWeight.w500,
                       ),

@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:bmi_calculator/models/bmi_data.dart';
-import 'package:bmi_calculator/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -147,8 +144,6 @@ class Database {
     }
   }
 
-
-
   Future<bool> checkUserExist({required String uid}) async {
     try {
       bool status = false;
@@ -187,7 +182,6 @@ class Database {
             data.add(querySnapshot.docs[0]["dob"]);
             data.add(querySnapshot.docs[0]["height"]);
             data.add(querySnapshot.docs[0]["weight"]);
-
           }
         }
       });
@@ -209,4 +203,49 @@ class Database {
       rethrow;
     }
   }
+
+  Future<void> addSettingsDetails({
+    required String uid,
+  }) async {
+    try {
+      fireStore
+          .collection("bmiApp")
+          .doc(uid)
+          .collection("settings")
+          .doc(uid)
+          .set({
+        "minHeight": "30.00",
+        "maxHeight": "255.00",
+        "minWeight": "1.00",
+        "maxWeight": "300.00",
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List> getSettingsDetails({required String uid}) async {
+    try {
+      List data = [];
+      await fireStore
+          .collection("bmiApp")
+          .doc(uid)
+          .collection("settings")
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        if (querySnapshot.docs.isNotEmpty) {
+          if (querySnapshot.docs[0].data().toString() != '{}') {
+            data.add(querySnapshot.docs[0]["minHeight"]);
+            data.add(querySnapshot.docs[0]["maxHeight"]);
+            data.add(querySnapshot.docs[0]["minWeight"]);
+            data.add(querySnapshot.docs[0]["maxWeight"]);
+          }
+        }
+      });
+      return data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }

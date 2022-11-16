@@ -1,4 +1,3 @@
-import 'package:bmi_calculator/utils/dimentions.dart';
 import 'package:bmi_calculator/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';

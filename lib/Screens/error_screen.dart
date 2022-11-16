@@ -42,7 +42,7 @@ class ErrorScreen extends StatelessWidget {
             height: 25.0,
           ),
           Container(
-            margin: EdgeInsets.all(25.0),
+            margin: const EdgeInsets.all(25.0),
             child: const Image(
               image: AssetImage(
                 "assets/images/error-image.png",

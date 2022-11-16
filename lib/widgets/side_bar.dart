@@ -5,7 +5,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar({super.key, required this.auth, required this.fireStore});
@@ -109,10 +108,11 @@ class _SideBarState extends State<SideBar> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MyProfileScreen(
-                                      auth: widget.auth,
-                                      fireStore: widget.fireStore,
-                                    )),
+                              builder: (context) => MyProfileScreen(
+                                auth: widget.auth,
+                                fireStore: widget.fireStore,
+                              ),
+                            ),
                           );
                         },
                         child: Text(
@@ -190,6 +190,33 @@ class _SideBarState extends State<SideBar> {
                         minLeadingWidth: 10,
                         title: Text(
                           'BMI History',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SettingsScreen(
+                              auth: widget.auth,
+                              fireStore: widget.fireStore,
+                            ),
+                          ),
+                        );
+                      },
+                      child: const ListTile(
+                        leading: Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                        ),
+                        minLeadingWidth: 10,
+                        title: Text(
+                          'Settings',
                           style: TextStyle(
                             color: Colors.white,
                           ),

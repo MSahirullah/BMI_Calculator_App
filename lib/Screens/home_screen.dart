@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
+import 'package:age_calculator/age_calculator.dart';
 import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/provider/google_sign_in.dart';
 import 'package:bmi_calculator/services/database.dart';
@@ -12,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -31,13 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
   String _genderSelected = 'null';
   int _age = 20;
 
-  final double _minWeight = 1;
-  final double _maxWeight = 220;
-  late double _weight;
+  double _minWeight = 1;
+  double _maxWeight = 400;
+  double _weight = 65;
 
-  final double _minHeight = 30;
-  final double _maxHeight = 220;
-  late double _height;
+  double _minHeight = 30;
+  double _maxHeight = 255;
+  double _height = 170;
 
   double bmiResult = 0.0;
   String _textResult = "";
@@ -46,14 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
   double _reduceMinWeight = 0.0;
   double _reduceMaxWeight = 0.0;
 
-  late IconData weighIcon;
-  late IconData heightIcon;
+  IconData weighIcon = Icons.edit;
+  IconData heightIcon = Icons.edit;
 
-  late bool weightInputChanger;
-  late bool heightInputChanger;
+  bool weightInputChanger = true;
+  bool heightInputChanger = true;
 
-  late int weightPosition;
-  late int heightPosition;
+  int weightPosition = 128;
+  int heightPosition = 140;
 
   bool _saveMyData = true;
 
@@ -70,25 +71,51 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _minHeight = double.parse(Preferences.getMinHeight() ?? "1.00");
+    _maxHeight = double.parse(Preferences.getMaxHeight() ?? "400.00");
+    _minWeight = double.parse(Preferences.getMinHeight() ?? "30.00");
+    _maxWeight = double.parse(Preferences.getMaxWeight() ?? "255.00");
 
-    _weight = 65.00;
-    _height = 170.00;
+    _genderSelected = Preferences.getGender() ?? "";
+    heightController.text = Preferences.getHeight() ?? "";
+    _weight = Preferences.getWeight() != ""
+        ? double.parse(Preferences.getWeight()!)
+        : 65.00;
+
+    if (!(_weight % 1 == 0.5 || _weight % 1 == 0)) {
+      weightInputChanger = false;
+    }
+
+    _height = Preferences.getHeight() != ""
+        ? double.parse(Preferences.getHeight()!)
+        : 170.00;
+
+    if (!(_height % 1 == 0)) {
+      heightInputChanger = false;
+    }
 
     weightController.text = _weight.toStringAsFixed(2);
     heightController.text = _height.toStringAsFixed(2);
 
-    weighIcon = Icons.edit;
-    heightIcon = Icons.edit;
+    weightPosition = ((_weight - 1) * 2).toInt();
+    heightPosition = (_height - _minHeight).toInt();
 
-    weightInputChanger = true;
-    heightInputChanger = true;
-
-    weightPosition = 128;
-    heightPosition = 140;
+    if (Preferences.getDOB() != "") {
+      DateTime dob = DateFormat('y-m-d').parse(Preferences.getDOB()!);
+      DateDuration duration = AgeCalculator.age(dob);
+      if (duration.years != 0) {
+        _age = duration.years;
+      } else {
+        _age = 1;
+      }
+    } else {
+      _age = 25;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    //
     return Scaffold(
       drawer: SideBar(
         auth: widget.auth,
@@ -107,13 +134,12 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 10.0),
+            padding: const EdgeInsets.all(10.0),
             child: GestureDetector(
               onTap: () {
-                showLoading(_timer);
                 final provider =
                     Provider.of<GoogleSignInProvider>(context, listen: false);
                 provider.logout();
-                hideLoading(_timer);
               },
               child: const Center(
                 child: FaIcon(
@@ -173,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      _genderSelected = 'male';
+                                      _genderSelected = 'Male';
                                     });
                                   },
                                   child: Column(
@@ -186,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           border: Border.all(
-                                            color: _genderSelected == 'male'
+                                            color: _genderSelected == 'Male'
                                                 ? AppColors.mainColor
                                                 : Colors.white,
                                             width: 2.0,
@@ -213,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         style: TextStyle(
                                           fontSize: 13.0,
                                           fontWeight: FontWeight.w500,
-                                          color: _genderSelected == 'male'
+                                          color: _genderSelected == 'Male'
                                               ? AppColors.secondaryColor
                                               : AppColors.greyColor,
                                         ),
@@ -224,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      _genderSelected = 'female';
+                                      _genderSelected = 'Female';
                                     });
                                   },
                                   child: Column(
@@ -237,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           border: Border.all(
-                                            color: _genderSelected == 'female'
+                                            color: _genderSelected == 'Female'
                                                 ? AppColors.mainColor
                                                 : Colors.white,
                                             width: 2.0,
@@ -264,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         style: TextStyle(
                                           fontSize: 13.0,
                                           fontWeight: FontWeight.w500,
-                                          color: _genderSelected == 'female'
+                                          color: _genderSelected == 'Female'
                                               ? AppColors.secondaryColor
                                               : AppColors.greyColor,
                                         ),
@@ -478,9 +504,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: TextFormField(
                                   onChanged: (value) {
                                     setState(() {
-                                      _weight = weightController.text.isEmpty
-                                          ? -1
-                                          : double.parse(weightController.text);
+                                      if (weightController.text.isEmpty) {
+                                        _weight = -1;
+                                      } else {
+                                        _weight =
+                                            double.parse(weightController.text);
+                                      }
                                     });
                                   },
                                   controller: weightController,
@@ -712,7 +741,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(width: 2.0),
                   Text(
-                    'Save as my profile data',
+                    'Save weight & height as my profile data',
                     style: TextStyle(
                       color: AppColors.secondaryColor,
                       fontWeight: FontWeight.w500,

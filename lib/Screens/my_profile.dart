@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
+import 'package:bmi_calculator/Screens/home_screen.dart';
 import 'package:bmi_calculator/services/database.dart';
 import 'package:bmi_calculator/services/preferences.dart';
 import 'package:bmi_calculator/services/storage.dart';
@@ -46,6 +49,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   bool updateStatus = false;
   String _oldProfile = '';
 
+  double _minWeight = 1;
+  double _maxWeight = 400;
+
+  double _minHeight = 30;
+  double _maxHeight = 255;
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +66,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     heightController.text = Preferences.getHeight() ?? "";
     weightController.text = Preferences.getWeight() ?? "";
     bdateController.text = Preferences.getDOB() ?? "";
+
+    _minHeight = double.parse(Preferences.getMinHeight() ?? "1.00");
+    _maxHeight = double.parse(Preferences.getMaxHeight() ?? "400.00");
+    _minWeight = double.parse(Preferences.getMinHeight() ?? "30.00");
+    _maxWeight = double.parse(Preferences.getMaxWeight() ?? "255.00");
   }
 
   @override
@@ -70,12 +84,24 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         }
         if (!updateStatus &&
             _loadProfile &&
-            _profilePic != widget.auth.currentUser!.photoURL) {
+            _profilePic !=
+                (Preferences.getProfile() ??
+                    widget.auth.currentUser!.photoURL!)) {
           await Storage(
             auth: widget.auth,
           ).deleteUserProfilePicture(_profilePic);
         }
-        return true;
+        Navigator.pop(context);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(
+              auth: widget.auth,
+              fireStore: widget.fireStore,
+            ),
+          ),
+        );
+        return false;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -328,8 +354,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         validator: (String? fieldContent) {
                           if (fieldContent == null ||
                               fieldContent.isEmpty ||
-                              double.parse(fieldContent) < 0 ||
-                              double.parse(fieldContent) > 225) {
+                              double.parse(fieldContent) <= _minWeight ||
+                              double.parse(fieldContent) >= _maxWeight) {
                             return 'Please enter a valid weight';
                           }
                           return null;
@@ -353,8 +379,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         validator: (String? fieldContent) {
                           if (fieldContent == null ||
                               fieldContent.isEmpty ||
-                              double.parse(fieldContent) < 30 ||
-                              double.parse(fieldContent) > 220) {
+                              double.parse(fieldContent) <= _minHeight ||
+                              double.parse(fieldContent) >= _maxHeight) {
                             return 'Please enter a valid height';
                           }
                           return null;
@@ -403,7 +429,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           if (value) {
                             updateStatus = true;
                             if (_oldProfile != '') {
-                             
                               await Storage(
                                 auth: widget.auth,
                               ).deleteUserProfilePicture(_oldProfile);
