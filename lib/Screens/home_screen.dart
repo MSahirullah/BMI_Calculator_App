@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/provider/google_sign_in.dart';
 import 'package:bmi_calculator/services/database.dart';
+import 'package:bmi_calculator/services/preferences.dart';
 import 'package:bmi_calculator/utils/utils.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool _saveMyData = true;
 
-  Timer? timer;
+  Timer? _timer;
 
   FixedExtentScrollController weightScrollController =
       FixedExtentScrollController();
@@ -69,11 +71,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    _weight = 65;
-    _height = 170;
+    _weight = 65.00;
+    _height = 170.00;
 
-    weightController.text = _weight.toString();
-    heightController.text = _height.toString();
+    weightController.text = _weight.toStringAsFixed(2);
+    heightController.text = _height.toStringAsFixed(2);
 
     weighIcon = Icons.edit;
     heightIcon = Icons.edit;
@@ -88,7 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: SideBar(auth: widget.auth, fireStore: widget.fireStore),
+      drawer: SideBar(
+        auth: widget.auth,
+        fireStore: widget.fireStore,
+      ),
       appBar: AppBar(
         elevation: 2.0,
         backgroundColor: AppColors.mainColor,
@@ -104,9 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: const EdgeInsets.only(right: 10.0),
             child: GestureDetector(
               onTap: () {
+                showLoading(_timer);
                 final provider =
                     Provider.of<GoogleSignInProvider>(context, listen: false);
                 provider.logout();
+                hideLoading(_timer);
               },
               child: const Center(
                 child: FaIcon(
@@ -394,7 +401,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   if (weightInputChanger) {
                                     setState(() {
                                       weightController.text =
-                                          _weight.toString();
+                                          _weight.toStringAsFixed(2);
                                       weighIcon = Icons.monitor_weight_outlined;
                                       weightInputChanger = !weightInputChanger;
                                     });
@@ -402,7 +409,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     setState(() {
                                       _weight = weightController.text.isEmpty
                                           ? -1
-                                          : double.parse(weightController.text);
+                                          : double.parse(double.parse(
+                                                  weightController.text)
+                                              .toStringAsFixed(2));
 
                                       if (_weight >= _minWeight &&
                                           _weight <= _maxWeight) {
@@ -557,7 +566,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   if (heightInputChanger) {
                                     setState(() {
                                       heightController.text =
-                                          _height.toString();
+                                          _height.toStringAsFixed(2);
                                       heightIcon =
                                           Icons.accessibility_new_rounded;
                                       heightInputChanger = !heightInputChanger;
@@ -566,7 +575,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     setState(() {
                                       _height = heightController.text.isEmpty
                                           ? -1
-                                          : double.parse(heightController.text);
+                                          : double.parse(double.parse(
+                                                  heightController.text)
+                                              .toStringAsFixed(2));
 
                                       if (_height >= _minHeight &&
                                           _height <= _maxHeight) {
@@ -636,7 +647,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     setState(() {
                                       _height = heightController.text.isEmpty
                                           ? -1
-                                          : double.parse(heightController.text);
+                                          : double.parse(double.parse(
+                                                  heightController.text)
+                                              .toStringAsFixed(2));
                                     });
                                   },
                                   controller: heightController,
@@ -821,6 +834,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           IconButton(
                             onPressed: () {
                               Navigator.of(context).pop();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(
+                                  builder: (BuildContext context) =>
+                                      BMIHistoryScreen(
+                                    auth: widget.auth,
+                                    fireStore: widget.fireStore,
+                                  ),
+                                ),
+                              );
                             },
                             icon: Icon(
                               Icons.history,
@@ -869,13 +892,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     Database(auth: widget.auth, fireStore: widget.fireStore)
                         .addBMIData(
                       uid: user.uid,
-                      weight: _weight.toString(),
-                      height: _height.toString(),
+                      weight: _weight.toStringAsFixed(2),
+                      height: _height.toStringAsFixed(2),
                       bmi: bmiResult.toStringAsFixed(2),
                     )
                         .then((value) async {
-                      hideLoading(timer);
-                      print(value);
+                      hideLoading(_timer);
 
                       if (value == "0") {
                         showSnackBar(
@@ -884,7 +906,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
 
                     //saveData
-                    if (_saveMyData) {}
+                    if (_saveMyData) {
+                      Preferences.setBMIData(_height.toStringAsFixed(2),
+                          _weight.toStringAsFixed(2));
+                      Database(auth: widget.auth, fireStore: widget.fireStore)
+                          .updateUserBMIData(
+                        uid: user.uid,
+                        weight: _weight.toStringAsFixed(2),
+                        height: _height.toStringAsFixed(2),
+                      )
+                          .then((value) {
+                        if (!value) {
+                          showSnackBar("Profile data not saved.");
+                        }
+                      });
+                    }
                   },
                   btnText: "Calculate",
                   width: Dimentions.screenWidth * 0.75,

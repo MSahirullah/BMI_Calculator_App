@@ -21,11 +21,12 @@ class BMIHistoryScreen extends StatefulWidget {
 }
 
 class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
+  bool _loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.mainColor,
+        // backgroundColor: AppColors.mainColor,
         centerTitle: true,
         title: const Text(
           "History",
@@ -35,28 +36,39 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
             margin: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {
+                setState(() {
+                  _loading = true;
+                });
                 Database(fireStore: widget.fireStore, auth: widget.auth)
-                    .clearHistory(uid: widget.auth.currentUser!.uid);
-
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (BuildContext context) => const LoadingScreen(),
-                  ),
-                );
+                    .clearHistory(uid: widget.auth.currentUser!.uid)
+                    .then((value) {
+                  setState(() {
+                    _loading = false;
+                  });
+                });
+                // _loading = false;
               },
-              child: const Center(
-                child: FaIcon(
-                  FontAwesomeIcons.trash,
-                  color: Colors.white,
-                  size: 18.0,
-                ),
+              child: Center(
+                child: _loading == false
+                    ? const FaIcon(
+                        FontAwesomeIcons.trash,
+                        color: Colors.white,
+                        size: 18.0,
+                      )
+                    : Container(
+                        height: 20.0,
+                        width: 20.0,
+                        child: const CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2.0,
+                        ),
+                      ),
               ),
             ),
           ),
         ],
       ),
-      backgroundColor: AppColors.mainColor.withOpacity(0.1),
+      backgroundColor: AppColors.mainColorWithO1,
       body: Container(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -91,9 +103,49 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                     builder: (BuildContext context,
                         AsyncSnapshot<List<BMIModel>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.active) {
-                        if (snapshot.data == null) {
-                          return const Center(
-                            child: Text("You don't have any history data."),
+                        if (snapshot.data!.isEmpty) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("You don't have any history data."),
+                                const SizedBox(
+                                  height: 20.0,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute<void>(
+                                        builder: (BuildContext context) =>
+                                            const LoadingScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: const [
+                                      Text(
+                                        "Go to Home",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.0,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5.0,
+                                      ),
+                                      Icon(
+                                        FontAwesomeIcons.arrowRight,
+                                        size: 16.0,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         }
                         return ListView.builder(

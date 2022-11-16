@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static Color mainColor = const Color(0xFF606BA1);
+  static Color mainColorWithO1 = const Color(0xFFEFF0F6);
+  
   static Color secondaryColor = const Color(0xFF515151);
+
+  static Color bottomBox = const Color(0xff5E5E5E);
   static Color greyColor = const Color(0xFF9F9F9F);
   static Color inputFieldBorder = const Color.fromARGB(255, 194, 193, 193);
   static Color backgroundColor = const Color(0xFFdbdeea);

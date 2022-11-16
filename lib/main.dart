@@ -1,5 +1,6 @@
 import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/provider/google_sign_in.dart';
+import 'package:bmi_calculator/services/preferences.dart';
 import 'package:bmi_calculator/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +13,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(const MyApp());
   configLoading();
+  await Preferences.init();
 }
 
 class MyApp extends StatelessWidget {
