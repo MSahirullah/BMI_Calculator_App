@@ -224,6 +224,31 @@ class Database {
     }
   }
 
+    Future<bool> updateSettingsData({
+    required String uid,
+    required String minHeight,
+    required String maxHeight,
+    required String minWeight,
+    required String maxWeight,
+  }) async {
+    try {
+      fireStore
+          .collection("bmiApp")
+          .doc(uid)
+          .collection("settings")
+          .doc(uid)
+          .update({
+        "minHeight": minHeight,
+        "maxHeight": maxHeight,
+        "minWeight": minWeight,
+        "maxWeight": maxWeight,
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<List> getSettingsDetails({required String uid}) async {
     try {
       List data = [];

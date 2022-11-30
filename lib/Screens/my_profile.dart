@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:bmi_calculator/Screens/home_screen.dart';
+import 'package:bmi_calculator/Screens/screens.dart';
 import 'package:bmi_calculator/services/database.dart';
 import 'package:bmi_calculator/services/preferences.dart';
 import 'package:bmi_calculator/services/storage.dart';
@@ -14,7 +14,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class MyProfileScreen extends StatefulWidget {
   final FirebaseAuth auth;
@@ -75,393 +77,414 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (!_loadProfile) {
-          showSnackBar(
-              "Please wait, uploading profile \npicture is in process.");
-          return false;
-        }
-        if (!updateStatus &&
-            _loadProfile &&
-            _profilePic !=
-                (Preferences.getProfile() ??
-                    widget.auth.currentUser!.photoURL!)) {
-          await Storage(
-            auth: widget.auth,
-          ).deleteUserProfilePicture(_profilePic);
-        }
-        Navigator.pop(context);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomeScreen(
-              auth: widget.auth,
-              fireStore: widget.fireStore,
-            ),
-          ),
-        );
-        return false;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.mainColor,
-          centerTitle: true,
-          title: const Text(
-            "Edit Profile",
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 30.0,
+    return Provider.of<InternetConnectionStatus>(context) !=
+            InternetConnectionStatus.disconnected
+        ? WillPopScope(
+            onWillPop: () async {
+              if (!_loadProfile) {
+                showSnackBar(
+                    "Please wait, uploading profile \npicture is in process.");
+                return false;
+              }
+              if (!updateStatus &&
+                  _loadProfile &&
+                  _profilePic !=
+                      (Preferences.getProfile() ??
+                          widget.auth.currentUser!.photoURL!)) {
+                await Storage(
+                  auth: widget.auth,
+                ).deleteUserProfilePicture(_profilePic);
+              }
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                    auth: widget.auth,
+                    fireStore: widget.fireStore,
+                  ),
                 ),
-                Container(
-                  constraints: const BoxConstraints(minHeight: 165.0),
-                  height: MediaQuery.of(context).size.height * 0.18,
+              );
+              return false;
+            },
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: AppColors.mainColor,
+                centerTitle: true,
+                title: const Text(
+                  "Edit Profile",
+                ),
+              ),
+              body: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 165.0,
-                            height: 165.0,
-                            child: Stack(
+                      const SizedBox(
+                        height: 30.0,
+                      ),
+                      Container(
+                        constraints: const BoxConstraints(minHeight: 165.0),
+                        height: MediaQuery.of(context).size.height * 0.18,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  radius: 80.0,
-                                  child: CachedNetworkImage(
-                                    placeholder: (context, url) =>
-                                        const CircularProgressIndicator(
-                                      strokeWidth: 3,
-                                    ),
-                                    imageUrl: _profilePic,
-                                    imageBuilder: (context, imageProvider) =>
-                                        Container(
-                                      width: 165.0,
-                                      height: 165.0,
-                                      decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(100.0),
-                                        ),
-                                        image: DecorationImage(
-                                          fit: BoxFit.fitWidth,
-                                          alignment: FractionalOffset.center,
-                                          image: imageProvider,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 0.0,
-                                  right: 0.0,
-                                  child: InkWell(
-                                    onTap: () {
-                                      _loadProfile
-                                          ? showModalBottomSheet(
-                                              context: context,
-                                              builder: ((builder) =>
-                                                  bottomSheet()),
-                                            )
-                                          : null;
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(80.0),
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.1),
-                                            spreadRadius: 2,
-                                            blurRadius: 2,
-                                            offset: const Offset(0, 1),
+                                SizedBox(
+                                  width: 165.0,
+                                  height: 165.0,
+                                  child: Stack(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: Colors.white,
+                                        radius: 80.0,
+                                        child: CachedNetworkImage(
+                                          placeholder: (context, url) =>
+                                              const CircularProgressIndicator(
+                                            strokeWidth: 3,
                                           ),
-                                        ],
-                                      ),
-                                      child: _loadProfile
-                                          ? Icon(
-                                              Icons.camera_alt,
-                                              color: AppColors.bottomBox,
-                                              size: 25.0,
-                                            )
-                                          : const SizedBox(
-                                              width: 25.0,
-                                              height: 25.0,
-                                              child: Padding(
-                                                padding: EdgeInsets.all(2.0),
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 3,
-                                                ),
+                                          imageUrl: _profilePic,
+                                          imageBuilder:
+                                              (context, imageProvider) =>
+                                                  Container(
+                                            width: 165.0,
+                                            height: 165.0,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(100.0),
+                                              ),
+                                              image: DecorationImage(
+                                                fit: BoxFit.fitWidth,
+                                                alignment:
+                                                    FractionalOffset.center,
+                                                image: imageProvider,
                                               ),
                                             ),
-                                    ),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 0.0,
+                                        right: 0.0,
+                                        child: InkWell(
+                                          onTap: () {
+                                            _loadProfile
+                                                ? showModalBottomSheet(
+                                                    context: context,
+                                                    builder: ((builder) =>
+                                                        bottomSheet()),
+                                                  )
+                                                : null;
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8.0),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(80.0),
+                                              ),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black
+                                                      .withOpacity(0.1),
+                                                  spreadRadius: 2,
+                                                  blurRadius: 2,
+                                                  offset: const Offset(0, 1),
+                                                ),
+                                              ],
+                                            ),
+                                            child: _loadProfile
+                                                ? Icon(
+                                                    Icons.camera_alt,
+                                                    color: AppColors.bottomBox,
+                                                    size: 25.0,
+                                                  )
+                                                : const SizedBox(
+                                                    width: 25.0,
+                                                    height: 25.0,
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(2.0),
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        strokeWidth: 3,
+                                                      ),
+                                                    ),
+                                                  ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 30.0,
+                          horizontal: 25.0,
+                        ),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: nameController,
+                              validator: (String? fieldContent) {
+                                if (fieldContent == null ||
+                                    fieldContent.isEmpty ||
+                                    fieldContent.length < 4) {
+                                  return 'Please enter a valid name';
+                                }
+                                return null;
+                              },
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[A-Za-z. ]')),
+                                LengthLimitingTextInputFormatter(50),
+                              ],
+                              decoration: InputDecoration(
+                                prefixIcon:
+                                    const Icon(Icons.person_outline_rounded),
+                                prefixIconColor: AppColors.greyColor,
+                                contentPadding: const EdgeInsets.all(8.0),
+                                labelText: "Enter your name",
+                                labelStyle: TextStyle(
+                                  color: AppColors.secondaryColor,
+                                  fontSize: 15.0,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 30.0,
-                    horizontal: 25.0,
-                  ),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: nameController,
-                        validator: (String? fieldContent) {
-                          if (fieldContent == null ||
-                              fieldContent.isEmpty ||
-                              fieldContent.length < 4) {
-                            return 'Please enter a valid name';
-                          }
-                          return null;
-                        },
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                              RegExp(r'[A-Za-z. ]')),
-                          LengthLimitingTextInputFormatter(50),
-                        ],
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.person_outline_rounded),
-                          prefixIconColor: AppColors.greyColor,
-                          contentPadding: const EdgeInsets.all(8.0),
-                          labelText: "Enter your name",
-                          labelStyle: TextStyle(
-                            color: AppColors.secondaryColor,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextFormField(
-                        readOnly: true,
-                        controller: genderController,
-                        key: const ValueKey("gender"),
-                        style: const TextStyle(
-                          fontSize: 15.0,
-                        ),
-                        validator: (String? fieldContent) {
-                          if (fieldContent == null || fieldContent.isEmpty) {
-                            return 'Please select your gender';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(genderController.text == 'Female'
-                              ? Icons.girl_rounded
-                              : Icons.boy_rounded),
-                          prefixIconColor: AppColors.greyColor,
-                          contentPadding: const EdgeInsets.all(8.0),
-                          labelText: "Gender",
-                          labelStyle: TextStyle(
-                            color: AppColors.secondaryColor,
-                            fontSize: 15.0,
-                          ),
-                          suffixIcon: PopupMenuButton<String>(
-                            elevation: 4,
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: AppColors.mainColor,
-                              size: 25.0,
+                            const SizedBox(height: 20.0),
+                            TextFormField(
+                              readOnly: true,
+                              controller: genderController,
+                              key: const ValueKey("gender"),
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                              ),
+                              validator: (String? fieldContent) {
+                                if (fieldContent == null ||
+                                    fieldContent.isEmpty) {
+                                  return 'Please select your gender';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(
+                                    genderController.text == 'Female'
+                                        ? Icons.girl_rounded
+                                        : Icons.boy_rounded),
+                                prefixIconColor: AppColors.greyColor,
+                                contentPadding: const EdgeInsets.all(8.0),
+                                labelText: "Gender",
+                                labelStyle: TextStyle(
+                                  color: AppColors.secondaryColor,
+                                  fontSize: 15.0,
+                                ),
+                                suffixIcon: PopupMenuButton<String>(
+                                  elevation: 4,
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: AppColors.mainColor,
+                                    size: 25.0,
+                                  ),
+                                  onSelected: (String value) {
+                                    genderController.text = value;
+                                  },
+                                  itemBuilder: (BuildContext context) {
+                                    return genders.map<PopupMenuItem<String>>(
+                                        (String value) {
+                                      return PopupMenuItem(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList();
+                                  },
+                                ),
+                              ),
                             ),
-                            onSelected: (String value) {
-                              genderController.text = value;
-                            },
-                            itemBuilder: (BuildContext context) {
-                              return genders
-                                  .map<PopupMenuItem<String>>((String value) {
-                                return PopupMenuItem(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList();
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextFormField(
-                        readOnly: true,
-                        controller: bdateController,
-                        key: const ValueKey("birth_day"),
-                        style: const TextStyle(
-                          fontSize: 15.0,
-                        ),
-                        keyboardType: TextInputType.datetime,
-                        validator: (String? fieldContent) {
-                          if (fieldContent == null || fieldContent.isEmpty) {
-                            return 'Please enter a valid date of birth';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(8.0),
-                          labelText: "Date of Birth",
-                          labelStyle: TextStyle(
-                            color: AppColors.secondaryColor,
-                            fontSize: 15.0,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.date_range,
-                            color: AppColors.greyColor,
-                            size: 18.0,
-                          ),
-                        ),
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: bdateController.text == ""
-                                  ? DateTime.now()
-                                  : DateFormat('y-m-d')
-                                      .parse(bdateController.text),
-                              fieldHintText: 'Date/Month/Year',
-                              fieldLabelText: 'Date of Birth',
-                              helpText: 'Date of Birth',
-                              firstDate: DateTime(DateTime.now().year - 100),
-                              lastDate: DateTime(DateTime.now().year,
-                                  DateTime.now().month, DateTime.now().day));
+                            const SizedBox(height: 20.0),
+                            TextFormField(
+                              readOnly: true,
+                              controller: bdateController,
+                              key: const ValueKey("birth_day"),
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                              ),
+                              keyboardType: TextInputType.datetime,
+                              validator: (String? fieldContent) {
+                                if (fieldContent == null ||
+                                    fieldContent.isEmpty) {
+                                  return 'Please enter a valid date of birth';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(8.0),
+                                labelText: "Date of Birth",
+                                labelStyle: TextStyle(
+                                  color: AppColors.secondaryColor,
+                                  fontSize: 15.0,
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.date_range,
+                                  color: AppColors.greyColor,
+                                  size: 18.0,
+                                ),
+                              ),
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: bdateController.text == ""
+                                        ? DateTime.now()
+                                        : DateFormat('y-m-d')
+                                            .parse(bdateController.text),
+                                    fieldHintText: 'Date/Month/Year',
+                                    fieldLabelText: 'Date of Birth',
+                                    helpText: 'Date of Birth',
+                                    firstDate:
+                                        DateTime(DateTime.now().year - 100),
+                                    lastDate: DateTime(
+                                        DateTime.now().year,
+                                        DateTime.now().month,
+                                        DateTime.now().day));
 
-                          if (pickedDate != null) {
-                            String formattedDate =
-                                DateFormat('yyyy-MM-dd').format(pickedDate);
+                                if (pickedDate != null) {
+                                  String formattedDate =
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(pickedDate);
 
-                            bdateController.text = formattedDate;
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextFormField(
-                        controller: weightController,
-                        keyboardType: TextInputType.number,
-                        validator: (String? fieldContent) {
-                          if (fieldContent == null ||
-                              fieldContent.isEmpty ||
-                              double.parse(fieldContent) <= _minWeight ||
-                              double.parse(fieldContent) >= _maxWeight) {
-                            return 'Please enter a valid weight';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.monitor_weight_outlined),
-                          prefixIconColor: AppColors.greyColor,
-                          suffix: const Text("kg"),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          labelText: "Enter your weight",
-                          labelStyle: TextStyle(
-                            color: AppColors.secondaryColor,
-                            fontSize: 15.0,
-                          ),
+                                  bdateController.text = formattedDate;
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 20.0),
+                            TextFormField(
+                              controller: weightController,
+                              keyboardType: TextInputType.number,
+                              validator: (String? fieldContent) {
+                                if (fieldContent == null ||
+                                    fieldContent.isEmpty ||
+                                    double.parse(fieldContent) <= _minWeight ||
+                                    double.parse(fieldContent) >= _maxWeight) {
+                                  return 'Please enter a valid weight';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon:
+                                    const Icon(Icons.monitor_weight_outlined),
+                                prefixIconColor: AppColors.greyColor,
+                                suffix: const Text("kg"),
+                                contentPadding: const EdgeInsets.all(8.0),
+                                labelText: "Enter your weight",
+                                labelStyle: TextStyle(
+                                  color: AppColors.secondaryColor,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20.0),
+                            TextFormField(
+                              controller: heightController,
+                              keyboardType: TextInputType.number,
+                              validator: (String? fieldContent) {
+                                if (fieldContent == null ||
+                                    fieldContent.isEmpty ||
+                                    double.parse(fieldContent) <= _minHeight ||
+                                    double.parse(fieldContent) >= _maxHeight) {
+                                  return 'Please enter a valid height';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                prefixIcon:
+                                    const Icon(Icons.accessibility_new_rounded),
+                                prefixIconColor: AppColors.greyColor,
+                                suffix: const Text("cm"),
+                                contentPadding: const EdgeInsets.all(8.0),
+                                labelText: "Enter your height",
+                                labelStyle: TextStyle(
+                                  color: AppColors.secondaryColor,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 20.0),
-                      TextFormField(
-                        controller: heightController,
-                        keyboardType: TextInputType.number,
-                        validator: (String? fieldContent) {
-                          if (fieldContent == null ||
-                              fieldContent.isEmpty ||
-                              double.parse(fieldContent) <= _minHeight ||
-                              double.parse(fieldContent) >= _maxHeight) {
-                            return 'Please enter a valid height';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon:
-                              const Icon(Icons.accessibility_new_rounded),
-                          prefixIconColor: AppColors.greyColor,
-                          suffix: const Text("cm"),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          labelText: "Enter your height",
-                          labelStyle: TextStyle(
-                            color: AppColors.secondaryColor,
-                            fontSize: 15.0,
-                          ),
-                        ),
+                      const SizedBox(
+                        height: 24.0,
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 24.0,
-                ),
-                CustomTextButton(
-                    isHaveIcon: false,
-                    icon: null,
-                    onPressed: () {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      // ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      if (!_loadProfile) {
-                        showSnackBar(
-                            "Please wait, uploading profile \npicture is in process.");
-                      } else if (_formKey.currentState!.validate() &&
-                          _loadProfile) {
-                        Database(auth: widget.auth, fireStore: widget.fireStore)
-                            .updateUserDetails(
-                          uid: widget.auth.currentUser!.uid,
-                          name: nameController.text,
-                          weight: weightController.text,
-                          height: heightController.text,
-                          gender: genderController.text,
-                          dob: bdateController.text,
-                          profile: _profilePic,
-                        )
-                            .then((value) async {
-                          if (value) {
-                            updateStatus = true;
-                            if (_oldProfile != '') {
-                              await Storage(
-                                auth: widget.auth,
-                              ).deleteUserProfilePicture(_oldProfile);
+                      CustomTextButton(
+                          isHaveIcon: false,
+                          icon: null,
+                          onPressed: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            dismissSnackBar();
+                            if (!_loadProfile) {
+                              showSnackBar(
+                                  "Please wait, uploading profile \npicture is in process.");
+                            } else if (_formKey.currentState!.validate() &&
+                                _loadProfile) {
+                              Database(
+                                      auth: widget.auth,
+                                      fireStore: widget.fireStore)
+                                  .updateUserDetails(
+                                uid: widget.auth.currentUser!.uid,
+                                name: nameController.text,
+                                weight: weightController.text,
+                                height: heightController.text,
+                                gender: genderController.text,
+                                dob: bdateController.text,
+                                profile: _profilePic,
+                              )
+                                  .then((value) async {
+                                if (value) {
+                                  updateStatus = true;
+                                  if (_oldProfile != '') {
+                                    await Storage(
+                                      auth: widget.auth,
+                                    ).deleteUserProfilePicture(_oldProfile);
+                                  }
+                                  Preferences.setUserData(
+                                      nameController.text,
+                                      _profilePic,
+                                      genderController.text,
+                                      bdateController.text);
+                                  Preferences.setBMIData(
+                                      double.parse(heightController.text)
+                                          .toStringAsFixed(2),
+                                      double.parse(weightController.text)
+                                          .toStringAsFixed(2));
+                                  showSuccess(_timer,
+                                      "Profile details\nsuccessfully updated.");
+                                } else {
+                                  showSnackBar(
+                                      "Something went wrong. \nPlease try again.");
+                                }
+                              });
                             }
-                            Preferences.setUserData(
-                                nameController.text,
-                                _profilePic,
-                                genderController.text,
-                                bdateController.text);
-                            Preferences.setBMIData(
-                                double.parse(heightController.text)
-                                    .toStringAsFixed(2),
-                                double.parse(weightController.text)
-                                    .toStringAsFixed(2));
-                            showSuccess(_timer,
-                                "Profile details\nsuccessfully updated.");
-                          } else {
-                            showSnackBar(
-                                "Something went wrong. \nPlease try again.");
-                          }
-                        });
-                      }
-                    },
-                    btnText: "Save Changes"),
-                const SizedBox(
-                  height: 30.0,
+                          },
+                          btnText: "Save Changes"),
+                      const SizedBox(
+                        height: 30.0,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          )
+        : const SplashScreen(
+            btnDisableStatus: true,
+          );
   }
 
   Widget bottomSheet() {

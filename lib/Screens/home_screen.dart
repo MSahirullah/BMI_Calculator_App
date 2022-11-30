@@ -73,12 +73,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _minHeight = double.parse(Preferences.getMinHeight() ?? "1.00");
     _maxHeight = double.parse(Preferences.getMaxHeight() ?? "400.00");
-    _minWeight = double.parse(Preferences.getMinHeight() ?? "30.00");
+    _minWeight = double.parse(Preferences.getMinWeight() ?? "30.00");
     _maxWeight = double.parse(Preferences.getMaxWeight() ?? "255.00");
 
     _genderSelected = Preferences.getGender() ?? "";
     heightController.text = Preferences.getHeight() ?? "";
-    _weight = Preferences.getWeight() != ""
+    _weight = Preferences.getWeight() != null && Preferences.getWeight() != ""
         ? double.parse(Preferences.getWeight()!)
         : 65.00;
 
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
       weightInputChanger = false;
     }
 
-    _height = Preferences.getHeight() != ""
+    _height = Preferences.getHeight() != null && Preferences.getHeight() != ""
         ? double.parse(Preferences.getHeight()!)
         : 170.00;
 
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
     weightPosition = ((_weight - 1) * 2).toInt();
     heightPosition = (_height - _minHeight).toInt();
 
-    if (Preferences.getDOB() != "") {
+    if (Preferences.getDOB() != null && Preferences.getDOB() != "") {
       DateTime dob = DateFormat('y-m-d').parse(Preferences.getDOB()!);
       DateDuration duration = AgeCalculator.age(dob);
       if (duration.years != 0) {
@@ -132,15 +132,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 10.0),
-            padding: const EdgeInsets.all(10.0),
-            child: GestureDetector(
-              onTap: () {
-                final provider =
-                    Provider.of<GoogleSignInProvider>(context, listen: false);
-                provider.logout();
-              },
+          GestureDetector(
+            onTap: () {
+              signOut();
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 10.0),
+              padding: const EdgeInsets.all(10.0),
               child: const Center(
                 child: FaIcon(
                   FontAwesomeIcons.rightFromBracket,
@@ -445,15 +443,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         weightInputChanger =
                                             !weightInputChanger;
                                       } else {
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentSnackBar();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                "Please input valid weight."),
-                                          ),
-                                        );
+                                        dismissSnackBar();
+                                        showSnackBar(
+                                            "Please input valid weight.");
                                         return;
                                       }
                                     });
@@ -484,7 +476,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 minValue: _minWeight,
                                 initialPosition: InitialPosition.center,
                                 maxValue: _maxWeight,
-                                divisions: 438,
+                                divisions:
+                                    ((_maxWeight - _minWeight) * 2).toInt(),
                                 suffix: " kg",
                                 cursorColor: AppColors.mainColor,
                                 showCursor: true,
@@ -614,15 +607,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         heightInputChanger =
                                             !heightInputChanger;
                                       } else {
-                                        ScaffoldMessenger.of(context)
-                                            .hideCurrentSnackBar();
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                "Please input valid height."),
-                                          ),
-                                        );
+                                        dismissSnackBar();
+                                        showSnackBar(
+                                            "Please input valid height.");
                                         return;
                                       }
                                     });
@@ -729,6 +716,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 15.0),
+              //Save my Data
               Row(
                 children: [
                   Checkbox(
@@ -756,13 +744,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   isHaveIcon: false,
                   icon: null,
                   onPressed: () {
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    dismissSnackBar();
                     if (_genderSelected == 'null') {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Please select gender."),
-                        ),
-                      );
+                      showSnackBar("Please select gender.");
                       return;
                     }
 
@@ -793,11 +777,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
 
                     if (errorText.isNotEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(errorText),
-                        ),
-                      );
+                      showSnackBar(errorText);
                       return;
                     }
 
@@ -960,5 +940,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  signOut() async {
+    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+    provider.logout();
   }
 }

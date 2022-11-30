@@ -1,9 +1,17 @@
+import 'dart:async';
+
+import 'package:bmi_calculator/Screens/screens.dart';
+import 'package:bmi_calculator/services/database.dart';
+import 'package:bmi_calculator/services/preferences.dart';
 import 'package:bmi_calculator/utils/utils.dart';
 import 'package:bmi_calculator/widgets/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen(
@@ -22,251 +30,332 @@ class _SettingsScreenState extends State<SettingsScreen> {
   TextEditingController minWeightController = TextEditingController();
   TextEditingController maxWeightController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  Timer? _timer;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: AppColors.mainColor,
-        centerTitle: true,
-        title: const Text(
-          "Settings",
-        ),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              child: const Center(
-                  child: FaIcon(
-                FontAwesomeIcons.check,
-                color: Colors.white,
-                size: 20.0,
-              )),
+    minWeightController.text = Preferences.getMinWeight() ?? "";
+    maxWeightController.text = Preferences.getMaxWeight() ?? "";
+    minHeightController.text = Preferences.getMinHeight() ?? "";
+    maxHeightController.text = Preferences.getMaxHeight() ?? "";
+
+    final reg = RegExp(r'^(\d{1,3}|\d{0,3}\.\d{1,2})$');
+
+    return Provider.of<InternetConnectionStatus>(context) !=
+            InternetConnectionStatus.disconnected
+        ? WillPopScope(
+           onWillPop: ()async {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                    auth: widget.auth,
+                    fireStore: widget.fireStore,
+                  ),
+                ),
+              );
+              return false;
+           },
+          child: Scaffold(
+              appBar: AppBar(
+                // backgroundColor: AppColors.mainColor,
+                centerTitle: true,
+                title: const Text(
+                  "Settings",
+                ),
+                actions: [
+                  GestureDetector(
+                    onTap: () => onPressed(),
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 20.0),
+                      child: const Center(
+                          child: FaIcon(
+                        FontAwesomeIcons.check,
+                        color: Colors.white,
+                        size: 20.0,
+                      )),
+                    ),
+                  ),
+                ],
+              ),
+              backgroundColor: AppColors.mainColorWithO1,
+              body: SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Weight Settings",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                            color: AppColors.secondaryColor,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 1.0,
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                  controller: minWeightController,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(6),
+                                  ],
+                                  validator: (String? fieldContent) {
+                                    if (fieldContent == null ||
+                                        fieldContent.isEmpty ||
+                                        double.parse(fieldContent) < 0 ||
+                                        double.parse(fieldContent) > 400 ||
+                                        !reg.hasMatch(fieldContent)) {
+                                      return 'Please enter a valid min weight';
+                                    }
+                                    if (maxWeightController.text.isNotEmpty &&
+                                        reg.hasMatch(maxWeightController.text)) {
+                                      if (double.parse(fieldContent) >
+                                          double.parse(
+                                              maxWeightController.text)) {
+                                        return 'Please enter a valid min weight';
+                                      }
+                                    }
+                                    return null;
+                                  },
+                                  onTap: () => minWeightController.selection =
+                                      TextSelection(
+                                          baseOffset: 0,
+                                          extentOffset: minWeightController
+                                              .value.text.length),
+                                  decoration: InputDecoration(
+                                    suffix: const Text("kg"),
+                                    contentPadding: const EdgeInsets.all(8.0),
+                                    labelText: "Min Weight",
+                                    labelStyle: TextStyle(
+                                      color: AppColors.secondaryColor,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 15.0),
+                                TextFormField(
+                                  controller: maxWeightController,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(6),
+                                  ],
+                                  validator: (String? fieldContent) {
+                                    if (fieldContent == null ||
+                                        fieldContent.isEmpty ||
+                                        double.parse(fieldContent) < 0 ||
+                                        double.parse(fieldContent) > 400 ||
+                                        !reg.hasMatch(fieldContent)) {
+                                      return 'Please enter a valid max weight';
+                                    }
+                                    if (minWeightController.text.isNotEmpty &&
+                                        reg.hasMatch(minWeightController.text)) {
+                                      if (double.parse(fieldContent) <
+                                          double.parse(
+                                              minWeightController.text)) {
+                                        return 'Please enter a valid max weight';
+                                      }
+                                    }
+                                    return null;
+                                  },
+                                  onTap: () => maxWeightController.selection =
+                                      TextSelection(
+                                          baseOffset: 0,
+                                          extentOffset: maxWeightController
+                                              .value.text.length),
+                                  decoration: InputDecoration(
+                                    suffix: const Text("kg"),
+                                    contentPadding: const EdgeInsets.all(8.0),
+                                    labelText: "Max Weight",
+                                    labelStyle: TextStyle(
+                                      color: AppColors.secondaryColor,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 25.0,
+                        ),
+                        Text(
+                          "Height Settings",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                            color: AppColors.secondaryColor,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          elevation: 1.0,
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextFormField(
+                                  controller: minHeightController,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(6),
+                                  ],
+                                  validator: (String? fieldContent) {
+                                    if (fieldContent == null ||
+                                        fieldContent.isEmpty ||
+                                        double.parse(fieldContent) < 0 ||
+                                        double.parse(fieldContent) > 300 ||
+                                        !reg.hasMatch(fieldContent)) {
+                                      return 'Please enter a valid min height';
+                                    }
+                                    if (maxHeightController.text.isNotEmpty &&
+                                        reg.hasMatch(maxHeightController.text)) {
+                                      if (double.parse(fieldContent) >
+                                          double.parse(
+                                              maxHeightController.text)) {
+                                        return 'Please enter a valid min height';
+                                      }
+                                    }
+                                    return null;
+                                  },
+                                  onTap: () => minHeightController.selection =
+                                      TextSelection(
+                                          baseOffset: 0,
+                                          extentOffset: minHeightController
+                                              .value.text.length),
+                                  decoration: InputDecoration(
+                                    suffix: const Text("cm"),
+                                    contentPadding: const EdgeInsets.all(8.0),
+                                    labelText: "Min Height",
+                                    labelStyle: TextStyle(
+                                      color: AppColors.secondaryColor,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 15.0),
+                                TextFormField(
+                                  controller: maxHeightController,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(6),
+                                  ],
+                                  validator: (String? fieldContent) {
+                                    if (fieldContent == null ||
+                                        fieldContent.isEmpty ||
+                                        double.parse(fieldContent) < 0 ||
+                                        double.parse(fieldContent) > 300 ||
+                                        !reg.hasMatch(fieldContent)) {
+                                      return 'Please enter a valid max height';
+                                    }
+                                    if (minHeightController.text.isNotEmpty &&
+                                        reg.hasMatch(minHeightController.text)) {
+                                      if (double.parse(fieldContent) <
+                                          double.parse(
+                                              minHeightController.text)) {
+                                        return 'Please enter a valid max height';
+                                      }
+                                    }
+                                    return null;
+                                  },
+                                  onTap: () => maxHeightController.selection =
+                                      TextSelection(
+                                          baseOffset: 0,
+                                          extentOffset: maxHeightController
+                                              .value.text.length),
+                                  decoration: InputDecoration(
+                                    suffix: const Text("cm"),
+                                    contentPadding: const EdgeInsets.all(8.0),
+                                    labelText: "Max Height",
+                                    labelStyle: TextStyle(
+                                      color: AppColors.secondaryColor,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 35.0,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          child: CustomTextButton(
+                              isHaveIcon: false,
+                              icon: null,
+                              onPressed: () => onPressed(),
+                              btnText: "Save Changes"),
+                        ),
+                        const SizedBox(
+                          height: 30.0,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
-      ),
-      backgroundColor: AppColors.mainColorWithO1,
-      body: Container(
-        padding: const EdgeInsets.all(25.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Weight Settings",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16.0,
-                  color: AppColors.secondaryColor,
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                elevation: 1.0,
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextFormField(
-                        controller: minWeightController,
-                        keyboardType: TextInputType.number,
-                        validator: (String? fieldContent) {
-                          if (fieldContent == null ||
-                              fieldContent.isEmpty ||
-                              double.parse(fieldContent) < 0 ||
-                              double.parse(fieldContent) > 400) {
-                            return 'Please enter a valid min weight';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          suffix: const Text("cm"),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          labelText: "Min Weight",
-                          labelStyle: TextStyle(
-                            color: AppColors.secondaryColor,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15.0),
-                      TextFormField(
-                        controller: maxWeightController,
-                        keyboardType: TextInputType.number,
-                        validator: (String? fieldContent) {
-                          if (fieldContent == null ||
-                              fieldContent.isEmpty ||
-                              double.parse(fieldContent) < 0 ||
-                              double.parse(fieldContent) > 400) {
-                            return 'Please enter a valid max weight';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          suffix: const Text("cm"),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          labelText: "Max Weight",
-                          labelStyle: TextStyle(
-                            color: AppColors.secondaryColor,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 25.0,
-              ),
-              Text(
-                "Height Settings",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16.0,
-                  color: AppColors.secondaryColor,
-                ),
-              ),
-              const SizedBox(
-                height: 10.0,
-              ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                elevation: 1.0,
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextFormField(
-                        controller: minHeightController,
-                        keyboardType: TextInputType.number,
-                        validator: (String? fieldContent) {
-                          if (fieldContent == null ||
-                              fieldContent.isEmpty ||
-                              double.parse(fieldContent) < 0 ||
-                              double.parse(fieldContent) > 300) {
-                            return 'Please enter a valid min height';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          suffix: const Text("cm"),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          labelText: "Min Height",
-                          labelStyle: TextStyle(
-                            color: AppColors.secondaryColor,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15.0),
-                      TextFormField(
-                        controller: maxHeightController,
-                        keyboardType: TextInputType.number,
-                        validator: (String? fieldContent) {
-                          if (fieldContent == null ||
-                              fieldContent.isEmpty ||
-                              double.parse(fieldContent) < 0 ||
-                              double.parse(fieldContent) > 300) {
-                            return 'Please enter a valid max height';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          suffix: const Text("cm"),
-                          contentPadding: const EdgeInsets.all(8.0),
-                          labelText: "Max Height",
-                          labelStyle: TextStyle(
-                            color: AppColors.secondaryColor,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 35.0,
-              ),
-              Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                child: CustomTextButton(
-                    isHaveIcon: false,
-                    icon: null,
-                    onPressed: () {
-                      FocusManager.instance.primaryFocus?.unfocus();
+        )
+        : const SplashScreen(
+            btnDisableStatus: true,
+          );
+  }
 
-                      //ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  void onPressed() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (_formKey.currentState!.validate()) {
+      Database(auth: widget.auth, fireStore: widget.fireStore)
+          .updateSettingsData(
+        uid: widget.auth.currentUser!.uid,
+        minHeight: double.parse(minHeightController.text).toStringAsFixed(2),
+        maxHeight: double.parse(maxHeightController.text).toStringAsFixed(2),
+        minWeight: double.parse(minWeightController.text).toStringAsFixed(2),
+        maxWeight: double.parse(maxWeightController.text).toStringAsFixed(2),
+      )
+          .then((value) {
+        if (value) {
+          showSuccess(_timer, "Settings successfully\nupdated.");
+          saveSettingsData(
+              double.parse(minHeightController.text).toStringAsFixed(2),
+              double.parse(maxHeightController.text).toStringAsFixed(2),
+              double.parse(minWeightController.text).toStringAsFixed(2),
+              double.parse(maxWeightController.text).toStringAsFixed(2));
+        }
+      });
+    }
+  }
 
-                      // if (!_loadProfile) {
-                      //   showSnackBar(
-                      //       "Please wait, uploading profile \npicture is in process.");
-                      // } else if (_formKey.currentState!.validate() &&
-                      //     _loadProfile) {
-                      //   Database(
-                      //           auth: widget.auth,
-                      //           fireStore: widget.fireStore)
-                      //       .updateUserDetails(
-                      //     uid: widget.auth.currentUser!.uid,
-                      //     name: nameController.text,
-                      //     weight: weightController.text,
-                      //     height: heightController.text,
-                      //     gender: genderController.text,
-                      //     dob: bdateController.text,
-                      //     profile: _profilePic,
-                      //   )
-                      //       .then((value) async {
-                      //     if (value) {
-                      //       updateStatus = true;
-                      //       if (_oldProfile != '') {
-                      //         await Storage(
-                      //           auth: widget.auth,
-                      //         ).deleteUserProfilePicture(_oldProfile);
-                      //       }
-                      //       Preferences.setUserData(
-                      //           nameController.text,
-                      //           _profilePic,
-                      //           genderController.text,
-                      //           bdateController.text);
-                      //       Preferences.setBMIData(
-                      //           double.parse(heightController.text)
-                      //               .toStringAsFixed(2),
-                      //           double.parse(weightController.text)
-                      //               .toStringAsFixed(2));
-                      //       showSuccess(_timer,
-                      //           "Profile details\nsuccessfully updated.");
-                      //     } else {
-                      //       showSnackBar(
-                      //           "Something went wrong. \nPlease try again.");
-                      //     }
-                      // });
-                    },
-                    btnText: "Save Changes"),
-              ),
-              const SizedBox(
-                height: 30.0,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  Future<void> saveSettingsData(String minHeight, String maxHeight,
+      String minWeight, String maxWeight) async {
+    await Preferences.setSettingsData(
+        minHeight, maxHeight, minWeight, maxWeight);
   }
 }

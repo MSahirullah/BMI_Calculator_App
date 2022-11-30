@@ -79,12 +79,3 @@ void configLoading() {
 
 // when user input value the meter value should be bold
 // remove all snackbar
-
-  // print(_weight);
-
-  // setState(() {
-  //   weightScrollController.animateToItem(
-  //       ((_weight - 1) * 2).toInt(),
-  //       duration: const Duration(seconds: 1),
-  //       curve: Curves.linear);
-  // });

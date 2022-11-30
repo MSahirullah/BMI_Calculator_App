@@ -21,3 +21,8 @@ void hideLoading(timer) async {
   timer?.cancel();
   await EasyLoading.dismiss();
 }
+
+void dismissSnackBar() async {
+  await EasyLoading.dismiss();
+}
+
