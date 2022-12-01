@@ -77,5 +77,6 @@ void configLoading() {
     ..dismissOnTap = true;
 }
 
-// when user input value the meter value should be bold
+// when user input 
+//value the meter value should be bold
 // remove all snackbar

@@ -134,7 +134,9 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           GestureDetector(
             onTap: () {
+              showLoading(_timer);
               signOut();
+              hideLoading(_timer);
               setState(() {});
             },
             child: Container(
@@ -512,8 +514,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   controller: weightController,
                                   key: const ValueKey('Weight'),
                                   style: TextStyle(
-                                    fontSize: Dimentions.height10 * 1.8,
-                                  ),
+                                      fontSize: Dimentions.height10 * 1.8,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.secondaryColor),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
@@ -684,8 +687,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   controller: heightController,
                                   key: const ValueKey('Height'),
                                   style: TextStyle(
-                                    fontSize: Dimentions.height10 * 1.8,
-                                  ),
+                                      fontSize: Dimentions.height10 * 1.8,
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.secondaryColor),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(

@@ -133,11 +133,11 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
     for (var i = 0; i < valueMap.length; i++) {
       if (i == item) {
         valueMap[item]["color"] = widget.activeItemTextColor;
-        valueMap[item]["fontSize"] = Dimentions.pxH * 18;
+        valueMap[item]["fontSize"] = Dimentions.pxH * 15;
         valueMap[item]["hasBorders"] = true;
       } else {
         valueMap[i]["color"] = widget.passiveItemsTextColor;
-        valueMap[i]["fontSize"] = Dimentions.pxH * 16;
+        valueMap[i]["fontSize"] = Dimentions.pxH * 15;
         valueMap[i]["hasBorders"] = false;
       }
     }

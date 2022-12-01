@@ -119,7 +119,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 TextFormField(
                                   style: TextStyle(
                                     fontSize: Dimentions.height10 * 1.8,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                   controller: minWeightController,
                                   keyboardType: TextInputType.number,
@@ -167,7 +167,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 TextFormField(
                                   style: TextStyle(
                                     fontSize: Dimentions.height10 * 1.8,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                   controller: maxWeightController,
                                   keyboardType: TextInputType.number,
@@ -248,7 +248,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 TextFormField(
                                   style: TextStyle(
                                     fontSize: Dimentions.height10 * 1.8,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                   controller: minHeightController,
                                   keyboardType: TextInputType.number,
@@ -296,7 +296,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 TextFormField(
                                   style: TextStyle(
                                     fontSize: Dimentions.height10 * 1.8,
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                   controller: maxHeightController,
                                   keyboardType: TextInputType.number,

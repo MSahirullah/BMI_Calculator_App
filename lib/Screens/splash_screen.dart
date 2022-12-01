@@ -46,7 +46,10 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               Text(
                 "Let's control your fitness",
-                style: TextStyle(color: AppColors.greyColor),
+                style: TextStyle(
+                  color: AppColors.greyColor,
+                  fontSize: Dimentions.height10 * 1.7,
+                ),
               ),
               SizedBox(
                 height: Dimentions.height10 * 2.5,

@@ -264,9 +264,14 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         child: Column(
                           children: [
                             TextFormField(
+                              onTap: () =>
+                                  nameController.selection = TextSelection(
+                                baseOffset: 0,
+                                extentOffset: nameController.value.text.length,
+                              ),
                               style: TextStyle(
                                 fontSize: Dimentions.height10 * 1.8,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                               controller: nameController,
                               validator: (String? fieldContent) {
@@ -302,7 +307,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             TextFormField(
                               style: TextStyle(
                                 fontSize: Dimentions.height10 * 1.8,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                               readOnly: true,
                               controller: genderController,
@@ -356,7 +361,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             TextFormField(
                               style: TextStyle(
                                 fontSize: Dimentions.height10 * 1.8,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                               readOnly: true,
                               controller: bdateController,
@@ -414,10 +419,16 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             ),
                             SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
+                              onTap: () =>
+                                  weightController.selection = TextSelection(
+                                baseOffset: 0,
+                                extentOffset:
+                                    weightController.value.text.length,
+                              ),
                               controller: weightController,
                               style: TextStyle(
                                 fontSize: Dimentions.height10 * 1.8,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                               keyboardType: TextInputType.number,
                               validator: (String? fieldContent) {
@@ -448,9 +459,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             ),
                             SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
+                              onTap: () =>
+                                  heightController.selection = TextSelection(
+                                baseOffset: 0,
+                                extentOffset:
+                                    heightController.value.text.length,
+                              ),
                               style: TextStyle(
                                 fontSize: Dimentions.height10 * 1.8,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                               ),
                               controller: heightController,
                               keyboardType: TextInputType.number,
