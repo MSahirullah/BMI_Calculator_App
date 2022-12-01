@@ -13,6 +13,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
@@ -51,11 +52,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   bool updateStatus = false;
   String _oldProfile = '';
 
-  double _minWeight = 1;
-  double _maxWeight = 400;
+  double _minWeight = 1.00;
+  double _maxWeight = 400.00;
 
-  double _minHeight = 30;
-  double _maxHeight = 255;
+  double _minHeight = 30.00;
+  double _maxHeight = 255.00;
 
   @override
   void initState() {
@@ -114,18 +115,33 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 title: const Text(
                   "Edit Profile",
                 ),
+                actions: [
+                  GestureDetector(
+                    onTap: () => onPressed(),
+                    child: Container(
+                      margin: EdgeInsets.only(right: Dimentions.width10 * 2),
+                      child: Center(
+                          child: FaIcon(
+                        FontAwesomeIcons.check,
+                        color: Colors.white,
+                        size: Dimentions.height10 * 2.3,
+                      )),
+                    ),
+                  ),
+                ],
               ),
               body: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      const SizedBox(
-                        height: 30.0,
+                      SizedBox(
+                        height: Dimentions.height10 * 3,
                       ),
                       Container(
-                        constraints: const BoxConstraints(minHeight: 165.0),
-                        height: MediaQuery.of(context).size.height * 0.18,
+                        constraints:
+                            BoxConstraints(minHeight: Dimentions.height10 * 17),
+                        height: Dimentions.screenHeight * 0.18,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -133,13 +149,13 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                  width: 165.0,
-                                  height: 165.0,
+                                  width: Dimentions.height10 * 17,
+                                  height: Dimentions.height10 * 17,
                                   child: Stack(
                                     children: [
                                       CircleAvatar(
                                         backgroundColor: Colors.white,
-                                        radius: 80.0,
+                                        radius: Dimentions.height10 * 9,
                                         child: CachedNetworkImage(
                                           placeholder: (context, url) =>
                                               const CircularProgressIndicator(
@@ -149,12 +165,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                           imageBuilder:
                                               (context, imageProvider) =>
                                                   Container(
-                                            width: 165.0,
-                                            height: 165.0,
+                                            width: Dimentions.height10 * 17,
+                                            height: Dimentions.height10 * 17,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(100.0),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(
+                                                    Dimentions.height10 * 10),
                                               ),
                                               image: DecorationImage(
                                                 fit: BoxFit.fitWidth,
@@ -180,12 +196,16 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                                 : null;
                                           },
                                           child: Container(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    Dimentions.width10 * 0.8,
+                                                vertical:
+                                                    Dimentions.height10 * 0.8),
                                             decoration: BoxDecoration(
                                               color: Colors.white,
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(80.0),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(
+                                                    Dimentions.height10 * 8),
                                               ),
                                               boxShadow: [
                                                 BoxShadow(
@@ -201,16 +221,26 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                                 ? Icon(
                                                     Icons.camera_alt,
                                                     color: AppColors.bottomBox,
-                                                    size: 25.0,
+                                                    size:
+                                                        Dimentions.height10 * 3,
                                                   )
-                                                : const SizedBox(
-                                                    width: 25.0,
-                                                    height: 25.0,
+                                                : SizedBox(
+                                                    width:
+                                                        Dimentions.height10 * 3,
+                                                    height:
+                                                        Dimentions.height10 * 3,
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsets.all(2.0),
+                                                          EdgeInsets.symmetric(
+                                                        horizontal:
+                                                            Dimentions.width10 *
+                                                                0.2,
+                                                        vertical: Dimentions
+                                                                .height10 *
+                                                            0.2,
+                                                      ),
                                                       child:
-                                                          CircularProgressIndicator(
+                                                          const CircularProgressIndicator(
                                                         strokeWidth: 3,
                                                       ),
                                                     ),
@@ -227,9 +257,9 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 30.0,
-                          horizontal: 25.0,
+                        margin: EdgeInsets.symmetric(
+                          vertical: Dimentions.height10 * 3,
+                          horizontal: Dimentions.width10 * 2.5,
                         ),
                         child: Column(
                           children: [
@@ -252,21 +282,23 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 prefixIcon:
                                     const Icon(Icons.person_outline_rounded),
                                 prefixIconColor: AppColors.greyColor,
-                                contentPadding: const EdgeInsets.all(8.0),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: Dimentions.width10 * 0.8,
+                                    vertical: Dimentions.height10 * 0.8),
                                 labelText: "Enter your name",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: 15.0,
+                                  fontSize: Dimentions.height15,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20.0),
+                            SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
                               readOnly: true,
                               controller: genderController,
                               key: const ValueKey("gender"),
-                              style: const TextStyle(
-                                fontSize: 15.0,
+                              style: TextStyle(
+                                fontSize: Dimentions.height15,
                               ),
                               validator: (String? fieldContent) {
                                 if (fieldContent == null ||
@@ -281,18 +313,20 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                         ? Icons.girl_rounded
                                         : Icons.boy_rounded),
                                 prefixIconColor: AppColors.greyColor,
-                                contentPadding: const EdgeInsets.all(8.0),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: Dimentions.width10 * 0.8,
+                                    vertical: Dimentions.height10 * 0.8),
                                 labelText: "Gender",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: 15.0,
+                                  fontSize: Dimentions.height15,
                                 ),
                                 suffixIcon: PopupMenuButton<String>(
                                   elevation: 4,
                                   icon: Icon(
                                     Icons.arrow_drop_down,
                                     color: AppColors.mainColor,
-                                    size: 25.0,
+                                    size: Dimentions.height10 * 2.5,
                                   ),
                                   onSelected: (String value) {
                                     genderController.text = value;
@@ -309,13 +343,13 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20.0),
+                            SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
                               readOnly: true,
                               controller: bdateController,
                               key: const ValueKey("birth_day"),
-                              style: const TextStyle(
-                                fontSize: 15.0,
+                              style: TextStyle(
+                                fontSize: Dimentions.height15,
                               ),
                               keyboardType: TextInputType.datetime,
                               validator: (String? fieldContent) {
@@ -326,16 +360,18 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 return null;
                               },
                               decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.all(8.0),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: Dimentions.width10 * 0.8,
+                                    vertical: Dimentions.height10 * 0.8),
                                 labelText: "Date of Birth",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: 15.0,
+                                  fontSize: Dimentions.height15,
                                 ),
                                 prefixIcon: Icon(
                                   Icons.date_range,
                                   color: AppColors.greyColor,
-                                  size: 18.0,
+                                  size: Dimentions.height10 * 1.8,
                                 ),
                               ),
                               onTap: () async {
@@ -364,7 +400,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 }
                               },
                             ),
-                            const SizedBox(height: 20.0),
+                            SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
                               controller: weightController,
                               keyboardType: TextInputType.number,
@@ -382,15 +418,17 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     const Icon(Icons.monitor_weight_outlined),
                                 prefixIconColor: AppColors.greyColor,
                                 suffix: const Text("kg"),
-                                contentPadding: const EdgeInsets.all(8.0),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: Dimentions.width10 * 0.8,
+                                    vertical: Dimentions.height10 * 0.8),
                                 labelText: "Enter your weight",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: 15.0,
+                                  fontSize: Dimentions.height15,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20.0),
+                            SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
                               controller: heightController,
                               keyboardType: TextInputType.number,
@@ -408,73 +446,29 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     const Icon(Icons.accessibility_new_rounded),
                                 prefixIconColor: AppColors.greyColor,
                                 suffix: const Text("cm"),
-                                contentPadding: const EdgeInsets.all(8.0),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: Dimentions.width10 * 0.8,
+                                    vertical: Dimentions.height10 * 0.8),
                                 labelText: "Enter your height",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: 15.0,
+                                  fontSize: Dimentions.height15,
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 24.0,
+                      SizedBox(
+                        height: Dimentions.height10 * 2.4,
                       ),
                       CustomTextButton(
                           isHaveIcon: false,
                           icon: null,
-                          onPressed: () {
-                            FocusManager.instance.primaryFocus?.unfocus();
-                            dismissSnackBar();
-                            if (!_loadProfile) {
-                              showSnackBar(
-                                  "Please wait, uploading profile \npicture is in process.");
-                            } else if (_formKey.currentState!.validate() &&
-                                _loadProfile) {
-                              Database(
-                                      auth: widget.auth,
-                                      fireStore: widget.fireStore)
-                                  .updateUserDetails(
-                                uid: widget.auth.currentUser!.uid,
-                                name: nameController.text,
-                                weight: weightController.text,
-                                height: heightController.text,
-                                gender: genderController.text,
-                                dob: bdateController.text,
-                                profile: _profilePic,
-                              )
-                                  .then((value) async {
-                                if (value) {
-                                  updateStatus = true;
-                                  if (_oldProfile != '') {
-                                    await Storage(
-                                      auth: widget.auth,
-                                    ).deleteUserProfilePicture(_oldProfile);
-                                  }
-                                  Preferences.setUserData(
-                                      nameController.text,
-                                      _profilePic,
-                                      genderController.text,
-                                      bdateController.text);
-                                  Preferences.setBMIData(
-                                      double.parse(heightController.text)
-                                          .toStringAsFixed(2),
-                                      double.parse(weightController.text)
-                                          .toStringAsFixed(2));
-                                  showSuccess(_timer,
-                                      "Profile details\nsuccessfully updated.");
-                                } else {
-                                  showSnackBar(
-                                      "Something went wrong. \nPlease try again.");
-                                }
-                              });
-                            }
-                          },
+                          onPressed: onPressed,
                           btnText: "Save Changes"),
-                      const SizedBox(
-                        height: 30.0,
+                      SizedBox(
+                        height: Dimentions.height10 * 3,
                       ),
                     ],
                   ),
@@ -489,24 +483,24 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
   Widget bottomSheet() {
     return Container(
-      height: 80.0,
+      height: Dimentions.height10 * 8.5,
       width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 20.0,
-        vertical: 20.0,
+      margin: EdgeInsets.symmetric(
+        horizontal: Dimentions.width10 * 2,
+        vertical: Dimentions.height10 * 2,
       ),
       child: Column(
         children: [
           Text(
             "Choose Profile Photo",
             style: TextStyle(
-              fontSize: 15,
+              fontSize: Dimentions.height15,
               color: AppColors.greyColor,
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(
-            height: 10.0,
+          SizedBox(
+            height: Dimentions.height10,
           ),
           Row(
             children: [
@@ -523,8 +517,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   style: TextStyle(color: AppColors.bottomBox),
                 ),
               ),
-              const SizedBox(
-                width: 10.0,
+              SizedBox(
+                width: Dimentions.width10,
               ),
               TextButton.icon(
                 onPressed: () {
@@ -571,6 +565,43 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
           _profilePic = value;
           _loadProfile = true;
         });
+      });
+    }
+  }
+
+  onPressed() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    dismissSnackBar();
+    if (!_loadProfile) {
+      showSnackBar("Please wait, uploading profile \npicture is in process.");
+    } else if (_formKey.currentState!.validate() && _loadProfile) {
+      Database(auth: widget.auth, fireStore: widget.fireStore)
+          .updateUserDetails(
+        uid: widget.auth.currentUser!.uid,
+        name: nameController.text,
+        weight: weightController.text,
+        height: heightController.text,
+        gender: genderController.text,
+        dob: bdateController.text,
+        profile: _profilePic,
+      )
+          .then((value) async {
+        if (value) {
+          updateStatus = true;
+          if (_oldProfile != '') {
+            await Storage(
+              auth: widget.auth,
+            ).deleteUserProfilePicture(_oldProfile);
+          }
+          Preferences.setUserData(nameController.text, _profilePic,
+              genderController.text, bdateController.text);
+          Preferences.setBMIData(
+              double.parse(heightController.text).toStringAsFixed(2),
+              double.parse(weightController.text).toStringAsFixed(2));
+          showSuccess(_timer, "Profile details\nsuccessfully updated.");
+        } else {
+          showSnackBar("Something went wrong. \nPlease try again.");
+        }
       });
     }
   }

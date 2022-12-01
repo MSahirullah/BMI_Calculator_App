@@ -44,8 +44,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Provider.of<InternetConnectionStatus>(context) !=
             InternetConnectionStatus.disconnected
         ? WillPopScope(
-           onWillPop: ()async {
-            Navigator.pushReplacement(
+            onWillPop: () async {
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => HomeScreen(
@@ -55,8 +55,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               );
               return false;
-           },
-          child: Scaffold(
+            },
+            child: Scaffold(
               appBar: AppBar(
                 // backgroundColor: AppColors.mainColor,
                 centerTitle: true,
@@ -67,12 +67,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   GestureDetector(
                     onTap: () => onPressed(),
                     child: Container(
-                      margin: const EdgeInsets.only(right: 20.0),
-                      child: const Center(
+                      margin: EdgeInsets.only(right: Dimentions.width10 * 2),
+                      child: Center(
                           child: FaIcon(
                         FontAwesomeIcons.check,
                         color: Colors.white,
-                        size: 20.0,
+                        size: Dimentions.height10 * 2.3,
                       )),
                     ),
                   ),
@@ -81,7 +81,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               backgroundColor: AppColors.mainColorWithO1,
               body: SingleChildScrollView(
                 child: Container(
-                  padding: const EdgeInsets.all(25.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimentions.width10 * 2.5,
+                      vertical: Dimentions.height10 * 2.5),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -91,21 +93,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           "Weight Settings",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 16.0,
+                            fontSize: Dimentions.pxH * 16,
                             color: AppColors.secondaryColor,
                           ),
                         ),
-                        const SizedBox(
-                          height: 10.0,
+                        SizedBox(
+                          height: Dimentions.height10,
                         ),
                         Card(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius:
+                                BorderRadius.circular(Dimentions.height10),
                           ),
                           elevation: 1.0,
                           child: Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.all(15.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Dimentions.width10 * 1.5,
+                                vertical: Dimentions.height10 * 1.5),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +130,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       return 'Please enter a valid min weight';
                                     }
                                     if (maxWeightController.text.isNotEmpty &&
-                                        reg.hasMatch(maxWeightController.text)) {
+                                        reg.hasMatch(
+                                            maxWeightController.text)) {
                                       if (double.parse(fieldContent) >
                                           double.parse(
                                               maxWeightController.text)) {
@@ -141,15 +147,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               .value.text.length),
                                   decoration: InputDecoration(
                                     suffix: const Text("kg"),
-                                    contentPadding: const EdgeInsets.all(8.0),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: Dimentions.width10 * 0.8,
+                                        vertical: Dimentions.height10 * 0.8),
                                     labelText: "Min Weight",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: 15.0,
+                                      fontSize: Dimentions.height15,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 15.0),
+                                SizedBox(height: Dimentions.height15),
                                 TextFormField(
                                   controller: maxWeightController,
                                   keyboardType: TextInputType.number,
@@ -165,7 +173,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       return 'Please enter a valid max weight';
                                     }
                                     if (minWeightController.text.isNotEmpty &&
-                                        reg.hasMatch(minWeightController.text)) {
+                                        reg.hasMatch(
+                                            minWeightController.text)) {
                                       if (double.parse(fieldContent) <
                                           double.parse(
                                               minWeightController.text)) {
@@ -181,11 +190,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               .value.text.length),
                                   decoration: InputDecoration(
                                     suffix: const Text("kg"),
-                                    contentPadding: const EdgeInsets.all(8.0),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: Dimentions.width10 * 0.8,
+                                        vertical: Dimentions.height10 * 0.8),
                                     labelText: "Max Weight",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: 15.0,
+                                      fontSize: Dimentions.height15,
                                     ),
                                   ),
                                 ),
@@ -193,28 +204,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 25.0,
+                        SizedBox(
+                          height: Dimentions.height10 * 2.5,
                         ),
                         Text(
                           "Height Settings",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 16.0,
+                            fontSize: Dimentions.pxH * 16,
                             color: AppColors.secondaryColor,
                           ),
                         ),
-                        const SizedBox(
-                          height: 10.0,
+                        SizedBox(
+                          height: Dimentions.height10,
                         ),
                         Card(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius:
+                                BorderRadius.circular(Dimentions.height10),
                           ),
                           elevation: 1.0,
                           child: Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.all(15.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Dimentions.width15,
+                                vertical: Dimentions.height15),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +248,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       return 'Please enter a valid min height';
                                     }
                                     if (maxHeightController.text.isNotEmpty &&
-                                        reg.hasMatch(maxHeightController.text)) {
+                                        reg.hasMatch(
+                                            maxHeightController.text)) {
                                       if (double.parse(fieldContent) >
                                           double.parse(
                                               maxHeightController.text)) {
@@ -250,15 +265,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               .value.text.length),
                                   decoration: InputDecoration(
                                     suffix: const Text("cm"),
-                                    contentPadding: const EdgeInsets.all(8.0),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: Dimentions.width10 * 0.8,
+                                        vertical: Dimentions.height10 * 0.8),
                                     labelText: "Min Height",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: 15.0,
+                                      fontSize: Dimentions.height15,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 15.0),
+                                SizedBox(height: Dimentions.height15),
                                 TextFormField(
                                   controller: maxHeightController,
                                   keyboardType: TextInputType.number,
@@ -274,7 +291,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       return 'Please enter a valid max height';
                                     }
                                     if (minHeightController.text.isNotEmpty &&
-                                        reg.hasMatch(minHeightController.text)) {
+                                        reg.hasMatch(
+                                            minHeightController.text)) {
                                       if (double.parse(fieldContent) <
                                           double.parse(
                                               minHeightController.text)) {
@@ -290,11 +308,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               .value.text.length),
                                   decoration: InputDecoration(
                                     suffix: const Text("cm"),
-                                    contentPadding: const EdgeInsets.all(8.0),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: Dimentions.width10 * 0.8,
+                                        vertical: Dimentions.height10 * 0.8),
                                     labelText: "Max Height",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: 15.0,
+                                      fontSize: Dimentions.height15,
                                     ),
                                   ),
                                 ),
@@ -302,8 +322,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 35.0,
+                        SizedBox(
+                          height: Dimentions.height10 * 3.5,
                         ),
                         Container(
                           width: double.infinity,
@@ -314,8 +334,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               onPressed: () => onPressed(),
                               btnText: "Save Changes"),
                         ),
-                        const SizedBox(
-                          height: 30.0,
+                        SizedBox(
+                          height: Dimentions.height10 * 3,
                         ),
                       ],
                     ),
@@ -323,7 +343,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
-        )
+          )
         : const SplashScreen(
             btnDisableStatus: true,
           );

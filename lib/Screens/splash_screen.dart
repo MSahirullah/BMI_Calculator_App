@@ -24,40 +24,40 @@ class _SplashScreenState extends State<SplashScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Image(
-                image: AssetImage(
+              Image(
+                image: const AssetImage(
                   "assets/logo/bmi-logo-png.png",
                 ),
-                height: 65.0,
+                height: Dimentions.height10 * 6.5,
               ),
-              const SizedBox(
-                height: 15.0,
+              SizedBox(
+                height: Dimentions.height15,
               ),
               Text(
                 "BMI CALCULATOR",
                 style: TextStyle(
                   color: AppColors.mainColor,
-                  fontSize: 25.0,
+                  fontSize: Dimentions.height10 * 2.5,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(
-                height: 5.0,
+              SizedBox(
+                height: Dimentions.height10 * 0.5,
               ),
               Text(
                 "Let's control your fitness",
                 style: TextStyle(color: AppColors.greyColor),
               ),
-              const SizedBox(
-                height: 25.0,
+              SizedBox(
+                height: Dimentions.height10 * 2.5,
               ),
               const Image(
                 image: AssetImage(
                   "assets/images/splash-image.png",
                 ),
               ),
-              const SizedBox(
-                height: 30.0,
+              SizedBox(
+                height: Dimentions.height10 * 3,
               ),
               CustomTextButton(
                 disabled: widget.btnDisableStatus,
@@ -80,9 +80,9 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Container(
                 color: AppColors.redColor,
                 width: Dimentions.screenWidth,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 1.0,
-                  horizontal: 10.0,
+                padding: EdgeInsets.symmetric(
+                  vertical: Dimentions.pxH,
+                  horizontal: Dimentions.width10,
                 ),
                 child: const Text(
                   "No Internet connection.",

@@ -14,43 +14,45 @@ class ErrorScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Image(
-            image: AssetImage(
+          Image(
+            image: const AssetImage(
               "assets/logo/bmi-logo-png.png",
             ),
-            height: 65.0,
+            height: Dimentions.height10 * 6.5,
           ),
-          const SizedBox(
-            height: 15.0,
+          SizedBox(
+            height: Dimentions.height15,
           ),
           Text(
             "BMI CALCULATOR",
             style: TextStyle(
               color: AppColors.mainColor,
-              fontSize: 25.0,
+              fontSize: Dimentions.height10 * 2.5,
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(
-            height: 5.0,
+          SizedBox(
+            height: Dimentions.pxH * 5,
           ),
           Text(
             "Let's control your fitness",
             style: TextStyle(color: AppColors.greyColor),
           ),
-          const SizedBox(
-            height: 25.0,
+          SizedBox(
+            height: Dimentions.height10 * 2.5,
           ),
           Container(
-            margin: const EdgeInsets.all(25.0),
+            margin: EdgeInsets.symmetric(
+                vertical: Dimentions.height10 * 2.5,
+                horizontal: Dimentions.width10 * 2.5),
             child: const Image(
               image: AssetImage(
                 "assets/images/error-image.png",
               ),
             ),
           ),
-          const SizedBox(
-            height: 30.0,
+          SizedBox(
+            height: Dimentions.height10 * 3,
           ),
           CustomTextButton(
             icon: FontAwesomeIcons.arrowRotateLeft,

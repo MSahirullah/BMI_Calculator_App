@@ -1,4 +1,5 @@
 import 'package:bmi_calculator/models/bmi_data.dart';
+import 'package:bmi_calculator/utils/dimentions.dart';
 import 'package:flutter/material.dart';
 
 class BMIHistoryCard extends StatelessWidget {
@@ -10,7 +11,7 @@ class BMIHistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 5.0),
+        SizedBox(height: Dimentions.pxH * 5),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -21,8 +22,8 @@ class BMIHistoryCard extends StatelessWidget {
             Text(bmiData.bmi),
           ],
         ),
-        const SizedBox(height: 5.0),
-        const Divider(height: 5),
+        SizedBox(height: Dimentions.pxH * 5),
+        Divider(height: Dimentions.pxH * 5),
       ],
     );
   }

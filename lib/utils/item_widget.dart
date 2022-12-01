@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bmi_calculator/utils/dimentions.dart';
 import 'package:flutter/material.dart';
 
 class ItemWidget extends StatefulWidget {
@@ -39,13 +40,13 @@ class _ItemWidgetState extends State<ItemWidget> {
   Widget build(BuildContext context) {
     return FittedBox(
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 1,
+        padding: EdgeInsets.symmetric(
+          horizontal: Dimentions.width10,
+          vertical: Dimentions.pxH,
         ),
         decoration: BoxDecoration(
           color: widget.backgroundColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(Dimentions.height10),
         ),
         child: RotatedBox(
           quarterTurns: 1,
@@ -55,9 +56,11 @@ class _ItemWidgetState extends State<ItemWidget> {
             children: <Widget>[
               Text(
                 "|",
-                style: TextStyle(fontSize: 8, color: widget.curItem["color"]),
+                style: TextStyle(
+                    fontSize: Dimentions.pxH * 8,
+                    color: widget.curItem["color"]),
               ),
-              const SizedBox(height: 5),
+              SizedBox(height: Dimentions.pxH * 5),
               RichText(
                 text: TextSpan(
                   children: [
@@ -94,10 +97,12 @@ class _ItemWidgetState extends State<ItemWidget> {
                   ],
                 ),
               ),
-              const SizedBox(height: 5),
+              SizedBox(height: Dimentions.pxH * 5),
               Text(
                 "|",
-                style: TextStyle(fontSize: 8, color: widget.curItem["color"]),
+                style: TextStyle(
+                    fontSize: Dimentions.pxH * 8,
+                    color: widget.curItem["color"]),
               ),
             ],
           ),

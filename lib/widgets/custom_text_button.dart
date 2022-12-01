@@ -7,7 +7,7 @@ class CustomTextButton extends StatelessWidget {
       {super.key,
       required this.onPressed,
       required this.btnText,
-      this.width = 200.0,
+      this.width = 0.0,
       this.icon,
       required this.isHaveIcon,
       this.disabled = false});
@@ -27,18 +27,18 @@ class CustomTextButton extends StatelessWidget {
         elevation: 2.0,
         padding: const EdgeInsets.all(0.0),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(Dimentions.pxH * 30),
         ),
       ),
       child: Ink(
-        width: width,
+        width: width == 0.0 ? Dimentions.pxW * 200 : width,
         decoration: BoxDecoration(
           gradient: AppColors.linearGradient,
-          borderRadius: BorderRadius.circular(50.0),
+          borderRadius: BorderRadius.circular(Dimentions.pxH * 50),
         ),
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 13.0,
+          padding: EdgeInsets.symmetric(
+            vertical: Dimentions.pxH * 13,
           ),
           alignment: Alignment.center,
           child: Row(
@@ -48,15 +48,15 @@ class CustomTextButton extends StatelessWidget {
                   ? FaIcon(
                       icon,
                       color: Colors.white,
-                      size: 16.0,
+                      size: Dimentions.pxH * 16,
                     )
                   : Container(),
-              isHaveIcon ? const SizedBox(width: 15.0) : Container(),
+              isHaveIcon ? SizedBox(width: Dimentions.width15) : Container(),
               Text(
                 btnText,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
-                  fontSize: 15.0,
+                  fontSize: Dimentions.height15,
                 ),
                 textAlign: TextAlign.center,
               ),

@@ -37,22 +37,22 @@ class ResultWidget extends StatelessWidget {
                   style: TextStyle(
                     color: AppColors.secondaryColor,
                     fontWeight: FontWeight.w600,
-                    fontSize: 16.0,
+                    fontSize: Dimentions.pxH * 16,
                   ),
                 ),
-                const SizedBox(
-                  height: 10.0,
+                SizedBox(
+                  height: Dimentions.height10,
                 ),
                 Text(
                   bmiResult.toStringAsFixed(2),
                   style: TextStyle(
                     color: AppColors.mainColor,
                     fontWeight: FontWeight.w600,
-                    fontSize: 35.0,
+                    fontSize: Dimentions.height10 * 3.5,
                   ),
                 ),
-                const SizedBox(
-                  height: 15.0,
+                SizedBox(
+                  height: Dimentions.height15,
                 ),
               ],
             ),
@@ -100,8 +100,8 @@ class ResultWidget extends StatelessWidget {
                   width: 25,
                 ),
               ]),
-          const SizedBox(
-            height: 30.0,
+          SizedBox(
+            height: Dimentions.height10 * 3,
           ),
           Align(
             alignment: Alignment.center,
@@ -115,15 +115,15 @@ class ResultWidget extends StatelessWidget {
                     style: TextStyle(
                       color: textResultColor,
                       fontWeight: FontWeight.w600,
-                      fontSize: 18.0,
+                      fontSize: Dimentions.pxH * 18.0,
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(
-            height: 20.0,
+          SizedBox(
+            height: Dimentions.height10 * 2,
           ),
           Align(
             alignment: Alignment.center,
@@ -133,19 +133,21 @@ class ResultWidget extends StatelessWidget {
               style: TextStyle(
                 color: AppColors.secondaryColor,
                 fontWeight: FontWeight.w500,
-                fontSize: 14.0,
+                fontSize: Dimentions.pxH * 14,
               ),
             ),
           ),
-          const SizedBox(
-            height: 20.0,
+          SizedBox(
+            height: Dimentions.height10 * 2,
           ),
           textResult != "NORMAL WEIGHT!"
               ? Container(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: Dimentions.height10,
+                      horizontal: Dimentions.width10),
                   width: Dimentions.screenWidth * 0.75,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(Dimentions.height10),
                     color: Theme.of(context).primaryColor.withOpacity(0.7),
                   ),
                   child: Row(
@@ -156,45 +158,45 @@ class ResultWidget extends StatelessWidget {
                         Icons.info_outline_rounded,
                         color: Colors.white,
                       ),
-                      const SizedBox(width: 10.0),
+                      SizedBox(width: Dimentions.width10),
                       Flexible(
                         child: RichText(
                           text: TextSpan(
                             text:
                                 "A healthy weight range for your height is between ",
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.white,
-                              fontSize: 15.0,
+                              fontSize: Dimentions.height15,
                             ),
                             children: <TextSpan>[
                               TextSpan(
                                 text: "${reduceMinWeight}kg",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 15.0,
+                                  fontSize: Dimentions.height15,
                                 ),
                               ),
-                              const TextSpan(
+                              TextSpan(
                                 text: " & ",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15.0,
+                                  fontSize: Dimentions.height15,
                                 ),
                               ),
                               TextSpan(
                                 text: "${reduceMaxWeight}kg",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,
-                                  fontSize: 15.0,
+                                  fontSize: Dimentions.height15,
                                 ),
                               ),
-                              const TextSpan(
+                              TextSpan(
                                 text: ".",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 15.0,
+                                  fontSize: Dimentions.height15,
                                 ),
                               ),
                             ],

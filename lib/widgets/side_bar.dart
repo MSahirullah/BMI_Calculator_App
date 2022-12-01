@@ -30,35 +30,36 @@ class _SideBarState extends State<SideBar> {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: AppColors.mainColor,
-      width: 275.0,
+      width: Dimentions.pxW * 275,
       child: ListView(
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 20.0,
-              vertical: 20.0,
+            margin: EdgeInsets.symmetric(
+              horizontal: Dimentions.width10 * 2,
+              vertical: Dimentions.height10 * 2,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 5.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimentions.width15,
+                      vertical: Dimentions.height10 / 2),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 10.0),
+                        margin: EdgeInsets.only(bottom: Dimentions.height10),
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
+                          borderRadius: BorderRadius.all(
                             Radius.circular(
-                              100.0,
+                              Dimentions.height10 * 10,
                             ),
                           ),
                           border: Border.all(
                             color: Colors.white,
-                            width: 2.0,
+                            width: Dimentions.pxW * 2,
                           ),
                         ),
                         child: GestureDetector(
@@ -76,7 +77,7 @@ class _SideBarState extends State<SideBar> {
                           },
                           child: CircleAvatar(
                             backgroundColor: Colors.white,
-                            radius: 60.0,
+                            radius: Dimentions.height10 * 6,
                             child: CachedNetworkImage(
                               placeholder: (context, url) =>
                                   const CircularProgressIndicator(
@@ -85,11 +86,11 @@ class _SideBarState extends State<SideBar> {
                               imageUrl: profile,
                               imageBuilder: (context, imageProvider) =>
                                   Container(
-                                width: 120.0,
-                                height: 120.0,
+                                width: Dimentions.width10 * 12,
+                                height: Dimentions.height10 * 12,
                                 decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(70.0),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(Dimentions.height10 * 7),
                                   ),
                                   image: DecorationImage(
                                     fit: BoxFit.fitWidth,
@@ -117,25 +118,25 @@ class _SideBarState extends State<SideBar> {
                         },
                         child: Text(
                           name,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
-                            fontSize: 15.0,
+                            fontSize: Dimentions.height15,
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 20.0,
+                SizedBox(
+                  height: Dimentions.height10 * 2,
                 ),
-                const Divider(
+                Divider(
                   color: Colors.white,
-                  height: 2.0,
+                  height: Dimentions.pxH * 2,
                 ),
-                const SizedBox(
-                  height: 10.0,
+                SizedBox(
+                  height: Dimentions.height10,
                 ),
                 ListView(
                   shrinkWrap: true,

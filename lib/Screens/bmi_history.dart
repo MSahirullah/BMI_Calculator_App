@@ -48,7 +48,7 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                 ),
                 actions: [
                   Container(
-                    margin: const EdgeInsets.only(right: 20.0),
+                    margin: EdgeInsets.only(right: Dimentions.width10 * 2),
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -65,15 +65,15 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                       },
                       child: Center(
                         child: _loading == false
-                            ? const FaIcon(
+                            ? FaIcon(
                                 FontAwesomeIcons.trash,
                                 color: Colors.white,
-                                size: 18.0,
+                                size: Dimentions.pxH * 18,
                               )
-                            : const SizedBox(
-                                height: 20.0,
-                                width: 20.0,
-                                child: CircularProgressIndicator(
+                            : SizedBox(
+                                height: Dimentions.height10 * 2,
+                                width: Dimentions.width10 * 2,
+                                child: const CircularProgressIndicator(
                                   color: Colors.white,
                                   strokeWidth: 2.0,
                                 ),
@@ -85,14 +85,18 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
               ),
               backgroundColor: AppColors.mainColorWithO1,
               body: Container(
-                padding: const EdgeInsets.all(15.0),
+                padding: EdgeInsets.symmetric(
+                    vertical: Dimentions.height15,
+                    horizontal: Dimentions.width15),
                 child: Column(
                   children: [
                     Card(
                       elevation: 0.0,
                       child: Container(
-                        padding: const EdgeInsets.only(
-                            top: 8.0, left: 4.0, right: 4.0, bottom: 8.0),
+                        padding: EdgeInsets.symmetric(
+                          vertical: Dimentions.pxH * 8,
+                          horizontal: Dimentions.pxW * 4,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -112,7 +116,9 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                     Expanded(
                       child: Card(
                         child: Container(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimentions.pxW * 12,
+                              vertical: Dimentions.pxH * 12),
                           child: StreamBuilder(
                             stream: Database(
                                     fireStore: widget.fireStore,
@@ -130,8 +136,8 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                                       children: [
                                         const Text(
                                             "You don't have any history data."),
-                                        const SizedBox(
-                                          height: 20.0,
+                                        SizedBox(
+                                          height: Dimentions.height10 * 2,
                                         ),
                                         GestureDetector(
                                           onTap: () {
@@ -149,20 +155,20 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                                                 MainAxisAlignment.center,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
-                                            children: const [
+                                            children: [
                                               Text(
                                                 "Go to Home",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w500,
-                                                  fontSize: 14.0,
+                                                  fontSize: Dimentions.pxH * 14,
                                                 ),
                                               ),
                                               SizedBox(
-                                                width: 5.0,
+                                                width: Dimentions.pxW * 5,
                                               ),
                                               Icon(
                                                 FontAwesomeIcons.arrowRight,
-                                                size: 16.0,
+                                                size: Dimentions.pxH * 16,
                                               ),
                                             ],
                                           ),

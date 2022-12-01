@@ -56,7 +56,7 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
       valueMap.add({
         "value": widget.minValue +
             ((widget.maxValue - widget.minValue) / widget.divisions) * i,
-        "fontSize": 14.0,
+        "fontSize": Dimentions.pxH * 14,
         "color": widget.passiveItemsTextColor,
       });
     }
@@ -78,7 +78,8 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: EdgeInsets.symmetric(
+          horizontal: Dimentions.pxW * 8, vertical: Dimentions.pxH * 8),
       height: widget.height,
       alignment: Alignment.center,
       color: widget.backgroundColor,
@@ -105,15 +106,16 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
             visible: widget.showCursor,
             child: Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.all(1),
+              padding: EdgeInsets.symmetric(
+                  horizontal: Dimentions.pxW, vertical: Dimentions.pxH),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(Dimentions.height10),
                   ),
                   color: widget.cursorColor.withOpacity(0.3),
                 ),
-                width: 3,
+                width: Dimentions.pxW * 3,
               ),
             ),
           )
@@ -131,11 +133,11 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
     for (var i = 0; i < valueMap.length; i++) {
       if (i == item) {
         valueMap[item]["color"] = widget.activeItemTextColor;
-        valueMap[item]["fontSize"] = 18.0;
+        valueMap[item]["fontSize"] = Dimentions.pxH * 18;
         valueMap[item]["hasBorders"] = true;
       } else {
         valueMap[i]["color"] = widget.passiveItemsTextColor;
-        valueMap[i]["fontSize"] = 16.0;
+        valueMap[i]["fontSize"] = Dimentions.pxH * 16;
         valueMap[i]["hasBorders"] = false;
       }
     }

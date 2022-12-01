@@ -135,15 +135,18 @@ class _HomeScreenState extends State<HomeScreen> {
           GestureDetector(
             onTap: () {
               signOut();
+              setState(() {});
             },
             child: Container(
-              margin: const EdgeInsets.only(right: 10.0),
-              padding: const EdgeInsets.all(10.0),
-              child: const Center(
+              margin: EdgeInsets.only(right: Dimentions.width10),
+              padding: EdgeInsets.symmetric(
+                  vertical: Dimentions.height10,
+                  horizontal: Dimentions.width10),
+              child: Center(
                 child: FaIcon(
                   FontAwesomeIcons.rightFromBracket,
                   color: Colors.white,
-                  size: 20.0,
+                  size: Dimentions.height10 * 2,
                 ),
               ),
             ),
@@ -153,8 +156,9 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.backgroundColor,
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(
-            20.0,
+          padding: EdgeInsets.symmetric(
+            vertical: Dimentions.height10 * 2,
+            horizontal: Dimentions.width10 * 2,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,31 +169,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   //Gender Card
                   Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(Dimentions.height10),
                     ),
                     elevation: 1.0,
                     child: Container(
-                      height: 145.0,
+                      height: Dimentions.height10 * 14.5,
                       width:
                           (Dimentions.screenWidth - (Dimentions.width10 * 6)) /
                               2,
-                      padding: const EdgeInsets.all(10.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: Dimentions.height10,
+                          horizontal: Dimentions.width10),
                       child: Column(
                         children: [
                           Text(
                             "GENDER",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 16.0,
+                              fontSize: Dimentions.pxH * 16,
                               color: AppColors.secondaryColor,
                             ),
                           ),
-                          const SizedBox(
-                            height: 15.0,
+                          SizedBox(
+                            height: Dimentions.height15,
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: Dimentions.pxW * 8,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -204,9 +210,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
+                                          borderRadius: BorderRadius.all(
                                             Radius.circular(
-                                              28.0,
+                                              Dimentions.pxH * 28,
                                             ),
                                           ),
                                           border: Border.all(
@@ -218,24 +224,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         child: CircleAvatar(
                                           backgroundColor: Colors.white,
-                                          maxRadius: 26.0,
+                                          maxRadius: Dimentions.pxH * 26,
                                           child: ClipOval(
                                             child: Image.asset(
                                               'assets/images/male.png',
                                               fit: BoxFit.cover,
-                                              width: 100,
-                                              height: 100,
+                                              width: Dimentions.width10 * 10,
+                                              height: Dimentions.height10 * 10,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 4.0,
+                                      SizedBox(
+                                        height: Dimentions.pxH * 4,
                                       ),
                                       Text(
                                         "Male",
                                         style: TextStyle(
-                                          fontSize: 13.0,
+                                          fontSize: Dimentions.pxH * 13,
                                           fontWeight: FontWeight.w500,
                                           color: _genderSelected == 'Male'
                                               ? AppColors.secondaryColor
@@ -255,9 +261,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
+                                          borderRadius: BorderRadius.all(
                                             Radius.circular(
-                                              28.0,
+                                              Dimentions.pxH * 28,
                                             ),
                                           ),
                                           border: Border.all(
@@ -269,24 +275,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         child: CircleAvatar(
                                           backgroundColor: Colors.white,
-                                          maxRadius: 26.0,
+                                          maxRadius: Dimentions.pxH * 26,
                                           child: ClipOval(
                                             child: Image.asset(
                                               'assets/images/female.png',
                                               fit: BoxFit.cover,
-                                              width: 100,
-                                              height: 100,
+                                              width: Dimentions.width10 * 10,
+                                              height: Dimentions.height10 * 10,
                                             ),
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 4.0,
+                                      SizedBox(
+                                        height: Dimentions.pxH * 4,
                                       ),
                                       Text(
                                         "Female",
                                         style: TextStyle(
-                                          fontSize: 13.0,
+                                          fontSize: Dimentions.pxH * 13,
                                           fontWeight: FontWeight.w500,
                                           color: _genderSelected == 'Female'
                                               ? AppColors.secondaryColor
@@ -299,8 +305,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-                          const SizedBox(
-                            height: 8.0,
+                          SizedBox(
+                            height: Dimentions.pxH * 8,
                           ),
                         ],
                       ),
@@ -309,69 +315,62 @@ class _HomeScreenState extends State<HomeScreen> {
                   //Age Card
                   Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(Dimentions.height10),
                     ),
                     elevation: 1.0,
                     child: Container(
-                      height: 145,
+                      height: Dimentions.height10 * 14.5,
                       width:
                           (Dimentions.screenWidth - (Dimentions.width10 * 6)) /
                               2,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 9.0,
+                      padding: EdgeInsets.symmetric(
+                        vertical: Dimentions.height10,
+                        horizontal: Dimentions.pxW * 9,
                       ),
                       child: Column(
                         children: [
                           Text(
                             "AGE",
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: Dimentions.pxH * 16,
                               fontWeight: FontWeight.w600,
                               color: AppColors.secondaryColor,
                             ),
                           ),
-                          const SizedBox(
-                            height: 25.0,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 0.0,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SliderTheme(
-                                  data: SliderThemeData(
-                                    overlayShape: SliderComponentShape.noThumb,
-                                    activeTrackColor:
-                                        AppColors.mainColor.withOpacity(0.9),
-                                    thumbColor: AppColors.mainColor,
-                                    inactiveTrackColor:
-                                        AppColors.mainColor.withOpacity(0.3),
-                                  ),
-                                  child: SizedBox(
-                                    width: (Dimentions.screenWidth -
-                                            (Dimentions.width10 * 10)) /
-                                        2,
-                                    child: Slider(
-                                      value: _age.toDouble(),
-                                      max: 100,
-                                      min: 1,
-                                      label: _age.round().toString(),
-                                      onChanged: (double value) {
-                                        setState(() {
-                                          _age = value.toInt();
-                                        });
-                                      },
-                                    ),
+                          SizedBox(height: Dimentions.height10 * 2.5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SliderTheme(
+                                data: SliderThemeData(
+                                  overlayShape: SliderComponentShape.noThumb,
+                                  activeTrackColor:
+                                      AppColors.mainColor.withOpacity(0.9),
+                                  thumbColor: AppColors.mainColor,
+                                  inactiveTrackColor:
+                                      AppColors.mainColor.withOpacity(0.3),
+                                ),
+                                child: SizedBox(
+                                  width: (Dimentions.screenWidth -
+                                          (Dimentions.width10 * 10)) /
+                                      2,
+                                  child: Slider(
+                                    value: _age.toDouble(),
+                                    max: 100,
+                                    min: 1,
+                                    label: _age.round().toString(),
+                                    onChanged: (double value) {
+                                      setState(() {
+                                        _age = value.toInt();
+                                      });
+                                    },
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 15.0,
+                          SizedBox(
+                            height: Dimentions.height15,
                           ),
                           Text(
                             _age.toInt().toString(),
@@ -380,8 +379,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const SizedBox(
-                            height: 8.0,
+                          SizedBox(
+                            height: Dimentions.pxH * 8,
                           ),
                         ],
                       ),
@@ -389,16 +388,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20.0),
+              SizedBox(height: Dimentions.height10 * 2),
               //Weight Card
               Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(Dimentions.height10),
                 ),
                 elevation: 1.0,
                 child: Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(10.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: Dimentions.height10,
+                      horizontal: Dimentions.width10),
                   child: Column(
                     children: [
                       SizedBox(
@@ -412,7 +413,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "WEIGHT (kg)",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 16.0,
+                                    fontSize: Dimentions.pxH * 16,
                                     color: AppColors.secondaryColor,
                                   ),
                                 ),
@@ -454,7 +455,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Icon(
                                   weighIcon,
-                                  size: 22.0,
+                                  size: Dimentions.pxH * 22,
                                   color: AppColors.secondaryColor,
                                 ),
                               ),
@@ -462,12 +463,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 15.0,
+                      SizedBox(
+                        height: Dimentions.height15,
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Dimentions.pxH * 8,
                         ),
                         child: weightInputChanger
                             ? HorizontalPicker(
@@ -489,11 +490,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     _weight = value;
                                   });
                                 },
-                                height: 75.0,
+                                height: Dimentions.height10 * 7.58,
                               )
                             : Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 13.0, bottom: 10.0),
+                                padding: EdgeInsets.only(
+                                    top: Dimentions.pxH * 13,
+                                    bottom: Dimentions.height10),
                                 child: TextFormField(
                                   onChanged: (value) {
                                     setState(() {
@@ -507,8 +509,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   controller: weightController,
                                   key: const ValueKey('Weight'),
-                                  style: const TextStyle(
-                                    fontSize: 15.0,
+                                  style: TextStyle(
+                                    fontSize: Dimentions.height10 * 1.5,
                                   ),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -520,24 +522,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                       TextCapitalization.sentences,
                                   decoration: InputDecoration(
                                     suffixText: "kg",
-                                    contentPadding: const EdgeInsets.all(16.0),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: Dimentions.pxW * 16,
+                                        vertical: Dimentions.pxH * 16),
                                     labelText: "",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: 15.0,
+                                      fontSize: Dimentions.height10 * 1.5,
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: AppColors.inputFieldBorder),
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimentions.pxH * 8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimentions.pxH * 8),
                                       borderSide: BorderSide(
                                           color: AppColors.inputFieldBorder),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimentions.pxH * 8),
                                       borderSide: BorderSide(
                                           color: AppColors.inputFieldBorder),
                                     ),
@@ -545,23 +552,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                       ),
-                      const SizedBox(
-                        height: 8.0,
+                      SizedBox(
+                        height: Dimentions.pxH * 8,
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 20.0),
+              SizedBox(height: Dimentions.height10 * 2),
               //Height Card
               Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(Dimentions.height10),
                 ),
                 elevation: 1.0,
                 child: Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(10.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimentions.width10,
+                      vertical: Dimentions.height10),
                   child: Column(
                     children: [
                       SizedBox(
@@ -572,10 +581,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Height (cm)",
+                                  "HEIGHT (cm)",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 16.0,
+                                    fontSize: Dimentions.pxH * 16,
                                     color: AppColors.secondaryColor,
                                   ),
                                 ),
@@ -619,7 +628,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 },
                                 child: Icon(
                                   heightIcon,
-                                  size: 22.0,
+                                  size: Dimentions.pxH * 22,
                                   color: AppColors.secondaryColor,
                                 ),
                               ),
@@ -627,12 +636,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 15.0,
+                      SizedBox(
+                        height: Dimentions.pxH * 15,
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Dimentions.pxW * 8,
                         ),
                         child: heightInputChanger
                             ? HorizontalPicker(
@@ -653,11 +662,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     _height = value;
                                   });
                                 },
-                                height: 75.0,
+                                height: Dimentions.height10 * 7.58,
                               )
                             : Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 13.0, bottom: 10.0),
+                                padding: EdgeInsets.only(
+                                    top: Dimentions.pxH * 13,
+                                    bottom: Dimentions.height10),
                                 child: TextFormField(
                                   onChanged: (value) {
                                     setState(() {
@@ -670,8 +680,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   controller: heightController,
                                   key: const ValueKey('Height'),
-                                  style: const TextStyle(
-                                    fontSize: 15.0,
+                                  style: TextStyle(
+                                    fontSize: Dimentions.height15,
                                   ),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -683,24 +693,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                       TextCapitalization.sentences,
                                   decoration: InputDecoration(
                                     suffixText: "cm",
-                                    contentPadding: const EdgeInsets.all(16.0),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: Dimentions.pxW * 16,
+                                        vertical: Dimentions.pxH * 16),
                                     labelText: "",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: 15.0,
+                                      fontSize: Dimentions.height15,
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: AppColors.inputFieldBorder),
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimentions.pxH * 8),
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimentions.pxH * 8),
                                       borderSide: BorderSide(
                                           color: AppColors.inputFieldBorder),
                                     ),
                                     focusedErrorBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(
+                                          Dimentions.pxH * 8),
                                       borderSide: BorderSide(
                                           color: AppColors.inputFieldBorder),
                                     ),
@@ -708,14 +723,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                       ),
-                      const SizedBox(
-                        height: 8.0,
+                      SizedBox(
+                        height: Dimentions.pxH * 8,
                       ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 15.0),
+              SizedBox(height: Dimentions.height15),
               //Save my Data
               Row(
                 children: [
@@ -727,7 +742,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                   ),
-                  const SizedBox(width: 2.0),
+                  SizedBox(width: Dimentions.pxW * 2),
                   Text(
                     'Save weight & height as my profile data',
                     style: TextStyle(
@@ -737,7 +752,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 25.0),
+              SizedBox(height: Dimentions.height10 * 2.5),
               Align(
                 alignment: Alignment.center,
                 child: CustomTextButton(
@@ -837,7 +852,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           textInfo: _textInfo,
                           textResultColor: _textResultColor,
                         ),
-                        actionsPadding: const EdgeInsets.only(bottom: 20.0),
+                        actionsPadding:
+                            EdgeInsets.only(bottom: Dimentions.height10 * 2),
                         actionsAlignment: MainAxisAlignment.spaceAround,
                         actions: <Widget>[
                           IconButton(
@@ -857,7 +873,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: Icon(
                               Icons.history,
                               color: AppColors.secondaryColor,
-                              size: 26.0,
+                              size: Dimentions.pxH * 26,
                             ),
                           ),
                           IconButton(
@@ -871,15 +887,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.of(context).pop();
                             },
                             icon: Container(
-                              height: 50.0,
-                              width: 50.0,
+                              height: Dimentions.height10 * 5,
+                              width: Dimentions.width10 * 5,
                               decoration: BoxDecoration(
                                   color: AppColors.mainColor,
-                                  borderRadius: BorderRadius.circular(30.0)),
-                              child: const Icon(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimentions.height10 * 3)),
+                              child: Icon(
                                 Icons.refresh,
                                 color: Colors.white,
-                                size: 26.0,
+                                size: Dimentions.pxH * 26,
                               ),
                             ),
                           ),
@@ -891,7 +908,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: Icon(
                               Icons.share,
                               color: AppColors.secondaryColor,
-                              size: 26.0,
+                              size: Dimentions.pxH * 26,
                             ),
                           ),
                         ],
@@ -945,5 +962,6 @@ class _HomeScreenState extends State<HomeScreen> {
   signOut() async {
     final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
     provider.logout();
+    setState(() {});
   }
 }
