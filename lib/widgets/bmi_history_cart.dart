@@ -16,10 +16,31 @@ class BMIHistoryCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(bmiData.date.substring(0, 11)),
-            Text(bmiData.weight),
-            Text(bmiData.height, textAlign: TextAlign.end),
-            Text(bmiData.bmi),
+            Text(
+              bmiData.date.substring(0, 11),
+              style: TextStyle(
+                fontSize: Dimentions.height10 * 1.6,
+              ),
+            ),
+            Text(
+              bmiData.weight,
+              style: TextStyle(
+                fontSize: Dimentions.height10 * 1.6,
+              ),
+            ),
+            Text(
+              bmiData.height,
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: Dimentions.height10 * 1.6,
+              ),
+            ),
+            Text(
+              bmiData.bmi,
+              style: TextStyle(
+                fontSize: Dimentions.height10 * 1.6,
+              ),
+            ),
           ],
         ),
         SizedBox(height: Dimentions.pxH * 5),

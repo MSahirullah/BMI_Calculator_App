@@ -121,7 +121,7 @@ class _SideBarState extends State<SideBar> {
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
-                            fontSize: Dimentions.height15,
+                            fontSize: Dimentions.height10 * 1.8,
                           ),
                         ),
                       ),
@@ -156,8 +156,8 @@ class _SideBarState extends State<SideBar> {
                           ),
                         );
                       },
-                      child: const ListTile(
-                        leading: Icon(
+                      child: ListTile(
+                        leading: const Icon(
                           Icons.person_outline_rounded,
                           color: Colors.white,
                         ),
@@ -166,6 +166,7 @@ class _SideBarState extends State<SideBar> {
                           'My Profile',
                           style: TextStyle(
                             color: Colors.white,
+                            fontSize: Dimentions.height10 * 1.7,
                           ),
                         ),
                       ),
@@ -183,8 +184,8 @@ class _SideBarState extends State<SideBar> {
                           ),
                         );
                       },
-                      child: const ListTile(
-                        leading: Icon(
+                      child: ListTile(
+                        leading: const Icon(
                           Icons.history,
                           color: Colors.white,
                         ),
@@ -193,6 +194,7 @@ class _SideBarState extends State<SideBar> {
                           'BMI History',
                           style: TextStyle(
                             color: Colors.white,
+                            fontSize: Dimentions.height10 * 1.7,
                           ),
                         ),
                       ),
@@ -210,8 +212,8 @@ class _SideBarState extends State<SideBar> {
                           ),
                         );
                       },
-                      child: const ListTile(
-                        leading: Icon(
+                      child: ListTile(
+                        leading: const Icon(
                           Icons.settings,
                           color: Colors.white,
                         ),
@@ -220,6 +222,7 @@ class _SideBarState extends State<SideBar> {
                           'Settings',
                           style: TextStyle(
                             color: Colors.white,
+                            fontSize: Dimentions.height10 * 1.7,
                           ),
                         ),
                       ),

@@ -93,7 +93,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           "Weight Settings",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: Dimentions.pxH * 16,
+                            fontSize: Dimentions.pxH * 18,
                             color: AppColors.secondaryColor,
                           ),
                         ),
@@ -101,6 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           height: Dimentions.height10,
                         ),
                         Card(
+                          margin: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(Dimentions.height10),
@@ -116,6 +117,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextFormField(
+                                  style: TextStyle(
+                                    fontSize: Dimentions.height10 * 1.8,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                   controller: minWeightController,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -153,12 +158,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     labelText: "Min Weight",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: Dimentions.height15,
+                                      fontSize: Dimentions.height10 * 1.8,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
                                 SizedBox(height: Dimentions.height15),
                                 TextFormField(
+                                  style: TextStyle(
+                                    fontSize: Dimentions.height10 * 1.8,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                   controller: maxWeightController,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -196,7 +206,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     labelText: "Max Weight",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: Dimentions.height15,
+                                      fontSize: Dimentions.height10 * 1.8,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
@@ -211,7 +222,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           "Height Settings",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: Dimentions.pxH * 16,
+                            fontSize: Dimentions.pxH * 18,
                             color: AppColors.secondaryColor,
                           ),
                         ),
@@ -223,6 +234,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             borderRadius:
                                 BorderRadius.circular(Dimentions.height10),
                           ),
+                          margin: EdgeInsets.zero,
                           elevation: 1.0,
                           child: Container(
                             width: double.infinity,
@@ -234,6 +246,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextFormField(
+                                  style: TextStyle(
+                                    fontSize: Dimentions.height10 * 1.8,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                   controller: minHeightController,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -271,12 +287,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     labelText: "Min Height",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: Dimentions.height15,
+                                      fontSize: Dimentions.height10 * 1.8,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
                                 SizedBox(height: Dimentions.height15),
                                 TextFormField(
+                                  style: TextStyle(
+                                    fontSize: Dimentions.height10 * 1.8,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                   controller: maxHeightController,
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -314,7 +335,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     labelText: "Max Height",
                                     labelStyle: TextStyle(
                                       color: AppColors.secondaryColor,
-                                      fontSize: Dimentions.height15,
+                                      fontSize: Dimentions.height10 * 1.8,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),

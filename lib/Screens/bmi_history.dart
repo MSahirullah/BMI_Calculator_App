@@ -100,15 +100,23 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.end,
-                          children: const [
+                          children: [
                             Text('Date',
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: Dimentions.height10 * 1.6)),
                             Text('Weight',
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: Dimentions.height10 * 1.6)),
                             Text('Height',
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: Dimentions.height10 * 1.6)),
                             Text('BMI',
-                                style: TextStyle(fontWeight: FontWeight.w600)),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: Dimentions.height10 * 1.6)),
                           ],
                         ),
                       ),
@@ -134,8 +142,12 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        const Text(
-                                            "You don't have any history data."),
+                                        Text(
+                                          "You don't have any history data.",
+                                          style: TextStyle(
+                                            fontSize: Dimentions.pxH * 15,
+                                          ),
+                                        ),
                                         SizedBox(
                                           height: Dimentions.height10 * 2,
                                         ),
@@ -160,7 +172,7 @@ class _BMIHistoryScreenState extends State<BMIHistoryScreen> {
                                                 "Go to Home",
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.w500,
-                                                  fontSize: Dimentions.pxH * 14,
+                                                  fontSize: Dimentions.pxH * 16,
                                                 ),
                                               ),
                                               SizedBox(

@@ -186,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             "GENDER",
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: Dimentions.pxH * 16,
+                              fontSize: Dimentions.pxH * 18,
                               color: AppColors.secondaryColor,
                             ),
                           ),
@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Text(
                                         "Male",
                                         style: TextStyle(
-                                          fontSize: Dimentions.pxH * 13,
+                                          fontSize: Dimentions.pxH * 15,
                                           fontWeight: FontWeight.w500,
                                           color: _genderSelected == 'Male'
                                               ? AppColors.secondaryColor
@@ -292,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Text(
                                         "Female",
                                         style: TextStyle(
-                                          fontSize: Dimentions.pxH * 13,
+                                          fontSize: Dimentions.pxH * 15,
                                           fontWeight: FontWeight.w500,
                                           color: _genderSelected == 'Female'
                                               ? AppColors.secondaryColor
@@ -332,12 +332,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             "AGE",
                             style: TextStyle(
-                              fontSize: Dimentions.pxH * 16,
+                              fontSize: Dimentions.pxH * 18,
                               fontWeight: FontWeight.w600,
                               color: AppColors.secondaryColor,
                             ),
                           ),
-                          SizedBox(height: Dimentions.height10 * 2.5),
+                          SizedBox(height: Dimentions.height10 * 3),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -377,6 +377,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextStyle(
                               color: AppColors.secondaryColor,
                               fontWeight: FontWeight.w500,
+                              fontSize: Dimentions.pxH * 18,
                             ),
                           ),
                           SizedBox(
@@ -397,6 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 1.0,
                 child: Container(
                   width: double.infinity,
+                  height: Dimentions.height10 * 14,
                   padding: EdgeInsets.symmetric(
                       vertical: Dimentions.height10,
                       horizontal: Dimentions.width10),
@@ -413,7 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "WEIGHT (kg)",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: Dimentions.pxH * 16,
+                                    fontSize: Dimentions.pxH * 18,
                                     color: AppColors.secondaryColor,
                                   ),
                                 ),
@@ -510,7 +512,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   controller: weightController,
                                   key: const ValueKey('Weight'),
                                   style: TextStyle(
-                                    fontSize: Dimentions.height10 * 1.5,
+                                    fontSize: Dimentions.height10 * 1.8,
                                   ),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -568,6 +570,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 1.0,
                 child: Container(
                   width: double.infinity,
+                  height: Dimentions.height10 * 14,
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimentions.width10,
                       vertical: Dimentions.height10),
@@ -584,7 +587,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "HEIGHT (cm)",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: Dimentions.pxH * 16,
+                                    fontSize: Dimentions.pxH * 18,
                                     color: AppColors.secondaryColor,
                                   ),
                                 ),
@@ -681,7 +684,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   controller: heightController,
                                   key: const ValueKey('Height'),
                                   style: TextStyle(
-                                    fontSize: Dimentions.height15,
+                                    fontSize: Dimentions.height10 * 1.8,
                                   ),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -748,6 +751,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(
                       color: AppColors.secondaryColor,
                       fontWeight: FontWeight.w500,
+                      fontSize: Dimentions.pxH * 15,
                     ),
                   ),
                 ],

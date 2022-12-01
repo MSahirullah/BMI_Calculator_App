@@ -264,6 +264,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         child: Column(
                           children: [
                             TextFormField(
+                              style: TextStyle(
+                                fontSize: Dimentions.height10 * 1.8,
+                                fontWeight: FontWeight.w600,
+                              ),
                               controller: nameController,
                               validator: (String? fieldContent) {
                                 if (fieldContent == null ||
@@ -283,23 +287,26 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     const Icon(Icons.person_outline_rounded),
                                 prefixIconColor: AppColors.greyColor,
                                 contentPadding: EdgeInsets.symmetric(
-                                    horizontal: Dimentions.width10 * 0.8,
-                                    vertical: Dimentions.height10 * 0.8),
+                                  horizontal: Dimentions.width10 * 0.8,
+                                  vertical: Dimentions.height10 * 0.8,
+                                ),
                                 labelText: "Enter your name",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: Dimentions.height15,
+                                  fontSize: Dimentions.height10 * 1.8,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
                             SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
+                              style: TextStyle(
+                                fontSize: Dimentions.height10 * 1.8,
+                                fontWeight: FontWeight.w600,
+                              ),
                               readOnly: true,
                               controller: genderController,
                               key: const ValueKey("gender"),
-                              style: TextStyle(
-                                fontSize: Dimentions.height15,
-                              ),
                               validator: (String? fieldContent) {
                                 if (fieldContent == null ||
                                     fieldContent.isEmpty) {
@@ -314,12 +321,14 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                         : Icons.boy_rounded),
                                 prefixIconColor: AppColors.greyColor,
                                 contentPadding: EdgeInsets.symmetric(
-                                    horizontal: Dimentions.width10 * 0.8,
-                                    vertical: Dimentions.height10 * 0.8),
+                                  horizontal: Dimentions.width10 * 0.8,
+                                  vertical: Dimentions.height10 * 0.8,
+                                ),
                                 labelText: "Gender",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: Dimentions.height15,
+                                  fontSize: Dimentions.height10 * 1.8,
+                                  fontWeight: FontWeight.w500,
                                 ),
                                 suffixIcon: PopupMenuButton<String>(
                                   elevation: 4,
@@ -345,12 +354,13 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             ),
                             SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
+                              style: TextStyle(
+                                fontSize: Dimentions.height10 * 1.8,
+                                fontWeight: FontWeight.w600,
+                              ),
                               readOnly: true,
                               controller: bdateController,
                               key: const ValueKey("birth_day"),
-                              style: TextStyle(
-                                fontSize: Dimentions.height15,
-                              ),
                               keyboardType: TextInputType.datetime,
                               validator: (String? fieldContent) {
                                 if (fieldContent == null ||
@@ -361,12 +371,14 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               },
                               decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(
-                                    horizontal: Dimentions.width10 * 0.8,
-                                    vertical: Dimentions.height10 * 0.8),
+                                  horizontal: Dimentions.width10 * 0.8,
+                                  vertical: Dimentions.height10 * 0.8,
+                                ),
                                 labelText: "Date of Birth",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: Dimentions.height15,
+                                  fontSize: Dimentions.height10 * 1.8,
+                                  fontWeight: FontWeight.w500,
                                 ),
                                 prefixIcon: Icon(
                                   Icons.date_range,
@@ -403,6 +415,10 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
                               controller: weightController,
+                              style: TextStyle(
+                                fontSize: Dimentions.height10 * 1.8,
+                                fontWeight: FontWeight.w600,
+                              ),
                               keyboardType: TextInputType.number,
                               validator: (String? fieldContent) {
                                 if (fieldContent == null ||
@@ -419,17 +435,23 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 prefixIconColor: AppColors.greyColor,
                                 suffix: const Text("kg"),
                                 contentPadding: EdgeInsets.symmetric(
-                                    horizontal: Dimentions.width10 * 0.8,
-                                    vertical: Dimentions.height10 * 0.8),
+                                  horizontal: Dimentions.width10 * 0.8,
+                                  vertical: Dimentions.height10 * 0.8,
+                                ),
                                 labelText: "Enter your weight",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: Dimentions.height15,
+                                  fontSize: Dimentions.height10 * 1.8,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
                             SizedBox(height: Dimentions.height10 * 2),
                             TextFormField(
+                              style: TextStyle(
+                                fontSize: Dimentions.height10 * 1.8,
+                                fontWeight: FontWeight.w600,
+                              ),
                               controller: heightController,
                               keyboardType: TextInputType.number,
                               validator: (String? fieldContent) {
@@ -447,12 +469,14 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 prefixIconColor: AppColors.greyColor,
                                 suffix: const Text("cm"),
                                 contentPadding: EdgeInsets.symmetric(
-                                    horizontal: Dimentions.width10 * 0.8,
-                                    vertical: Dimentions.height10 * 0.8),
+                                  horizontal: Dimentions.width10 * 0.8,
+                                  vertical: Dimentions.height10 * 0.8,
+                                ),
                                 labelText: "Enter your height",
                                 labelStyle: TextStyle(
                                   color: AppColors.secondaryColor,
-                                  fontSize: Dimentions.height15,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: Dimentions.height10 * 1.8,
                                 ),
                               ),
                             ),

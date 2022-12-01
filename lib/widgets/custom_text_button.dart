@@ -48,7 +48,7 @@ class CustomTextButton extends StatelessWidget {
                   ? FaIcon(
                       icon,
                       color: Colors.white,
-                      size: Dimentions.pxH * 16,
+                      size: Dimentions.pxH * 17,
                     )
                   : Container(),
               isHaveIcon ? SizedBox(width: Dimentions.width15) : Container(),
@@ -56,7 +56,7 @@ class CustomTextButton extends StatelessWidget {
                 btnText,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: Dimentions.height15,
+                  fontSize: Dimentions.pxH * 17,
                 ),
                 textAlign: TextAlign.center,
               ),
