@@ -175,7 +175,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     elevation: 1.0,
                     child: Container(
-                      height: Dimentions.height10 * 14.5,
+                      constraints: const BoxConstraints(
+                        minHeight: 136,
+                        maxHeight: 145,
+                      ),
+                      height: Dimentions.height10 * 15,
                       width:
                           (Dimentions.screenWidth - (Dimentions.width10 * 6)) /
                               2,
@@ -321,7 +325,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     elevation: 1.0,
                     child: Container(
-                      height: Dimentions.height10 * 14.5,
+                      constraints: const BoxConstraints(
+                        minHeight: 136,
+                        maxHeight: 145,
+                      ),
+                      height: Dimentions.height10 * 15,
                       width:
                           (Dimentions.screenWidth - (Dimentions.width10 * 6)) /
                               2,
@@ -400,7 +408,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 1.0,
                 child: Container(
                   width: double.infinity,
-                  height: Dimentions.height10 * 14,
+                  height: Dimentions.height10 * 15,
+                  constraints: const BoxConstraints(
+                    minHeight: 136,
+                    maxHeight: 145,
+                  ),
                   padding: EdgeInsets.symmetric(
                       vertical: Dimentions.height10,
                       horizontal: Dimentions.width10),
@@ -573,7 +585,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 1.0,
                 child: Container(
                   width: double.infinity,
-                  height: Dimentions.height10 * 14,
+                  height: Dimentions.height10 * 15,
+                  constraints: const BoxConstraints(
+                    minHeight: 136,
+                    maxHeight: 145,
+                  ),
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimentions.width10,
                       vertical: Dimentions.height10),

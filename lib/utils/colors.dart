@@ -15,8 +15,8 @@ class AppColors {
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [
-      Color.fromARGB(255, 96, 107, 161),
-      Color.fromARGB(255, 132, 142, 188),
+      Color(0xFF606BA1),
+      Color(0xFF848EBC),
     ],
   );
 
