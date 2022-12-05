@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  static Map<int, Color> appMainColor = {
+    50: AppColors.mainColor.withOpacity(.1),
+    100: AppColors.mainColor.withOpacity(.2),
+    200: AppColors.mainColor.withOpacity(.3),
+    300: AppColors.mainColor.withOpacity(.4),
+    400: AppColors.mainColor.withOpacity(.5),
+    500: AppColors.mainColor.withOpacity(.6),
+    600: AppColors.mainColor.withOpacity(.7),
+    700: AppColors.mainColor.withOpacity(.8),
+    800: AppColors.mainColor.withOpacity(.9),
+    900: AppColors.mainColor.withOpacity(1),
+  };
+
+  static MaterialColor customAppColor = MaterialColor(0xFF606BA1, appMainColor);
+
   static Color mainColor = const Color(0xFF606BA1);
   static Color mainColorWithO1 = const Color(0xFFEFF0F6);
-  
+
   static Color secondaryColor = const Color(0xFF515151);
 
   static Color bottomBox = const Color(0xff5E5E5E);

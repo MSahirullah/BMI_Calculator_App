@@ -22,21 +22,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<int, Color> color = {
-      50: AppColors.mainColor.withOpacity(.1),
-      100: AppColors.mainColor.withOpacity(.2),
-      200: AppColors.mainColor.withOpacity(.3),
-      300: AppColors.mainColor.withOpacity(.4),
-      400: AppColors.mainColor.withOpacity(.5),
-      500: AppColors.mainColor.withOpacity(.6),
-      600: AppColors.mainColor.withOpacity(.7),
-      700: AppColors.mainColor.withOpacity(.8),
-      800: AppColors.mainColor.withOpacity(.9),
-      900: AppColors.mainColor.withOpacity(1),
-    };
-
-    MaterialColor colorCustom = MaterialColor(0xFF606BA1, color);
-
     return StreamProvider<InternetConnectionStatus>(
       initialData: InternetConnectionStatus.connected,
       create: (_) {
@@ -48,7 +33,7 @@ class MyApp extends StatelessWidget {
             title: 'BMI Calculator',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primarySwatch: colorCustom,
+              primarySwatch: AppColors.customAppColor,
               fontFamily: 'OpenSans',
             ),
             home: const LoadingScreen(),
@@ -76,4 +61,3 @@ void configLoading() {
         const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0)
     ..dismissOnTap = true;
 }
-
