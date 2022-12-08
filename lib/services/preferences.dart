@@ -14,6 +14,11 @@ class Preferences {
     await _preferences.setString("dob", dob);
   }
 
+  static Future setGenderAndDoB(String gender, String dob) async {
+    await _preferences.setString("gender", gender);
+    await _preferences.setString("dob", dob);
+  }
+
   static String? getUsername() => _preferences.getString("name");
   static String? getProfile() => _preferences.getString("profile");
   static String? getGender() => _preferences.getString("gender");
@@ -27,8 +32,8 @@ class Preferences {
   static String? getHeight() => _preferences.getString("height");
   static String? getWeight() => _preferences.getString("weight");
 
-  static Future setSettingsData(
-      String minHeight, String maxHeight,String  minWeight, String maxWeight) async {
+  static Future setSettingsData(String minHeight, String maxHeight,
+      String minWeight, String maxWeight) async {
     await _preferences.setString("minHeight", minHeight);
     await _preferences.setString("maxHeight", maxHeight);
     await _preferences.setString("minWeight", minWeight);

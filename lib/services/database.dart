@@ -127,6 +127,8 @@ class Database {
     required String uid,
     required String weight,
     required String height,
+    required String gender,
+    required String dob,
   }) async {
     try {
       fireStore
@@ -137,6 +139,8 @@ class Database {
           .update({
         "weight": weight,
         "height": height,
+        "dob": dob,
+        "gender": gender,
       });
       return true;
     } catch (e) {
@@ -224,7 +228,7 @@ class Database {
     }
   }
 
-    Future<bool> updateSettingsData({
+  Future<bool> updateSettingsData({
     required String uid,
     required String minHeight,
     required String maxHeight,
@@ -272,5 +276,4 @@ class Database {
       rethrow;
     }
   }
-
 }

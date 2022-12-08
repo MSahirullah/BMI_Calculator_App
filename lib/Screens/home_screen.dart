@@ -753,7 +753,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   SizedBox(width: Dimentions.pxW * 2),
                   Text(
-                    'Save weight & height as my profile data',
+                    'Save as my profile data',
                     style: TextStyle(
                       color: AppColors.secondaryColor,
                       fontWeight: FontWeight.w500,
@@ -947,13 +947,24 @@ class _HomeScreenState extends State<HomeScreen> {
                           _weight.toStringAsFixed(2));
                       Database(auth: widget.auth, fireStore: widget.fireStore)
                           .updateUserBMIData(
-                        uid: user.uid,
-                        weight: _weight.toStringAsFixed(2),
-                        height: _height.toStringAsFixed(2),
-                      )
+                              uid: user.uid,
+                              weight: _weight.toStringAsFixed(2),
+                              height: _height.toStringAsFixed(2),
+                              gender: _genderSelected,
+                              dob: DateFormat('yyyy-MM-dd').format(DateTime(
+                                  DateTime.now().year - _age,
+                                  DateTime.now().month,
+                                  DateTime.now().day)))
                           .then((value) {
                         if (!value) {
                           showSnackBar("Profile data not saved.");
+                        } else {
+                          Preferences.setGenderAndDoB(
+                              _genderSelected,
+                              DateFormat('yyyy-MM-dd').format(DateTime(
+                                  DateTime.now().year - _age,
+                                  DateTime.now().month,
+                                  DateTime.now().day)));
                         }
                       });
                     }
