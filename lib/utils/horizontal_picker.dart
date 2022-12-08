@@ -18,26 +18,28 @@ class HorizontalPicker extends StatefulWidget {
   final Color activeItemTextColor;
   final Color passiveItemsTextColor;
   final String suffix;
-  final int initialPositionX;
+  int initialPositionX;
+  double initValue;
   FixedExtentScrollController scrollController;
 
-  HorizontalPicker({
-    super.key,
-    required this.minValue,
-    required this.maxValue,
-    required this.divisions,
-    required this.height,
-    required this.onChanged,
-    this.initialPosition = InitialPosition.center,
-    this.backgroundColor = Colors.white,
-    this.showCursor = true,
-    this.cursorColor = Colors.red,
-    this.activeItemTextColor = Colors.blue,
-    this.passiveItemsTextColor = Colors.grey,
-    this.suffix = "",
-    required this.initialPositionX,
-    required this.scrollController,
-  }) : assert(minValue <= maxValue);
+  HorizontalPicker(
+      {super.key,
+      required this.minValue,
+      required this.maxValue,
+      required this.divisions,
+      required this.height,
+      required this.onChanged,
+      this.initialPosition = InitialPosition.center,
+      this.backgroundColor = Colors.white,
+      this.showCursor = true,
+      this.cursorColor = Colors.red,
+      this.activeItemTextColor = Colors.blue,
+      this.passiveItemsTextColor = Colors.grey,
+      this.suffix = "",
+      required this.initialPositionX,
+      required this.scrollController,
+      required this.initValue})
+      : assert(minValue <= maxValue);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -75,6 +77,8 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
     );
   }
 
+  bool isChanged = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -92,18 +96,12 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
                 itemExtent: 60,
                 onSelectedItemChanged: (item) {
                   createMap(item);
-                  setState(() {});
+                  setState(() {
+                    isChanged = true;
+                  });
                 },
                 children: valueMap.map((Map curValue) {
-                  return ItemWidget(
-                    curItem: curValue,
-                    backgroundColor: widget.backgroundColor,
-                    suffix: widget.suffix,
-                    initColor:
-                        valueMap.indexOf(curValue) == widget.initialPositionX
-                            ? AppColors.mainColor
-                            : AppColors.greyColor,
-                  );
+                  return func(curValue);
                 }).toList()),
           ),
           Visibility(
@@ -145,5 +143,20 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
         valueMap[i]["hasBorders"] = false;
       }
     }
+  }
+
+  Widget func(curValue) {
+    // print(curValue);
+    if (!isChanged) {
+      if (curValue['value'] == widget.initValue) {
+        curValue['color'] = AppColors.mainColor;
+      }
+    }
+
+    return ItemWidget(
+      curItem: curValue,
+      backgroundColor: widget.backgroundColor,
+      suffix: widget.suffix,
+    );
   }
 }

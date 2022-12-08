@@ -175,10 +175,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     elevation: 1.0,
                     child: Container(
-                      constraints: const BoxConstraints(
-                        minHeight: 136,
-                        maxHeight: 145,
-                      ),
                       height: Dimentions.height10 * 15,
                       width:
                           (Dimentions.screenWidth - (Dimentions.width10 * 6)) /
@@ -325,10 +321,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     elevation: 1.0,
                     child: Container(
-                      constraints: const BoxConstraints(
-                        minHeight: 136,
-                        maxHeight: 145,
-                      ),
                       height: Dimentions.height10 * 15,
                       width:
                           (Dimentions.screenWidth - (Dimentions.width10 * 6)) /
@@ -409,10 +401,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   width: double.infinity,
                   height: Dimentions.height10 * 15,
-                  constraints: const BoxConstraints(
-                    minHeight: 136,
-                    maxHeight: 145,
-                  ),
                   padding: EdgeInsets.symmetric(
                       vertical: Dimentions.height10,
                       horizontal: Dimentions.width10),
@@ -501,6 +489,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 backgroundColor: Colors.transparent,
                                 activeItemTextColor: AppColors.mainColor,
                                 passiveItemsTextColor: AppColors.greyColor,
+                                initValue: _weight,
                                 onChanged: (value) {
                                   setState(() {
                                     _weight = value;
@@ -586,10 +575,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   width: double.infinity,
                   height: Dimentions.height10 * 15,
-                  constraints: const BoxConstraints(
-                    minHeight: 136,
-                    maxHeight: 145,
-                  ),
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimentions.width10,
                       vertical: Dimentions.height10),
@@ -679,6 +664,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 backgroundColor: Colors.transparent,
                                 activeItemTextColor: AppColors.mainColor,
                                 passiveItemsTextColor: AppColors.greyColor,
+                                initValue: _height,
                                 onChanged: (value) {
                                   setState(() {
                                     _height = value;
@@ -985,7 +971,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   signOut() async {
     final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-    provider.logout();
+    provider.logout(context);
     setState(() {});
   }
 }

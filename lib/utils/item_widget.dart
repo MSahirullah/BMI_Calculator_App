@@ -7,13 +7,11 @@ class ItemWidget extends StatefulWidget {
   final Map curItem;
   final Color backgroundColor;
   final String suffix;
-  final Color initColor;
 
   const ItemWidget({
     required this.curItem,
     required this.backgroundColor,
     required this.suffix,
-    required this.initColor,
     Key? key,
   }) : super(key: key);
 
@@ -40,6 +38,7 @@ class _ItemWidgetState extends State<ItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+    
     return FittedBox(
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -59,11 +58,8 @@ class _ItemWidgetState extends State<ItemWidget> {
               Text(
                 "|",
                 style: TextStyle(
-                  fontSize: Dimentions.pxH * 8,
-                  color: (widget.initColor == const Color(0xff9f9f9f)
-                      ? widget.curItem["color"]
-                      : widget.initColor),
-                ),
+                    fontSize: Dimentions.pxH * 8,
+                    color: widget.curItem["color"]),
               ),
               SizedBox(height: Dimentions.pxH * 5),
               RichText(
@@ -73,39 +69,29 @@ class _ItemWidgetState extends State<ItemWidget> {
                       text: leftText,
                       style: TextStyle(
                         fontSize: widget.curItem["fontSize"],
-                        color: (widget.initColor == const Color(0xff9f9f9f)
-                            ? widget.curItem["color"]
-                            : widget.initColor),
+                        color: widget.curItem["color"],
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     TextSpan(
                       text: rightText == "0" ? "" : ".",
                       style: TextStyle(
-                        fontSize: widget.curItem["fontSize"] - 2,
-                        color: (widget.initColor == const Color(0xff9f9f9f)
-                            ? widget.curItem["color"]
-                            : widget.initColor),
-                      ),
+                          fontSize: widget.curItem["fontSize"] - 2,
+                          color: widget.curItem["color"]),
                     ),
                     TextSpan(
                       text: rightText == "0" ? "" : rightText,
                       style: TextStyle(
                         fontSize: widget.curItem["fontSize"] - 2,
-                        color: (widget.initColor == const Color(0xff9f9f9f)
-                            ? widget.curItem["color"]
-                            : widget.initColor),
+                        color: widget.curItem["color"],
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     TextSpan(
                       text: widget.suffix.isEmpty ? "" : widget.suffix,
                       style: TextStyle(
-                        fontSize: widget.curItem["fontSize"],
-                        color: (widget.initColor == const Color(0xff9f9f9f)
-                            ? widget.curItem["color"]
-                            : widget.initColor),
-                      ),
+                          fontSize: widget.curItem["fontSize"],
+                          color: widget.curItem["color"]),
                     )
                   ],
                 ),
@@ -114,11 +100,8 @@ class _ItemWidgetState extends State<ItemWidget> {
               Text(
                 "|",
                 style: TextStyle(
-                  fontSize: Dimentions.pxH * 8,
-                  color: (widget.initColor == const Color(0xff9f9f9f)
-                      ? widget.curItem["color"]
-                      : widget.initColor),
-                ),
+                    fontSize: Dimentions.pxH * 8,
+                    color: widget.curItem["color"]),
               ),
             ],
           ),

@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
               SizedBox(
-                height: Dimentions.height10 * 2.5,
+                height: Dimentions.height10 * 4,
               ),
               const Image(
                 image: AssetImage(
@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
               SizedBox(
-                height: Dimentions.height10 * 3,
+                height: Dimentions.height10 * 7,
               ),
               CustomTextButton(
                 disabled: widget.btnDisableStatus,
