@@ -56,7 +56,7 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
       valueMap.add({
         "value": widget.minValue +
             ((widget.maxValue - widget.minValue) / widget.divisions) * i,
-        "fontSize": Dimentions.pxH * 14,
+        "fontSize": Dimentions.pxH * 21,
         "color": widget.passiveItemsTextColor,
       });
     }
@@ -96,9 +96,13 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
                 },
                 children: valueMap.map((Map curValue) {
                   return ItemWidget(
-                    curValue,
-                    widget.backgroundColor,
-                    widget.suffix,
+                    curItem: curValue,
+                    backgroundColor: widget.backgroundColor,
+                    suffix: widget.suffix,
+                    initColor:
+                        valueMap.indexOf(curValue) == widget.initialPositionX
+                            ? AppColors.mainColor
+                            : AppColors.greyColor,
                   );
                 }).toList()),
           ),
@@ -133,11 +137,11 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
     for (var i = 0; i < valueMap.length; i++) {
       if (i == item) {
         valueMap[item]["color"] = widget.activeItemTextColor;
-        valueMap[item]["fontSize"] = Dimentions.pxH * 15;
+        valueMap[item]["fontSize"] = Dimentions.pxH * 21;
         valueMap[item]["hasBorders"] = true;
       } else {
         valueMap[i]["color"] = widget.passiveItemsTextColor;
-        valueMap[i]["fontSize"] = Dimentions.pxH * 15;
+        valueMap[i]["fontSize"] = Dimentions.pxH * 21;
         valueMap[i]["hasBorders"] = false;
       }
     }

@@ -526,8 +526,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   controller: weightController,
                                   key: const ValueKey('Weight'),
                                   style: TextStyle(
-                                      fontSize: Dimentions.height10 * 1.8,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: Dimentions.pxH * 18,
+                                      fontWeight: FontWeight.w600,
                                       color: AppColors.secondaryColor),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -703,8 +703,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   controller: heightController,
                                   key: const ValueKey('Height'),
                                   style: TextStyle(
-                                      fontSize: Dimentions.height10 * 1.8,
-                                      fontWeight: FontWeight.w500,
+                                      fontSize: Dimentions.pxH * 18,
+                                      fontWeight: FontWeight.w600,
                                       color: AppColors.secondaryColor),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
@@ -784,7 +784,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: null,
                   onPressed: () {
                     dismissSnackBar();
-                    if (_genderSelected == 'null') {
+                    if (_genderSelected == 'null' || _genderSelected == '') {
                       showSnackBar("Please select gender.");
                       return;
                     }
