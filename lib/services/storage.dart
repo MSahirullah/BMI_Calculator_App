@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;
 
 import 'dart:io';
