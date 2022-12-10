@@ -1,5 +1,5 @@
 # BMI Calculator App 🚴‍♀️📱
-## _𝘉𝘔𝘐 𝘊𝘢𝘭𝘤𝘶𝘭𝘢𝘵𝘰𝘳 | 𝘓𝘦𝘵'𝘴 𝘊𝘰𝘯𝘵𝘳𝘰𝘭 𝘠𝘰𝘶𝘳 𝘍𝘪𝘵𝘯𝘦𝘴𝘴_
+## 𝘉𝘔𝘐 𝘊𝘢𝘭𝘤𝘶𝘭𝘢𝘵𝘰𝘳 | 𝘓𝘦𝘵'𝘴 𝘊𝘰𝘯𝘵𝘳𝘰𝘭 𝘠𝘰𝘶𝘳 𝘍𝘪𝘵𝘯𝘦𝘴𝘴
 
 UI/UX by Fathima Fazla
 Behance: [Behance](https://www.behance.net/gallery/158472653/BMI-Calculator-App)
