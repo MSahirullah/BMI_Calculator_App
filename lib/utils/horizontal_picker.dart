@@ -66,8 +66,6 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
   }
 
   void setScrollController() {
-    //print('running');
-
     int initialItem;
 
     initialItem = widget.initialPositionX;
@@ -146,7 +144,6 @@ class _HorizontalPickerState extends State<HorizontalPicker> {
   }
 
   Widget func(curValue) {
-    // print(curValue);
     if (!isChanged) {
       if (curValue['value'] == widget.initValue) {
         curValue['color'] = AppColors.mainColor;

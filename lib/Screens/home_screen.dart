@@ -29,6 +29,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser!;
 
+  late StreamSubscription<bool> keyboardSubscription;
+
   String _genderSelected = 'null';
   int _age = 20;
 
@@ -71,10 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _minHeight = double.parse(Preferences.getMinHeight() ?? "1.00");
-    _maxHeight = double.parse(Preferences.getMaxHeight() ?? "400.00");
-    _minWeight = double.parse(Preferences.getMinWeight() ?? "30.00");
-    _maxWeight = double.parse(Preferences.getMaxWeight() ?? "255.00");
+
+    _minHeight = double.parse(Preferences.getMinHeight() ?? "30.00");
+    _maxHeight = double.parse(Preferences.getMaxHeight() ?? "255.00");
+    _minWeight = double.parse(Preferences.getMinWeight() ?? "1.00");
+    _maxWeight = double.parse(Preferences.getMaxWeight() ?? "400.00");
 
     _genderSelected = Preferences.getGender() ?? "";
     heightController.text = Preferences.getHeight() ?? "";
@@ -115,7 +118,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //
     return Scaffold(
       drawer: SideBar(
         auth: widget.auth,
@@ -436,7 +438,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     });
                                   } else {
                                     setState(() {
-                                      _weight = weightController.text.isEmpty
+                                      _weight = weightController.text.isEmpty ||
+                                              !RegExp(r'^(\d{1,5}|\d{0,5}\.\d{1,2})$')
+                                                  .hasMatch(
+                                                      weightController.text)
                                           ? -1
                                           : double.parse(double.parse(
                                                   weightController.text)
@@ -448,6 +453,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         weightInputChanger =
                                             !weightInputChanger;
                                       } else {
+                                        unfocus();
                                         dismissSnackBar();
                                         showSnackBar(
                                             "Please input valid weight.");
@@ -477,7 +483,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: weightInputChanger
                             ? HorizontalPicker(
                                 scrollController: weightScrollController,
-                                initialPositionX: weightPosition,
+                                initialPositionX: 128,
                                 minValue: _minWeight,
                                 initialPosition: InitialPosition.center,
                                 maxValue: _maxWeight,
@@ -489,7 +495,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 backgroundColor: Colors.transparent,
                                 activeItemTextColor: AppColors.mainColor,
                                 passiveItemsTextColor: AppColors.greyColor,
-                                initValue: _weight,
+                                initValue: 65,
                                 onChanged: (value) {
                                   setState(() {
                                     _weight = value;
@@ -504,7 +510,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: TextFormField(
                                   onChanged: (value) {
                                     setState(() {
-                                      if (weightController.text.isEmpty) {
+                                      if (weightController.text.isEmpty ||
+                                          !RegExp(r'^(\d{1,5}|\d{0,5}\.\d{1,2})$')
+                                              .hasMatch(
+                                                  weightController.text)) {
                                         _weight = -1;
                                       } else {
                                         _weight =
@@ -611,7 +620,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     });
                                   } else {
                                     setState(() {
-                                      _height = heightController.text.isEmpty
+                                      _height = heightController.text.isEmpty ||
+                                              !RegExp(r'^(\d{1,5}|\d{0,5}\.\d{1,2})$')
+                                                  .hasMatch(
+                                                      heightController.text)
                                           ? -1
                                           : double.parse(double.parse(
                                                   heightController.text)
@@ -623,9 +635,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         heightInputChanger =
                                             !heightInputChanger;
                                       } else {
+                                        unfocus();
                                         dismissSnackBar();
                                         showSnackBar(
                                             "Please input valid height.");
+
                                         return;
                                       }
                                     });
@@ -679,7 +693,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: TextFormField(
                                   onChanged: (value) {
                                     setState(() {
-                                      _height = heightController.text.isEmpty
+                                      _height = heightController.text.isEmpty ||
+                                              !RegExp(r'^(\d{1,5}|\d{0,5}\.\d{1,2})$')
+                                                  .hasMatch(
+                                                      heightController.text)
                                           ? -1
                                           : double.parse(double.parse(
                                                   heightController.text)
@@ -779,9 +796,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (heightController.text.isEmpty &&
                         weightController.text.isEmpty) {
                       errorText = "Please input valid weight & height.";
-                    } else if (heightController.text.isEmpty) {
+                    } else if (heightController.text.isEmpty ||
+                        !RegExp(r'^(\d{1,5}|\d{0,5}\.\d{1,2})$')
+                            .hasMatch(heightController.text)) {
                       errorText = "Please input valid height.";
-                    } else if (weightController.text.isEmpty) {
+                    } else if (weightController.text.isEmpty ||
+                        !RegExp(r'^(\d{1,5}|\d{0,5}\.\d{1,2})$')
+                            .hasMatch(weightController.text)) {
                       errorText = "Please input valid weight.";
                     } else {
                       double tempHeight = double.parse(heightController.text);
@@ -800,7 +821,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         errorText = "Please input valid weight.";
                       }
                     }
-
+                    unfocus();
                     if (errorText.isNotEmpty) {
                       showSnackBar(errorText);
                       return;
@@ -968,6 +989,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       });
                     }
+                    unfocus();
                   },
                   btnText: "Calculate",
                   width: Dimentions.screenWidth * 0.75,
@@ -978,6 +1000,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  unfocus() {
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   signOut() async {
