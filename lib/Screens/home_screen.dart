@@ -483,7 +483,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: weightInputChanger
                             ? HorizontalPicker(
                                 scrollController: weightScrollController,
-                                initialPositionX: 128,
+                                initialPositionX: weightPosition,
                                 minValue: _minWeight,
                                 initialPosition: InitialPosition.center,
                                 maxValue: _maxWeight,
@@ -495,7 +495,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 backgroundColor: Colors.transparent,
                                 activeItemTextColor: AppColors.mainColor,
                                 passiveItemsTextColor: AppColors.greyColor,
-                                initValue: 65,
+                                initValue: _weight,
                                 onChanged: (value) {
                                   setState(() {
                                     _weight = value;
