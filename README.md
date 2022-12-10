@@ -17,10 +17,10 @@ The app is connected with Firebase and would allow users to store and access the
     <th width=180>Side Bar </th>
   </tr>
   <tr>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/2.png" width="180" height="315" ></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/1.png" width="180" height="315"></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/3.png" width="180" height="315"></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/4.png" width="180" height="315"></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/2.png" width="180"  ></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/1.png" width="180" ></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/3.png" width="180" ></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/4.png" width="180" ></td>
   </tr>
     <tr>
     <th width=180>Profile Screen</th>
@@ -29,10 +29,10 @@ The app is connected with Firebase and would allow users to store and access the
     <th width=180>Settings Screen </th>
   </tr>
   <tr>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/5.png" width="180" height="315" ></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/6.png" width="180" height="315"></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/7.png" width="180" height="315"></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/8.png" width="180" height="315"></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/5.png" width="180" ></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/6.png" width="180" ></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/7.png" width="180" ></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/8.png" width="180" ></td>
   </tr>
 </table>
  </center>
