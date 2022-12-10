@@ -12,17 +12,27 @@ The app is connected with Firebase and would allow users to store and access the
 <table>
   <tr>
     <th width=180>Splash Screen</th>
-    <th width=180>Login Screen </th>
-    <th width=180>Register Screen </th>
     <th width=180>Home Screen </th>
-    <th width=180>Profile Screen </th>
+    <th width=180>Result Screen </th>
+    <th width=180>Side Bar </th>
   </tr>
   <tr>
-    <td><img src="https://drive.google.com/file/d/1PhRr09y2HDDaQ5nQSz_PN9WYtP399Rd-/view?usp=sharing" width="180" height="315" ></td>
-    <td><img src="https://github.com/MSahirullah/The-Best-Food-App/blob/main/assets/images/UI/Login%20Screen.png" width="180" height="315"></td>
-    <td><img src="https://github.com/MSahirullah/The-Best-Food-App/blob/main/assets/images/UI/Register%20Screen.png" width="180" height="315"></td>
-    <td><img src="https://github.com/MSahirullah/The-Best-Food-App/blob/main/assets/images/UI/Home%20Screen.png" width="180" height="315"></td>
-    <td><img src="https://github.com/MSahirullah/The-Best-Food-App/blob/main/assets/images/UI/Profile%20Screen.png" width="180" height="315"></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/2.png" width="180" height="315" ></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/1.png" width="180" height="315"></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/3.png" width="180" height="315"></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/4.png" width="180" height="315"></td>
+  </tr>
+    <tr>
+    <th width=180>Profile Screen</th>
+    <th width=180>Choose Profile Photo Popup </th>
+    <th width=180>History Screen </th>
+    <th width=180>Settings Screen </th>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/5.png" width="180" height="315" ></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/6.png" width="180" height="315"></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/7.png" width="180" height="315"></td>
+    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/8.png" width="180" height="315"></td>
   </tr>
 </table>
  </center>
