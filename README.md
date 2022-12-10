@@ -8,7 +8,7 @@ The BMI Calculator App is a simple tool that allows users to calculate their bod
 
 The app is connected with Firebase and would allow users to store and access their BMI calculations and related information on a secure, cloud-based platform. This would enable users to access their BMI data from any device with an internet connection, making it easy to track their BMI over time. 
 
-<center>
+
 <table>
   <tr>
     <th width=25%>Splash Screen</th>
@@ -17,10 +17,10 @@ The app is connected with Firebase and would allow users to store and access the
     <th width=25%>Side Bar </th>
   </tr>
   <tr>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/2.png" width="180"  ></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/1.png" width="180" ></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/3.png" width="180" ></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/4.png" width="180" ></td>
+    <td align="center"><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/2.png" width="180"  ></td>
+    <td align="center"><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/1.png" width="180" ></td>
+    <td align="center"><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/3.png" width="180" ></td>
+    <td align="center"><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/4.png" width="180" ></td>
   </tr>
     <tr>
     <th width=25%>Profile Screen</th>
@@ -29,10 +29,10 @@ The app is connected with Firebase and would allow users to store and access the
     <th width=25%>Settings Screen </th>
   </tr>
   <tr>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/5.png" width="180" ></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/6.png" width="180" ></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/7.png" width="180" ></td>
-    <td><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/8.png" width="180" ></td>
+    <td align="center"><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/5.png" width="180" ></td>
+    <td align="center"><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/6.png" width="180" ></td>
+    <td align="center"><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/7.png" width="180" ></td>
+    <td align="center"><img src="https://github.com/MSahirullah/Project-Images/blob/main/BMI%20App/8.png" width="180" ></td>
   </tr>
 </table>
- </center>
+
